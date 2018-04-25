@@ -9,7 +9,7 @@ class CustomPhotomap : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         val imagesIntent = intent
-        setContentView(R.layout.activity_custom_photomap)
+        setContentView(R.layout.acivity_photomap)
 
 
     }
