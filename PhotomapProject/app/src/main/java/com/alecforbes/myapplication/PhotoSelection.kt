@@ -7,6 +7,9 @@ import android.widget.Button
 
 class PhotoSelection : AppCompatActivity() {
 
+    // TODO permission handling
+    private val PICK_IMAGES = 1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_photo_selection)
@@ -27,7 +30,7 @@ class PhotoSelection : AppCompatActivity() {
             customSelectIntent.action = Intent.ACTION_GET_CONTENT
 
             if (customSelectIntent.resolveActivity(packageManager) != null){
-                startActivityForResult(customSelectIntent, 1)
+                startActivityForResult(Intent.createChooser(customSelectIntent, "Select photos for photomap"), PICK_IMAGES)
             }
         }
     }
@@ -35,7 +38,10 @@ class PhotoSelection : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         // Received the selection from the gallery
         super.onActivityResult(requestCode, resultCode, data)
+        val customPhotomapIntent = Intent(this, CustomPhotomap::class.java)
 
-        when(requestCode){}
+        if (requestCode == PICK_IMAGES){
+            startActivity(customPhotomapIntent)
+        }
     }
 }

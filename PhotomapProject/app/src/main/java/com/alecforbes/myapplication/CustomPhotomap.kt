@@ -10,6 +10,8 @@ class CustomPhotomap : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val imagesIntent = intent
         setContentView(R.layout.activity_custom_photomap)
 
 
