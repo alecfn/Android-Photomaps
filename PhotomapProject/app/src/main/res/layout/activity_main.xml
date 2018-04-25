@@ -6,13 +6,50 @@
     android:layout_height="match_parent"
     tools:context="com.alecforbes.myapplication.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <ImageButton
+                android:id="@+id/createPhotomapButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/createPhotomapText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/create_a_custom_photomap" />
+
+            <ImageButton
+                android:id="@+id/placesPhotomapButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@android:drawable/btn_star_big_on" />
+
+            <TextView
+                android:id="@+id/placesText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/places_photomaps" />
+
+            <ImageButton
+                android:id="@+id/savedPhotomapsButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/savedPhotomapsText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/saved_photomaps" />
+        </LinearLayout>
+    </ScrollView>
 </android.support.constraint.ConstraintLayout>

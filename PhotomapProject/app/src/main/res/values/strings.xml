@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">My Application</string>
     <string name="title_activity_custom_photomap">CustomPhotomap</string>
+    <string name="create_a_custom_photomap">Create a custom photomap</string>
+    <string name="places_photomaps">Places photomaps</string>
+    <string name="saved_photomaps">Saved photomaps</string>
 </resources>
