@@ -1,4 +1,4 @@
-package com.alecforbes.myapplication
+package com.alecforbes.photomaps
 
 import org.junit.Test
 

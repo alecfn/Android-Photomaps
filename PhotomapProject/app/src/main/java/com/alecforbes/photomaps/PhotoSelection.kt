@@ -1,4 +1,4 @@
-package com.alecforbes.myapplication
+package com.alecforbes.photomaps
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
