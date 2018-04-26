@@ -5,6 +5,7 @@ import android.content.Intent
 import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.os.Parcelable
 import android.provider.MediaStore
 import android.support.v7.app.AppCompatActivity
@@ -39,7 +40,8 @@ class CustomPhotomap : AppCompatActivity() {
         imageFiles.forEach {
            // val selectedImage = imageController
             var imageFile = it
-            var selectedImage = ImageData(imageFile.absolutePath)
+            // FIXME k this method doesnt work at all, look into the whole inputstream thing
+            var selectedImage = ImageData(Environment.getExternalStorageDirectory().absolutePath + imageFile.absoluteFile)
             selectedImages.add(selectedImage)
         }
         print("")
