@@ -9,11 +9,18 @@ import com.alecforbes.photomaps.Model.ImageData
 
 class ImageController {
     // TODO just store the images in an array list, and get the relevant exif data
+    // FIXME probably wont need this class
 
     var imageList = ArrayList<ImageData>()
 
-    fun getLatLong(){
-        //val exifInterface = ExifInterface()
+
+
+    fun createImageData(imageUri: String){
+
+    }
+
+    fun clearImageList(){
+
     }
 
 }
