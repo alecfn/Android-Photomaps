@@ -2,12 +2,14 @@ package com.alecforbes.photomaps.Model
 
 import android.graphics.Bitmap
 import android.media.ExifInterface
+import android.net.Uri
+import java.io.InputStream
 
 /**
  * Created by Alec on 4/26/2018.
  */
 
-class ImageData constructor(imagePath: String) {
+class ImageData constructor(exif: ExifInterface) {
     // TODO time taken probably isnt a string
 
     // TODO any more exif
@@ -17,8 +19,9 @@ class ImageData constructor(imagePath: String) {
     var timeTaken = ""
     var thumbnailBitmap = ""
     var imageBitmap = ""
+    var exif = exif
 
-    val exifInterface = ExifInterface(imagePath)
+    //val exifInterface = ExifInterface(imagePath)
 
     fun getAllImageData(){
         getLatLong()
@@ -26,9 +29,18 @@ class ImageData constructor(imagePath: String) {
 
     }
 
+    fun createExifInterface(){
+
+        try{
+
+        }finally {
+
+        }
+    }
+
     fun getLatLong(){
-        latitude = exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE)
-        longitude = exifInterface.getAttribute(ExifInterface.TAG_GPS_LONGITUDE)
+        latitude = exif.getAttribute(ExifInterface.TAG_GPS_LATITUDE)
+        longitude = exif.getAttribute(ExifInterface.TAG_GPS_LONGITUDE)
 
     }
 

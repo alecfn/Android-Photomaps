@@ -3,11 +3,14 @@ package com.alecforbes.photomaps.Activities
 import android.content.Context
 import android.content.Intent
 import android.database.Cursor
+import android.media.ExifInterface
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.os.Parcelable
 import android.provider.MediaStore
+import android.support.annotation.RequiresApi
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.alecforbes.photomaps.Controllers.ImageController
@@ -35,13 +38,17 @@ class CustomPhotomap : AppCompatActivity() {
 
     }
 
-    private fun createImageData(imageFiles: ArrayList<File>){
+    @RequiresApi(Build.VERSION_CODES.N) // FIXME exif stream needs android N
+    private fun createImageData(imageFiles: ArrayList<Uri>){
 
         imageFiles.forEach {
            // val selectedImage = imageController
-            var imageFile = it
+            //var imageFile = it
             // FIXME k this method doesnt work at all, look into the whole inputstream thing
-            var selectedImage = ImageData(Environment.getExternalStorageDirectory().absolutePath + imageFile.absoluteFile)
+            //var selectedImage = ImageData(Environment.getExternalStorageDirectory().absolutePath + imageFile.absoluteFile)
+            val stream = contentResolver.openInputStream(it)
+            val exif = ExifInterface(stream)
+            var selectedImage = ImageData(exif)
             selectedImages.add(selectedImage)
         }
         print("")
@@ -57,12 +64,12 @@ class CustomPhotomap : AppCompatActivity() {
 
             // FIXME exception when only selecting one?
             val numberImages = imageData.clipData!!.itemCount
-            val imageFiles= ArrayList<File>()
+            val imageFiles= ArrayList<Uri>()
 
             // Get all of the image ClipData objects to add to an array and send in an intent
             for (i in 0..(numberImages - 1)){
-                val uri = imageData.clipData.getItemAt(i).uri.path
-                val imageFile = File(uri)
+                val uri = imageData.clipData.getItemAt(i).uri
+                //val imageFile = File(uri)
 
 
                 //val uriStream = contentResolver.openInputStream(uri)
@@ -71,7 +78,7 @@ class CustomPhotomap : AppCompatActivity() {
                 //uriStream.read(bytes,0, bytes)
                // uriStream.read(bytes, 0, bytes.length)
 
-                imageFiles.add(imageFile)
+                imageFiles.add(uri)
                 print("")
             }
 
