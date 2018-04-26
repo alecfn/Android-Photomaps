@@ -21,21 +21,16 @@ class ImageData constructor(exif: ExifInterface) {
     var imageBitmap = ""
     var exif = exif
 
+    init {
+        getAllImageData()
+    }
+
     //val exifInterface = ExifInterface(imagePath)
 
     fun getAllImageData(){
         getLatLong()
         getImageBitmap()
 
-    }
-
-    fun createExifInterface(){
-
-        try{
-
-        }finally {
-
-        }
     }
 
     fun getLatLong(){
