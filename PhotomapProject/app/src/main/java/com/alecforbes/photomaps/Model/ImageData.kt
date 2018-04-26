@@ -7,7 +7,7 @@ import android.media.ExifInterface
  * Created by Alec on 4/26/2018.
  */
 
-class ImageData constructor(val imagePath: String) {
+class ImageData constructor(imagePath: String) {
     // TODO time taken probably isnt a string
 
     // TODO any more exif
