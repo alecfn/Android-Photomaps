@@ -1,5 +1,6 @@
 package com.alecforbes.photomaps.Activities
 
+import android.content.ClipData
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -40,8 +41,20 @@ class PhotoSelection : AppCompatActivity() {
         // Received the selection from the gallery
         super.onActivityResult(requestCode, resultCode, data)
         val customPhotomapIntent = Intent(this, CustomPhotomap::class.java)
+        //var imageUris = ArrayList<ClipData.Item>()
+
+        //var numberImages = data?.clipData!!.itemCount
 
         if (requestCode == PICK_IMAGES){
+
+            // Get all of the image ClipData objects to add to an array and send in an intent
+            //for (i in 0..(numberImages - 1)){
+            //    var uri = data.clipData.getItemAt(i)
+            //    imageUris.add(uri)
+            //}
+
+            customPhotomapIntent.putExtra("imageData", data)
+
             startActivity(customPhotomapIntent)
         }
     }
