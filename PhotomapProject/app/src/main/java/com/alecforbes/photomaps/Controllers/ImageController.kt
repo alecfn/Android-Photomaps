@@ -1,7 +1,5 @@
 package com.alecforbes.photomaps.Controllers
 
-import com.alecforbes.photomaps.Model.ImageData
-
 /**
  * Created by Alec on 4/26/2018.
  */

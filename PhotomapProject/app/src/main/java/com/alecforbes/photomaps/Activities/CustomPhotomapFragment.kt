@@ -1,13 +1,14 @@
 package com.alecforbes.photomaps.Activities
 
-import android.graphics.Bitmap
 import android.os.Bundle
 import com.alecforbes.photomaps.Model.ImageData
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import java.io.ByteArrayOutputStream
 
 /**
  * Created by Alec on 4/26/2018.
@@ -17,6 +18,9 @@ class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
 
     private lateinit var customPhotomap: GoogleMap
     private var selectedImages = ArrayList<ImageData>()
+
+    // TODO this should be custom views later
+    private var markers = ArrayList<Marker>()
 
 
     override fun onCreate(p0: Bundle?) {
@@ -33,10 +37,16 @@ class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
         customPhotomap = p0 as GoogleMap
 
         addImagePreviews()
+        setMapBounds()
 
         //TODO Populate customPhotomap with custom views based on image data passed in
     }
 
+
+    /**
+     * Define the necessary objects for the map fragment when the instance is created. This does not
+     * call the lifecycle functions like onMapReady, the fragment must be linked to a view for that.
+     */
     companion object {
         fun newInstance(images: ArrayList<ImageData>): CustomPhotomapFragment {
             val f = CustomPhotomapFragment()
@@ -60,9 +70,31 @@ class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
 
             markerOpts.position(it.latLong)
 
-            customPhotomap.addMarker(markerOpts)
+            val marker = customPhotomap.addMarker(markerOpts)
+            markers.add(marker)
         }
 
+    }
+
+    /**
+     * Set the boundaries of the map to include all of the markers added so they all appear on
+     * the screen.
+     */
+    fun setMapBounds(){
+
+        // TODO custom views
+
+        val latLongBuilder = LatLngBounds.builder()
+
+        markers.forEach{
+            latLongBuilder.include(it.position)
+        }
+
+        val mapBounds = latLongBuilder.build()
+        val pad = 10 // Map pixel padding
+        val cameraUpdate = CameraUpdateFactory.newLatLngBounds(mapBounds, pad)
+
+        customPhotomap.moveCamera(cameraUpdate)
     }
 
 }

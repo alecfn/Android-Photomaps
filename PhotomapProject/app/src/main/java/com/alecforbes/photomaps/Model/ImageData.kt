@@ -2,15 +2,12 @@ package com.alecforbes.photomaps.Model
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.media.ExifInterface
 import android.os.Parcelable
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.parcel.Parcelize
 import kotlinx.android.parcel.RawValue
 import java.io.File
-import java.io.InputStream
-import kotlin.properties.Delegates
 
 /**
  * Created by Alec on 4/26/2018.

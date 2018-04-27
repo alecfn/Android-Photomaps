@@ -1,13 +1,11 @@
 package com.alecforbes.photomaps.Activities
 
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment.getExternalStorageDirectory
 import android.support.annotation.RequiresApi
 import android.support.v7.app.AppCompatActivity
 import com.alecforbes.photomaps.Model.ImageData
@@ -55,16 +53,12 @@ class CustomPhotomap : AppCompatActivity() {
             val stream = contentResolver.openInputStream(it)
             val exif = ExifInterface(stream)
             val file = File(it.path)
-            // TODO bitmap needs to be byte array not a Bitmap due to parcelable limits
+            // TODO bitmap may need to be byte array not a Bitmap due to parcelable limits
 
             val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(it))
             // You can't reuse an InputStream in Android, so it has to be declared again
 
             // TODO any more creation stuff should be done here
-            //val options = BitmapFactory.Options()
-            //options.inPreferredConfig = Bitmap.Config.ARGB_8888
-            //val path = it.path
-            //val bitmap = BitmapFactory.decodeStream(path, options)
 
             val selectedImage = ImageData(file, bitmap, exif)
             selectedImages.add(selectedImage)
