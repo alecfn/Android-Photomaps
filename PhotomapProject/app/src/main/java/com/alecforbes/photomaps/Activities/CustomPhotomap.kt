@@ -30,16 +30,14 @@ class CustomPhotomap : AppCompatActivity() {
 
         val customMapFragment : CustomPhotomapFragment? = supportFragmentManager.findFragmentById(R.id.photomapFragment) as CustomPhotomapFragment?
 
+        // Create bundle to send images to fragment
+        //val images = Bundle()
+        //images.putParcelableArrayList("image", selectedImages)
+
+        //customMapFragment.arguments
+
+
         customMapFragment?.getMapAsync(customMapFragment)
-
-    }
-
-    /**
-     * Add the images to the map fragment as previews from the retrieved data
-     */
-    fun addImagePreviews(mapFrag: CustomPhotomapFragment){
-
-
 
     }
 
@@ -54,15 +52,16 @@ class CustomPhotomap : AppCompatActivity() {
 
         imageUris.forEach {
 
-            // For each selected image file URI, create an input stream object, and exif interface
-
             // Not every object can be created in the object because we have to resolve the current content, so pass those in
             val stream = contentResolver.openInputStream(it)
             val exif = ExifInterface(stream)
             val file = File(it.path)
+            // TODO bitmap needs to be byte array not a Bitmap due to parcelable limits
+
             val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(it))
             // You can't reuse an InputStream in Android, so it has to be declared again
 
+            // TODO any more creation stuff should be done here
             //val options = BitmapFactory.Options()
             //options.inPreferredConfig = Bitmap.Config.ARGB_8888
             //val path = it.path
