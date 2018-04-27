@@ -15,6 +15,6 @@ class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
     override fun onMapReady(p0: GoogleMap?) {
         map = p0 as GoogleMap
 
-        //TODO Populate map with custom views based on exif data passed in
+        //TODO Populate map with custom views based on image data passed in
     }
 }

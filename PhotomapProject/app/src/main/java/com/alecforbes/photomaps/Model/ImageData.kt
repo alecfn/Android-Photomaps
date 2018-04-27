@@ -1,25 +1,23 @@
 package com.alecforbes.photomaps.Model
 
-import android.graphics.Bitmap
 import android.media.ExifInterface
-import android.net.Uri
-import java.io.InputStream
 
 /**
  * Created by Alec on 4/26/2018.
  */
 
-class ImageData constructor(exif: ExifInterface) {
+class ImageData constructor(exifInterface: ExifInterface) {
     // TODO time taken probably isnt a string
 
-    // TODO any more exif
+    // TODO any more exifInterface
 
+    //var inputStream
     var latitude = ""
     var longitude = ""
     var timeTaken = ""
     var thumbnailBitmap = ""
     var imageBitmap = ""
-    var exif = exif
+    var exif = exifInterface
 
     init {
         getAllImageData()

@@ -1,6 +1,5 @@
 package com.alecforbes.photomaps.Activities
 
-import android.content.ClipData
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity

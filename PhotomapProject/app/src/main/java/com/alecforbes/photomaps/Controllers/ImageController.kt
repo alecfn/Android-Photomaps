@@ -1,6 +1,5 @@
 package com.alecforbes.photomaps.Controllers
 
-import android.media.ExifInterface
 import com.alecforbes.photomaps.Model.ImageData
 
 /**
@@ -10,9 +9,6 @@ import com.alecforbes.photomaps.Model.ImageData
 class ImageController {
     // TODO just store the images in an array list, and get the relevant exif data
     // FIXME probably wont need this class
-
-    var imageList = ArrayList<ImageData>()
-
 
 
     fun createImageData(imageUri: String){
