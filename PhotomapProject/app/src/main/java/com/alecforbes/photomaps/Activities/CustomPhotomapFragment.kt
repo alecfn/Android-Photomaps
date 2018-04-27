@@ -16,20 +16,32 @@ import java.io.ByteArrayOutputStream
 class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
 
     private lateinit var customPhotomap: GoogleMap
+    private var selectedImages = ArrayList<ImageData>()
+
+
+    override fun onCreate(p0: Bundle?) {
+        super.onCreate(p0)
+
+    }
+
+    override fun onActivityCreated(p0: Bundle?) {
+        super.onActivityCreated(p0)
+        getMapAsync(this)
+    }
 
     override fun onMapReady(p0: GoogleMap?) {
         customPhotomap = p0 as GoogleMap
 
-        //addImagePreviews()
+        addImagePreviews()
 
         //TODO Populate customPhotomap with custom views based on image data passed in
     }
 
     companion object {
-        fun newInstance(index: Int): CustomPhotomapFragment {
+        fun newInstance(images: ArrayList<ImageData>): CustomPhotomapFragment {
             val f = CustomPhotomapFragment()
             val args = Bundle()
-            args.putParcelableArrayList("selectedImages", ArrayList())
+            args.putParcelableArrayList("selectedImages", images)
             f.arguments = args
             return f
         }
@@ -38,7 +50,9 @@ class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
     /**
      * Add the images to the customPhotomap fragment as previews from the retrieved data
      */
-    fun addImagePreviews(selectedImages: ArrayList<ImageData>){
+    fun addImagePreviews(){
+
+        selectedImages = arguments.getParcelableArrayList<ImageData>("selectedImages")
 
         val markerOpts = MarkerOptions()
 

@@ -28,16 +28,27 @@ class CustomPhotomap : AppCompatActivity() {
 
         setContentView(R.layout.acivity_photomap)
 
-        val customMapFragment : CustomPhotomapFragment? = supportFragmentManager.findFragmentById(R.id.photomapFragment) as CustomPhotomapFragment?
+        //val customMapFragment : CustomPhotomapFragment? = supportFragmentManager.findFragmentById(R.id.photomapFragment) as CustomPhotomapFragment?
+
+        // TODO whats index for?
 
         // Create bundle to send images to fragment
-        //val images = Bundle()
-        //images.putParcelableArrayList("image", selectedImages)
+        val images = Bundle()
+        images.putParcelableArrayList("selectedImages", selectedImages)
+        val customMapFragment = CustomPhotomapFragment.newInstance(selectedImages)
+
+        supportFragmentManager.beginTransaction()
+                .add(R.id.photomapConstraint, customMapFragment)
+                .commit()
+
 
         //customMapFragment.arguments
 
+        //customMapFragment.getMapAsync(customMapFragment)
 
-        customMapFragment?.getMapAsync(customMapFragment)
+        //customMapFragment.addImagePreviews()
+
+
 
     }
 
