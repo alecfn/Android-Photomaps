@@ -28,27 +28,15 @@ class CustomPhotomap : AppCompatActivity() {
 
         setContentView(R.layout.acivity_photomap)
 
-        //val customMapFragment : CustomPhotomapFragment? = supportFragmentManager.findFragmentById(R.id.photomapFragment) as CustomPhotomapFragment?
-
-        // TODO whats index for?
-
         // Create bundle to send images to fragment
         val images = Bundle()
         images.putParcelableArrayList("selectedImages", selectedImages)
         val customMapFragment = CustomPhotomapFragment.newInstance(selectedImages)
 
+        // As the map is a fragment, initialise it in a view (but just the constraint as the map fills the view)
         supportFragmentManager.beginTransaction()
                 .add(R.id.photomapConstraint, customMapFragment)
                 .commit()
-
-
-        //customMapFragment.arguments
-
-        //customMapFragment.getMapAsync(customMapFragment)
-
-        //customMapFragment.addImagePreviews()
-
-
 
     }
 
@@ -93,24 +81,30 @@ class CustomPhotomap : AppCompatActivity() {
      */
     private fun getSelectedImageUris(imagesIntent: Intent){
 
-        if (imagesIntent != null) {
+        val imageData = imagesIntent.getParcelableExtra<Intent>("imageData")
+        val imageUris= ArrayList<Uri>()
 
-            val imageData = imagesIntent.getParcelableExtra<Intent>("imageData")
+        if (imagesIntent != null && imageData.clipData != null) {
 
-            // FIXME exception when only selecting one?
             // Get the number of images selected from the gallery application
             val numberImages = imageData.clipData!!.itemCount
-            val imageUris= ArrayList<Uri>()
 
-            // Get all of the image ClipData objects to add to an array and send in an intent
+            // Get all of the image ClipData objects to add to an array to send in an intent
             for (i in 0..(numberImages - 1)){
                 val uri = imageData.clipData.getItemAt(i).uri
 
                 imageUris.add(uri)
             }
 
-            createImageData(imageUris)
+        } else {
+
+            // If the user only selects one image, clipData is unused and will be null
+            val uri = imageData.data
+            imageUris.add(uri)
+
         }
+
+        createImageData(imageUris)
 
     }
 

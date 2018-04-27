@@ -28,13 +28,6 @@ data class ImageData(private val file: File,
 
     // TODO any more exifInterface
 
-    //var inputStream = stream
-    //var file = file
-    //var exif = exifInterface
-   // var bitmap: Bitmap? = null
-    //private var latitude: Float by Delegates.notNull()
-    //private var longitude: Float by Delegates.notNull()
-    //private var latLong: LatLng by Delegates.notNull()
     private var timeTaken = ""
     private var thumbnailBitmap = ""
 
@@ -56,11 +49,6 @@ data class ImageData(private val file: File,
         longitude = latLongArr[1]
 
         latLong = LatLng(latitude.toDouble(), longitude.toDouble())
-
-
-        //latitude = exif.getAttribute(ExifInterface.TAG_GPS_LATITUDE)
-        //longitude = exif.getAttribute(ExifInterface.TAG_GPS_LONGITUDE)
-        //latLong = LatLng(latitude.toDouble(), longitude.toDouble())
 
     }
 
