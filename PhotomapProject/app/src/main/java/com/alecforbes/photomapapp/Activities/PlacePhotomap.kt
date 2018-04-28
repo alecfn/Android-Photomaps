@@ -21,6 +21,7 @@ class PlacePhotomap : AppCompatActivity() {
 
     val firebaseStorage: FirebaseStorage = FirebaseStorage.getInstance()
     //var imageBytes = ArrayList<ByteArray>()
+    var firebaseFiles = ArrayList<File>()
     var firebaseImageUris = ArrayList<Uri>()
     var includedImages = ArrayList<ImageData>()
 
@@ -38,9 +39,6 @@ class PlacePhotomap : AppCompatActivity() {
         // The URIs for images in a place photomap come from firebase downloads, not an intent
 
         //createIncludedImageData()
-
-
-
 
     }
 
@@ -66,11 +64,18 @@ class PlacePhotomap : AppCompatActivity() {
         // Because we need to access exif information, we have to download the image
         val storageRef = firebaseStorage.reference
         val storagePathRef = storageRef.child("PlacesTestData/Sydney/harbourbridge.jpg")
-        val httpsRef = firebaseStorage.getReferenceFromUrl("https://firebasestorage.googleapis.com/v0/b/photomaps-fit3027.appspot.com/o/PlacesTestData%2FSydney%2Fharbourbridge.jpg?alt=media&token=56479978-584f-4fc9-b58d-20928e1ffd73")
+        //val httpsRef = firebaseStorage.getReferenceFromUrl("https://firebasestorage.googleapis.com/v0/b/photomaps-fit3027.appspot.com/o/PlacesTestData%2FSydney%2Fharbourbridge.jpg?alt=media&token=56479978-584f-4fc9-b58d-20928e1ffd73")
 
-        storagePathRef.downloadUrl.addOnSuccessListener { uri ->
-            firebaseImageUris.add(uri)
-            var test = storagePathRef.metadata
+        var tempFile = File.createTempFile("images", "jpg")
+
+        //storagePathRef.downloadUrl.addOnSuccessListener { uri ->
+            storagePathRef.getFile(tempFile).addOnSuccessListener {
+                firebaseFiles.add(tempFile)
+                var test = BitmapFactory.decodeFile(tempFile.absolutePath)
+                print("")
+            //}
+            //firebaseImageUris.add(uri)
+            //var test = storagePathRef.metadata
             print("")
         }
                 .addOnCompleteListener {
@@ -89,13 +94,13 @@ class PlacePhotomap : AppCompatActivity() {
     // todo put that in another class or something for both
     private fun createIncludedImageData(){
 
-        firebaseImageUris.forEach {
+        firebaseFiles.forEach {
 
-            val stream = contentResolver.openInputStream(it)
+            val stream = contentResolver.openInputStream(Uri.fromFile(it))
             val exif = ExifInterface(stream)
             val file = File(it.path)
 
-            val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(it))
+            val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(Uri.fromFile(it)))
 
             val selectedImage = ImageData(file, bitmap, exif)
             includedImages.add(selectedImage)
