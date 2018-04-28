@@ -19,10 +19,6 @@ class PlacesList : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_places_list)
         title = "Places"
-        //actionBar.setDisplayHomeAsUpEnabled(true)
-
-        //placesListView.setOnClickListener { parent, vi }
-
         setUpPlacesListView()
 
     }
@@ -35,8 +31,10 @@ class PlacesList : AppCompatActivity() {
         // TODO this is just manually added, could be a better way? Iterate through the sample files on firebase?
 
         availablePlaces.add("Sydney")
+        availablePlaces.add("New York")
+        availablePlaces.add("London")
 
-        // TODO do want to add image thumnail previews so will probably have to be a custom item later
+        // TODO do want to add image thumbnail previews so will probably have to be a custom item later
         val placeListAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, availablePlaces)
         placesListView.adapter = placeListAdapter
 
