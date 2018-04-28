@@ -13,7 +13,7 @@ class PlacesLinksHashmap{
     init {
         val sydneyLinks = listOf("PlacesTestData/Sydney/harbourbridge.jpg",
                 "PlacesTestData/Sydney/operahouse.jpg",
-                "PlacesTestData/Sydney/parliament.jpg")
+                "PlacesTestData/Sydney/parliament.jpeg")
 
         val newYorkLinks = listOf("") // Todo
         val londonLinks = listOf("")

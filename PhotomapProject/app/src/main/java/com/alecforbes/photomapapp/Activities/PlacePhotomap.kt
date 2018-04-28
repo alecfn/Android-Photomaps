@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.support.v7.app.AppCompatActivity
 import com.alecforbes.photomapapp.Model.ImageData
+import com.alecforbes.photomapapp.Model.PlacesLinksHashmap
 import com.alecforbes.photomapapp.R
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageMetadata
@@ -20,10 +21,11 @@ import java.io.File
 class PlacePhotomap : AppCompatActivity() {
 
     val firebaseStorage: FirebaseStorage = FirebaseStorage.getInstance()
-    //var imageBytes = ArrayList<ByteArray>()
+
     var firebaseFiles = ArrayList<File>()
-    var firebaseImageUris = ArrayList<Uri>()
     var includedImages = ArrayList<ImageData>()
+
+    val placesLinksHashmap = PlacesLinksHashmap()
 
     @RequiresApi(Build.VERSION_CODES.N)// TODO api level
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,29 +64,27 @@ class PlacePhotomap : AppCompatActivity() {
     private fun retrieveSelectedPlaceImages(placeName: String) {
         // TODO probably move to own class, needs to actually do everything based on selection
         // Handle cases to download the correct data
-        //val testFile = File.createTempFile("downloadtestimage", "jpg")
 
         // Because we need to access exif information, we have to download the image
         val storageRef = firebaseStorage.reference
-        val storagePathRef = storageRef.child("PlacesTestData/Sydney/harbourbridge.jpg")
-        //val httpsRef = firebaseStorage.getReferenceFromUrl("https://firebasestorage.googleapis.com/v0/b/photomaps-fit3027.appspot.com/o/PlacesTestData%2FSydney%2Fharbourbridge.jpg?alt=media&token=56479978-584f-4fc9-b58d-20928e1ffd73")
 
-        var tempFile = File.createTempFile("images", "jpg")
+        val selectedMapLinks = placesLinksHashmap.getPlaceLinks(placeName)
 
-        //storagePathRef.downloadUrl.addOnSuccessListener { uri ->
+        selectedMapLinks!!.forEach {
+            val storagePathRef = storageRef.child(it)
+            val tempFile = File.createTempFile("images", "jpg")
+
             storagePathRef.getFile(tempFile).addOnSuccessListener {
                 firebaseFiles.add(tempFile)
-                var test = BitmapFactory.decodeFile(tempFile.absolutePath)
+                //var test = BitmapFactory.decodeFile(tempFile.absolutePath)
                 print("")
-            //}
-            //firebaseImageUris.add(uri)
-            //var test = storagePathRef.metadata
-            print("")
+
+            }.addOnCompleteListener {
+                createIncludedImageData()
+                onFirebaseComplete()
+            }
+
         }
-                .addOnCompleteListener {
-                    createIncludedImageData()
-                    onFirebaseComplete()
-                }
 
     }
 
