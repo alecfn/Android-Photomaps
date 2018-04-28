@@ -1,7 +1,7 @@
-package com.alecforbes.photomaps.Activities
+package com.alecforbes.photomapapp.Activities
 
 import android.os.Bundle
-import com.alecforbes.photomaps.Model.ImageData
+import com.alecforbes.photomapapp.Model.ImageData
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback

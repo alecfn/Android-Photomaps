@@ -1,13 +1,13 @@
-package com.alecforbes.photomaps.Activities
+package com.alecforbes.photomapapp.Activities
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.alecforbes.photomaps.R
+import com.alecforbes.photomapapp.R
 
-class PlacesList : AppCompatActivity() {
+class PlacePhotomap : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_places_list)
+        setContentView(R.layout.activity_place_photomap)
     }
 }

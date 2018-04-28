@@ -1,10 +1,10 @@
-package com.alecforbes.photomaps.Activities
+package com.alecforbes.photomapapp.Activities
 
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Button
-import com.alecforbes.photomaps.R
+import com.alecforbes.photomapapp.R
 
 class PhotoSelection : AppCompatActivity() {
 

@@ -1,4 +1,4 @@
-package com.alecforbes.photomaps.Activities
+package com.alecforbes.photomapapp.Activities
 
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -8,8 +8,8 @@ import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.support.v7.app.AppCompatActivity
-import com.alecforbes.photomaps.Model.ImageData
-import com.alecforbes.photomaps.R
+import com.alecforbes.photomapapp.Model.ImageData
+import com.alecforbes.photomapapp.R
 import java.io.File
 
 class CustomPhotomap : AppCompatActivity() {
@@ -20,6 +20,7 @@ class CustomPhotomap : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        title = "Custom Photomap"
 
         val imagesIntent = intent
         getSelectedImageUris(imagesIntent)

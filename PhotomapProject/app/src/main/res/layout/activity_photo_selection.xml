@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.alecforbes.photomaps.Activities.PhotoSelection">
+    tools:context="com.alecforbes.photomapapp.Activities.PhotoSelection">
 
     <Button
         android:id="@+id/customSelectionButton"

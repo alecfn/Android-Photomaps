@@ -1,4 +1,4 @@
-package com.alecforbes.photomaps.Model
+package com.alecforbes.photomapapp.Model
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
