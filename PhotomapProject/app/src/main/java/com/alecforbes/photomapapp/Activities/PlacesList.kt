@@ -15,6 +15,9 @@ class PlacesList : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_places_list)
         title = "Places"
+        //actionBar.setDisplayHomeAsUpEnabled(true)
+
+        //placesListView.setOnClickListener { parent, vi }
 
         setUpPlacesItems()
     }
