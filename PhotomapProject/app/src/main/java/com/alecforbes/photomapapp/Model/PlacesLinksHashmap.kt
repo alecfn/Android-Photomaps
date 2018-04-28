@@ -15,12 +15,17 @@ class PlacesLinksHashmap{
                 "PlacesTestData/Sydney/operahouse.jpg",
                 "PlacesTestData/Sydney/parliament.jpeg")
 
-        val newYorkLinks = listOf("") // Todo
-        val londonLinks = listOf("")
+        val newYorkLinks = listOf("PlacesTestData/NewYork/brooklynbridge.jpg",
+                "PlacesTestData/NewYork/empirestate.jpg",
+                "PlacesTestData/NewYork/statueofliberty.jpg")
 
-        placesLinksHashmap.put("Sydney", sydneyLinks)
-        placesLinksHashmap.put("New York", newYorkLinks)
-        placesLinksHashmap.put("London", londonLinks)
+        val londonLinks = listOf("PlacesTestData/London/londoneye.jpg",
+                "PlacesTestData/London/parliament.jpg",
+                "PlacesTestData/London/toweroflondon.jpg")
+
+        placesLinksHashmap["Sydney"] = sydneyLinks
+        placesLinksHashmap["New York"] = newYorkLinks
+        placesLinksHashmap["London"] = londonLinks
     }
 
     fun getPlaceLinks(key: String): List<String>? {
