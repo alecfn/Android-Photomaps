@@ -8,7 +8,7 @@ package com.alecforbes.photomapapp.Model
 
 class PlacesLinksHashmap{
 
-    val placesLinksHashmap = HashMap<String, List<String>>()
+    private val placesLinksHashmap = HashMap<String, List<String>>()
 
     init {
         val sydneyLinks = listOf("PlacesTestData/Sydney/harbourbridge.jpg",

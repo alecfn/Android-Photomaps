@@ -6,9 +6,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLngBounds
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 
 /**
  * Created by Alec on 4/26/2018.
@@ -62,6 +60,9 @@ class PhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
      */
     fun addImagePreviews(){
 
+
+        val testLine = PolylineOptions() // fixme testing
+
         selectedImages = arguments.getParcelableArrayList<ImageData>("selectedImages")
 
         val markerOpts = MarkerOptions()
@@ -72,7 +73,11 @@ class PhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
 
             val marker = photomap.addMarker(markerOpts)
             markers.add(marker)
+
+            testLine.add(it.latLong)
         }
+
+        photomap.addPolyline(testLine)
 
     }
 
