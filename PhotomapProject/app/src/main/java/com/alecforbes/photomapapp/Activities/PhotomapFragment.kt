@@ -14,9 +14,9 @@ import com.google.android.gms.maps.model.MarkerOptions
  * Created by Alec on 4/26/2018.
  */
 
-class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
+class PhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
 
-    private lateinit var customPhotomap: GoogleMap
+    private lateinit var photomap: GoogleMap
     private var selectedImages = ArrayList<ImageData>()
 
     // TODO this should be custom views later
@@ -34,12 +34,12 @@ class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
     }
 
     override fun onMapReady(p0: GoogleMap?) {
-        customPhotomap = p0 as GoogleMap
+        photomap = p0 as GoogleMap
 
         addImagePreviews()
         setMapBounds()
 
-        //TODO Populate customPhotomap with custom views based on image data passed in
+        //TODO Populate photomap with custom views based on image data passed in
     }
 
 
@@ -48,8 +48,8 @@ class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
      * call the lifecycle functions like onMapReady, the fragment must be linked to a view for that.
      */
     companion object {
-        fun newInstance(images: ArrayList<ImageData>): CustomPhotomapFragment {
-            val f = CustomPhotomapFragment()
+        fun newInstance(images: ArrayList<ImageData>): PhotomapFragment {
+            val f = PhotomapFragment()
             val args = Bundle()
             args.putParcelableArrayList("selectedImages", images)
             f.arguments = args
@@ -58,7 +58,7 @@ class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
     }
 
     /**
-     * Add the images to the customPhotomap fragment as previews from the retrieved data
+     * Add the images to the photomap fragment as previews from the retrieved data
      */
     fun addImagePreviews(){
 
@@ -70,7 +70,7 @@ class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
 
             markerOpts.position(it.latLong)
 
-            val marker = customPhotomap.addMarker(markerOpts)
+            val marker = photomap.addMarker(markerOpts)
             markers.add(marker)
         }
 
@@ -94,7 +94,7 @@ class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
         val pad = 10 // Map pixel padding
         val cameraUpdate = CameraUpdateFactory.newLatLngBounds(mapBounds, pad)
 
-        customPhotomap.moveCamera(cameraUpdate)
+        photomap.moveCamera(cameraUpdate)
     }
 
 }

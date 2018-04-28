@@ -26,12 +26,12 @@ open class CustomPhotomap : AppCompatActivity() {
         val imagesIntent = intent
         getSelectedImageUris(imagesIntent)
 
-        setContentView(R.layout.acivity_photomap)
+        setContentView(R.layout.activity_photomap)
 
         // Create bundle to send images to fragment
         val images = Bundle()
         images.putParcelableArrayList("selectedImages", selectedImages)
-        val customMapFragment = CustomPhotomapFragment.newInstance(selectedImages)
+        val customMapFragment = PhotomapFragment.newInstance(selectedImages)
 
         // As the map is a fragment, initialise it in a view (but just the constraint as the map fills the view)
         supportFragmentManager.beginTransaction()
