@@ -12,7 +12,8 @@ import com.alecforbes.photomapapp.Model.ImageData
 import com.alecforbes.photomapapp.R
 import java.io.File
 
-class CustomPhotomap : AppCompatActivity() {
+// Open keyword means this class can be inherited from
+open class CustomPhotomap : AppCompatActivity() {
 
     var selectedImages = ArrayList<ImageData>()
     // Store the images as objects with all relevant info

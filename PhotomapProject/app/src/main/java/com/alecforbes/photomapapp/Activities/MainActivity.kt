@@ -19,16 +19,6 @@ class MainActivity : AppCompatActivity() {
 
         setupButtonListeners()
 
-        // TODO probably move to own class
-        val firebaseStorage: FirebaseStorage= FirebaseStorage.getInstance()
-
-        //val testFile = File.createTempFile("downloadtestimage", "jpg")
-        val storageRef = firebaseStorage.reference
-        val pathRef = storageRef.child("images/testfiledownload.jpg")
-        val httpsRef = firebaseStorage.getReferenceFromUrl("https://firebasestorage.googleapis.com/v0/b/photomaps-fit3027.appspot.com/o/PlacesTestData%2FSydney%2Fharbourbridge.jpg?alt=media&token=56479978-584f-4fc9-b58d-20928e1ffd73")
-
-        print("")
-
     }
 
     private fun setupButtonListeners(){
