@@ -12,14 +12,14 @@ import com.google.firebase.storage.FirebaseStorage
  * A place photomap inherits methods from the Custom photomap, as some functionality is not
  * available in a place photomap
  */
-class PlacePhotomap : CustomPhotomap() {
+class PlacePhotomap : AppCompatActivity() {
 
     val firebaseStorage: FirebaseStorage = FirebaseStorage.getInstance()
     var includedImages = ArrayList<ImageData>()
 
-    @TargetApi(Build.VERSION_CODES.N) // TODO api level
+    //@TargetApi(Build.VERSION_CODES.N) // TODO api level
     override fun onCreate(savedInstanceState: Bundle?) {
-        //super.onCreate(savedInstanceState) // FIXME should either call super or not inherit here
+        super.onCreate(savedInstanceState) // FIXME should either call super or not inherit here
         setContentView(R.layout.activity_place_photomap)
 
 

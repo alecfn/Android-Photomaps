@@ -12,7 +12,7 @@ import com.alecforbes.photomapapp.Model.ImageData
 import com.alecforbes.photomapapp.R
 import java.io.File
 
-// Open keyword means this class can be inherited from
+// FIXME Open keyword means this class can be inherited from, needed?
 open class CustomPhotomap : AppCompatActivity() {
 
     var selectedImages = ArrayList<ImageData>()
