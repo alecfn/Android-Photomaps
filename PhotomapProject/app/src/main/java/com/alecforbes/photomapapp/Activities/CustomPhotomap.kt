@@ -1,6 +1,7 @@
 package com.alecforbes.photomapapp.Activities
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.ExifInterface
 import android.net.Uri

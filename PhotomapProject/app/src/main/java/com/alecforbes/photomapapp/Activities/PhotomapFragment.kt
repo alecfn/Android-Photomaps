@@ -1,5 +1,6 @@
 package com.alecforbes.photomapapp.Activities
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import com.alecforbes.photomapapp.Model.ImageData
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -70,6 +71,9 @@ class PhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
         selectedImages.forEach {
 
             markerOpts.position(it.latLong)
+            val thumbnail = BitmapFactory.decodeByteArray(it.getImageThumbnail(), 0, it.getImageThumbnail().size)
+            val thumbnailDesc = BitmapDescriptorFactory.fromBitmap(thumbnail)
+            markerOpts.icon(thumbnailDesc)
 
             val marker = photomap.addMarker(markerOpts)
             markers.add(marker)

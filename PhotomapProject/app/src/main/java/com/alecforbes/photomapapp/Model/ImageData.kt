@@ -7,6 +7,7 @@ import android.os.Parcelable
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.parcel.Parcelize
 import kotlinx.android.parcel.RawValue
+import java.io.ByteArrayOutputStream
 import java.io.File
 
 /**
@@ -20,13 +21,13 @@ data class ImageData(private val file: File,
                      private val exifInterface: @RawValue ExifInterface,
                      private var latitude: Float=0F,
                      private var longitude: Float=0F,
-                     var latLong: LatLng= LatLng(0.0, 0.0)): Parcelable {
+                     var latLong: LatLng= LatLng(0.0, 0.0),
+                     private var thumbnailData: ByteArray= byteArrayOf()): Parcelable {
     // TODO time taken probably isnt a string
 
     // TODO any more exifInterface
 
     private var timeTaken = ""
-    private var thumbnailBitmap = ""
 
     init {
         setAllImageData()
@@ -35,6 +36,7 @@ data class ImageData(private val file: File,
 
     fun setAllImageData(){
         setLatLong()
+        setImageThumbnail()
     }
 
     fun setLatLong(){
@@ -61,8 +63,23 @@ data class ImageData(private val file: File,
         return bitmap
     }
 
-    fun getImageThumbnail(){
+    fun setImageThumbnail(){
 
+        try {
+
+            val THUMBNAIL_SIZE = 128
+            val thumbnail = Bitmap.createScaledBitmap(bitmap, THUMBNAIL_SIZE, THUMBNAIL_SIZE, false)
+
+            val outputStream = ByteArrayOutputStream()
+            thumbnail.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+            thumbnailData = outputStream.toByteArray()
+        } catch (e: Exception){
+
+        }
+    }
+
+    fun getImageThumbnail(): ByteArray {
+        return thumbnailData
     }
 
     fun getTimeTaken(){
