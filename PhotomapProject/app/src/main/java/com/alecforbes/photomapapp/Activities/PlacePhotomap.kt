@@ -1,11 +1,16 @@
 package com.alecforbes.photomapapp.Activities
 
+import android.graphics.BitmapFactory
+import android.media.ExifInterface
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.support.annotation.RequiresApi
 import android.support.v7.app.AppCompatActivity
 import com.alecforbes.photomapapp.Model.ImageData
 import com.alecforbes.photomapapp.R
 import com.google.firebase.storage.FirebaseStorage
+import java.io.File
 
 /**
  * A place photomap inherits methods from the Custom photomap, as some functionality is not
@@ -14,11 +19,11 @@ import com.google.firebase.storage.FirebaseStorage
 class PlacePhotomap : AppCompatActivity() {
 
     val firebaseStorage: FirebaseStorage = FirebaseStorage.getInstance()
-    var imageBytes = ArrayList<ByteArray>()
+    //var imageBytes = ArrayList<ByteArray>()
     var firebaseImageUris = ArrayList<Uri>()
     var includedImages = ArrayList<ImageData>()
 
-    //@TargetApi(Build.VERSION_CODES.N) // TODO api level
+    @RequiresApi(Build.VERSION_CODES.N)// TODO api level
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState) // FIXME should either call super or not inherit here
         setContentView(R.layout.activity_place_photomap)
@@ -31,7 +36,14 @@ class PlacePhotomap : AppCompatActivity() {
 
         // The URIs for images in a place photomap come from firebase downloads, not an intent
 
+        //createIncludedImageData()
 
+
+
+
+    }
+
+    private fun onFirebaseComplete(){
 
         val customMapFragment = PhotomapFragment.newInstance(includedImages)
 
@@ -39,24 +51,54 @@ class PlacePhotomap : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
                 .add(R.id.placePhotomapConstraint, customMapFragment)
                 .commit()
-
     }
 
     /**
      * Get the images from firebase for the selected location and return the array of URIs
      */
-    private fun retrieveSelectedPlaceImages(placeName: String){
-        // TODO probably move to own class
+    @RequiresApi(Build.VERSION_CODES.N) // todo api level
+    private fun retrieveSelectedPlaceImages(placeName: String) {
+        // TODO probably move to own class, needs to actually do everything based on selection
         // Handle cases to download the correct data
         //val testFile = File.createTempFile("downloadtestimage", "jpg")
         val storageRef = firebaseStorage.reference
         val storagePathRef = storageRef.child("PlacesTestData/Sydney/harbourbridge.jpg")
         //val httpsRef = firebaseStorage.getReferenceFromUrl("https://firebasestorage.googleapis.com/v0/b/photomaps-fit3027.appspot.com/o/PlacesTestData%2FSydney%2Fharbourbridge.jpg?alt=media&token=56479978-584f-4fc9-b58d-20928e1ffd73")
 
-        storagePathRef.downloadUrl.addOnSuccessListener {
-            uri ->
+        storagePathRef.downloadUrl.addOnSuccessListener { uri ->
             firebaseImageUris.add(uri)
         }
+                .addOnCompleteListener {
+                    createIncludedImageData()
+                    onFirebaseComplete()
+                }
+
+    }
+
+    /**
+     * Place map Image data objects need to be created differently from a CustomPhotomap, as they
+     * are not selected via intents
+     */
+    @RequiresApi(Build.VERSION_CODES.N) // Todo api levels
+    // FIXME still think this method is too similar to the one in CustomPhotomap, could be good to
+    // todo put that in another class or something for both
+    private fun createIncludedImageData(){
+
+        firebaseImageUris.forEach {
+
+            val stream = contentResolver.openInputStream(it)
+            val exif = ExifInterface(stream)
+            val file = File(it.path)
+
+            val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(it))
+
+            val selectedImage = ImageData(file, bitmap, exif)
+            includedImages.add(selectedImage)
+        }
+        print("")
+    }
+
+
 
         // TODO  add a progress bar
         // TODO 1mb limit at the moment, increase if needed
@@ -73,6 +115,4 @@ class PlacePhotomap : AppCompatActivity() {
 //                }
 //        print("")
 
-
-    }
 }
