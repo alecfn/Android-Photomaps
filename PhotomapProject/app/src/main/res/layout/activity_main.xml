@@ -2,24 +2,38 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainConstraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.alecforbes.photomapapp.Activities.MainActivity">
 
     <ScrollView
+        android:id="@+id/mainScrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:id="@+id/mainLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <ImageButton
                 android:id="@+id/createPhotomapButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:srcCompat="@mipmap/ic_launcher" />
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                android:padding="0dp"
+                app:srcCompat="@mipmap/main_placeholder" />
 
             <TextView
                 android:id="@+id/createPhotomapText"
@@ -31,7 +45,9 @@
                 android:id="@+id/placesPhotomapButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                app:srcCompat="@mipmap/newyorkmain" />
 
             <TextView
                 android:id="@+id/placesText"
@@ -43,7 +59,9 @@
                 android:id="@+id/savedPhotomapsButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:srcCompat="@mipmap/ic_launcher" />
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                app:srcCompat="@mipmap/main_placeholder" />
 
             <TextView
                 android:id="@+id/savedPhotomapsText"

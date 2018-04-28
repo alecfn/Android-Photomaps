@@ -16,7 +16,7 @@ import java.io.File
 @SuppressLint("ParcelCreator") // Known unnecessary warning with Kotlin when using Parcelize
 @Parcelize
 data class ImageData(private val file: File,
-                     private var bitmap: Bitmap ,
+                     private var bitmap: Bitmap,
                      private val exifInterface: @RawValue ExifInterface,
                      private var latitude: Float=0F,
                      private var longitude: Float=0F,

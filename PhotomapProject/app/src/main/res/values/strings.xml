@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Photomaps</string>
     <string name="title_activity_custom_photomap">CustomPhotomap</string>
-    <string name="create_a_custom_photomap">Create a custom photomap</string>
-    <string name="places_photomaps">Places photomaps</string>
-    <string name="saved_photomaps">Saved photomaps</string>
+    <string name="create_a_custom_photomap">Create a custom Photomap, made of images you choose. These can be saved and shared with friends.</string>
+    <string name="places_photomaps">See Photomaps in action. Select a Photomap showing well known landmarks in cities like New York, Paris, London and Sydney.</string>
+    <string name="saved_photomaps">View previously saved Photomaps you have created.</string>
 </resources>
