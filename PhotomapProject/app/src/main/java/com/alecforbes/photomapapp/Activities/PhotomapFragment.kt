@@ -94,6 +94,7 @@ class PhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
         val pad = 10 // Map pixel padding
         val cameraUpdate = CameraUpdateFactory.newLatLngBounds(mapBounds, pad)
 
+
         photomap.moveCamera(cameraUpdate)
     }
 

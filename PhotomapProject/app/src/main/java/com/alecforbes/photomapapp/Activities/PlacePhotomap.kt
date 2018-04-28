@@ -42,6 +42,9 @@ class PlacePhotomap : AppCompatActivity() {
 
     }
 
+    /**
+     * Only once firebase has successfully retrieved images should the map fragment be created
+     */
     private fun onFirebaseComplete(){
 
         val customMapFragment = PhotomapFragment.newInstance(includedImages)
