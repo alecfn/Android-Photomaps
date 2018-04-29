@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.support.v7.app.AppCompatActivity
+import android.view.Window
 import com.alecforbes.photomapapp.Model.ImageData
 import com.alecforbes.photomapapp.Model.PlacesLinksHashmap
 import com.alecforbes.photomapapp.R
@@ -31,6 +32,8 @@ class PlacePhotomap : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState) // FIXME should either call super or not inherit here
         setContentView(R.layout.activity_place_photomap)
+
+
 
         val placesIntent = intent
         val selectedLoc = placesIntent.getStringExtra("SelectedLocation")

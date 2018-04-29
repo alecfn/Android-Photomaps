@@ -67,7 +67,7 @@ data class ImageData(private val file: File,
 
         try {
 
-            val THUMBNAIL_SIZE = 128
+            val THUMBNAIL_SIZE = 180 // Controls the size of displayed thumbnails on map fragments
             val thumbnail = Bitmap.createScaledBitmap(bitmap, THUMBNAIL_SIZE, THUMBNAIL_SIZE, false)
 
             val outputStream = ByteArrayOutputStream()

@@ -13,12 +13,13 @@ import com.google.android.gms.maps.model.*
  * Created by Alec on 4/26/2018.
  */
 
+// FIXME this should probably be a super class for other fragments to inherit from
 class PhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
 
     private lateinit var photomap: GoogleMap
     private var selectedImages = ArrayList<ImageData>()
 
-    // TODO this should be custom views later
+    // TODO this could be custom views later
     private var markers = ArrayList<Marker>()
 
 
