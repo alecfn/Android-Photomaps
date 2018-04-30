@@ -31,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:scaleType="centerInside"
+                android:scaleType="fitCenter"
                 android:padding="0dp"
                 app:srcCompat="@mipmap/main_placeholder" />
 
@@ -46,7 +46,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:scaleType="centerInside"
+                android:scaleType="fitCenter"
+                android:padding="0dp"
                 app:srcCompat="@mipmap/newyorkmain" />
 
             <TextView
@@ -60,7 +61,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:scaleType="centerInside"
+                android:scaleType="fitCenter"
+                android:padding="0dp"
                 app:srcCompat="@mipmap/main_placeholder" />
 
             <TextView
