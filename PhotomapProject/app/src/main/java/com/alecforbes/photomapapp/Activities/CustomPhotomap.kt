@@ -66,7 +66,6 @@ open class CustomPhotomap : AppCompatActivity() {
             val selectedImage = ImageData(file, bitmap, exif)
             selectedImages.add(selectedImage)
         }
-        print("")
 
     }
 
