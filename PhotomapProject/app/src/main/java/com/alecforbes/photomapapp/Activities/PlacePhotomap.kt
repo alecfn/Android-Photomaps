@@ -20,30 +20,18 @@ import java.io.File
  */
 class PlacePhotomap : AppCompatActivity() {
 
-    val firebaseStorage: FirebaseStorage = FirebaseStorage.getInstance()
-
-    var firebaseFiles = ArrayList<File>()
-    //var includedImages = ArrayList<ImageData>()
-
-    val placesLinksHashmap = PlacesLinksHashmap()
-
     @RequiresApi(Build.VERSION_CODES.N)// TODO api level
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_place_photomap)
 
-
-
         val placesIntent = intent
         val selectedLoc = placesIntent.getStringExtra("SelectedLocation")
         title = "$selectedLoc Photomap"
 
+        // The URIs for images in a place photomap come from firebase downloads, not an intent
         val firebaseController = FirebaseController(contentResolver, this)
         firebaseController.retrieveSelectedPlaceImages(selectedLoc)
-
-        // The URIs for images in a place photomap come from firebase downloads, not an intent
-
-        //createIncludedImageData()
 
     }
 
@@ -60,75 +48,5 @@ class PlacePhotomap : AppCompatActivity() {
                 .commit()
     }
 
-//    /**
-//     * Get the images from firebase for the selected location and return the array of URIs
-//     */
-//    @RequiresApi(Build.VERSION_CODES.N) // todo api level
-//    private fun retrieveSelectedPlaceImages(placeName: String) {
-//        // TODO probably move to own class, needs to actually do everything based on selection
-//        // Handle cases to download the correct data
-//
-//        // Because we need to access exif information, we have to download the image
-//        val storageRef = firebaseStorage.reference
-//
-//        val selectedMapLinks = placesLinksHashmap.getPlaceLinks(placeName)
-//
-//        selectedMapLinks!!.forEach {
-//            val storagePathRef = storageRef.child(it)
-//            val tempFile = File.createTempFile("images", "jpg")
-//
-//            storagePathRef.getFile(tempFile).addOnSuccessListener {
-//                firebaseFiles.add(tempFile)
-//                //var test = BitmapFactory.decodeFile(tempFile.absolutePath)
-//                print("")
-//
-//            }.addOnCompleteListener {
-//                createIncludedImageData()
-//                onFirebaseComplete()
-//            }
-//
-//        }
-//
-//    }
-
-//    /**
-//     * Place map Image data objects need to be created differently from a CustomPhotomap, as they
-//     * are not selected via intents
-//     */
-//    @RequiresApi(Build.VERSION_CODES.N) // Todo api levels
-//    // FIXME still think this method is too similar to the one in CustomPhotomap, could be good to
-//    // todo put that in another class or something for both
-//    private fun createIncludedImageData(){
-//
-//        firebaseFiles.forEach {
-//
-//            val stream = contentResolver.openInputStream(Uri.fromFile(it))
-//            val exif = ExifInterface(stream)
-//            val file = File(it.path)
-//
-//            val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(Uri.fromFile(it)))
-//
-//            val selectedImage = ImageData(file, bitmap, exif)
-//            includedImages.add(selectedImage)
-//        }
-//        print("")
-//    }
-
-
-
-        // TODO  add a progress bar
-        // TODO 1mb limit at the moment, increase if needed
-//        val MAX_SIZE = (1024 * 1024).toLong()
-//
-//        // Use get bytes as the images will only be stored in memory, rather than on the device
-//        httpsRef.getBytes(MAX_SIZE)
-//                .addOnSuccessListener { bytes ->
-//                    imageBytes.add(bytes)
-//                    print("")
-//                }
-//                .addOnFailureListener { exception ->
-//                    //TODO
-//                }
-//        print("")
 
 }

@@ -16,16 +16,19 @@ import java.io.File
  * Created by Alec on 4/28/2018.
  */
 
-class FirebaseController(private val content: ContentResolver,
+/**
+ * This class communicates with the firebase db and downloads images for an associated PlaceMap
+ * object
+ */
+class FirebaseController(content: ContentResolver,
                          private val associatedPlaceMap: PlacePhotomap){
 
-    val firebaseStorage: FirebaseStorage = FirebaseStorage.getInstance()
+    private val firebaseStorage: FirebaseStorage = FirebaseStorage.getInstance()
+    private var firebaseFiles = ArrayList<File>()
+    private var includedImages = ArrayList<ImageData>()
 
-    var firebaseFiles = ArrayList<File>()
-    var includedImages = ArrayList<ImageData>()
-
-    val placesLinksHashmap = PlacesLinksHashmap()
-    val imageDataCreator = ImageDataCreator(content, firebaseFiles, includedImages)
+    private val placesLinksHashmap = PlacesLinksHashmap()
+    private val imageDataCreator = ImageDataCreator(content, firebaseFiles, includedImages)
 
     /**
      * Get the images from firebase for the selected location and return the array of URIs
@@ -47,12 +50,10 @@ class FirebaseController(private val content: ContentResolver,
             storagePathRef.getFile(tempFile).addOnSuccessListener {
                 firebaseFiles.add(tempFile)
 
-                print("")
 
             }.addOnCompleteListener {
+                // Update the map as every firebase operation completes, and updated the map
                 includedImages = imageDataCreator.createIncludedImageData()
-
-                //returnImages()
                 associatedPlaceMap.onFirebaseComplete(includedImages)
             }
 
