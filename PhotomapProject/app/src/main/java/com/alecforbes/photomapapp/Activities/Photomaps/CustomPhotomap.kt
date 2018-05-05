@@ -11,6 +11,8 @@ import android.support.v7.app.AppCompatActivity
 import com.alecforbes.photomapapp.Activities.MapFragments.CustomPhotomapFragment
 import com.alecforbes.photomapapp.Model.ImageData
 import com.alecforbes.photomapapp.R
+import kotlinx.android.synthetic.main.activity_photomap.*
+import kotlinx.android.synthetic.main.timeline_scroll.*
 import java.io.File
 
 // FIXME Open keyword means this class can be inherited from, needed?
@@ -38,6 +40,12 @@ open class CustomPhotomap : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
                 .add(R.id.photomapConstraint, customMapFragment)
                 .commit()
+
+
+        //val test = Intent(this, TimelineScroll::class.java)
+        //startActivity(test)
+
+        //test.bringToFront()
 
     }
 

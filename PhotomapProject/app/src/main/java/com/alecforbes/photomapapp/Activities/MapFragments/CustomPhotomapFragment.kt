@@ -40,6 +40,8 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
         photomap = p0 as GoogleMap
 
         addImagePreviews()
+
+        // fixme bug redrawing when you go back to the select screen and make a new one
         setMapBounds()
 
         //TODO Populate photomap with custom views based on image data passed in

@@ -12,9 +12,7 @@ import java.io.File
 
 /**
  * Created by Alec on 4/28/2018.
- */
-
-/**
+ *
  * This class communicates with the firebase db and downloads images for an associated PlaceMap
  * object
  */

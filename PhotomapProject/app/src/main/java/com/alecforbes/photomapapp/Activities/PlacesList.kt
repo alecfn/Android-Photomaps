@@ -13,7 +13,6 @@ import kotlinx.android.synthetic.main.activity_places_list.*
 class PlacesList : AppCompatActivity() {
 
     val availablePlaces = ArrayList<String>()
-    // TODO probably move to own class
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
