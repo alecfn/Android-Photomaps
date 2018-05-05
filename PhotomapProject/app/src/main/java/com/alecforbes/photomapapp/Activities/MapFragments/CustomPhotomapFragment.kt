@@ -1,4 +1,4 @@
-package com.alecforbes.photomapapp.Activities
+package com.alecforbes.photomapapp.Activities.MapFragments
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -11,10 +11,13 @@ import com.google.android.gms.maps.model.*
 
 /**
  * Created by Alec on 4/26/2018.
+ * The base class from which individual map fragments inherit from.
+ *
+ * The 'open' modifier defines the class as not being final and can be inherited from (by default
+ * classes are final in Kotlin)
  */
 
-// FIXME this should probably be a super class for other fragments to inherit from
-class PhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
+open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
 
     private lateinit var photomap: GoogleMap
     private var selectedImages = ArrayList<ImageData>()
@@ -48,8 +51,8 @@ class PhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
      * call the lifecycle functions like onMapReady, the fragment must be linked to a view for that.
      */
     companion object {
-        fun newInstance(images: ArrayList<ImageData>): PhotomapFragment {
-            val f = PhotomapFragment()
+        fun newInstance(images: ArrayList<ImageData>): CustomPhotomapFragment {
+            val f = CustomPhotomapFragment()
             val args = Bundle()
             args.putParcelableArrayList("selectedImages", images)
             f.arguments = args

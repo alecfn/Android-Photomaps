@@ -1,4 +1,4 @@
-package com.alecforbes.photomapapp.Controllers
+package com.alecforbes.photomapapp.Model
 
 import android.content.ContentResolver
 import android.graphics.BitmapFactory
@@ -6,9 +6,7 @@ import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
 import android.support.annotation.RequiresApi
-import com.alecforbes.photomapapp.Model.ImageData
 import java.io.File
-import java.nio.file.Files
 
 /**
  * Created by Alec on 5/5/2018.

@@ -1,7 +1,6 @@
-package com.alecforbes.photomapapp.Activities
+package com.alecforbes.photomapapp.Activities.Photomaps
 
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.ExifInterface
 import android.net.Uri
@@ -9,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.support.v7.app.AppCompatActivity
+import com.alecforbes.photomapapp.Activities.MapFragments.CustomPhotomapFragment
 import com.alecforbes.photomapapp.Model.ImageData
 import com.alecforbes.photomapapp.R
 import java.io.File
@@ -32,7 +32,7 @@ open class CustomPhotomap : AppCompatActivity() {
         // Create bundle to send images to fragment
         val images = Bundle()
         images.putParcelableArrayList("selectedImages", selectedImages)
-        val customMapFragment = PhotomapFragment.newInstance(selectedImages)
+        val customMapFragment = CustomPhotomapFragment.newInstance(selectedImages)
 
         // As the map is a fragment, initialise it in a view (but just the constraint as the map fills the view)
         supportFragmentManager.beginTransaction()

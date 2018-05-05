@@ -1,18 +1,13 @@
-package com.alecforbes.photomapapp.Activities
+package com.alecforbes.photomapapp.Activities.Photomaps
 
-import android.graphics.BitmapFactory
-import android.media.ExifInterface
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.support.v7.app.AppCompatActivity
+import com.alecforbes.photomapapp.Activities.MapFragments.CustomPhotomapFragment
 import com.alecforbes.photomapapp.Controllers.FirebaseController
 import com.alecforbes.photomapapp.Model.ImageData
-import com.alecforbes.photomapapp.Model.PlacesLinksHashmap
 import com.alecforbes.photomapapp.R
-import com.google.firebase.storage.FirebaseStorage
-import java.io.File
 
 /**
  * A place photomap inherits methods from the Custom photomap, as some functionality is not
@@ -36,11 +31,12 @@ class PlacePhotomap : AppCompatActivity() {
     }
 
     /**
-     * Only once firebase has successfully retrieved images should the map fragment be created
+     * Only once firebase has successfully retrieved images should the map fragment be created.
+     * This is called from the FirebaseController class.
      */
     fun onFirebaseComplete(includedImages: ArrayList<ImageData>){
 
-        val customMapFragment = PhotomapFragment.newInstance(includedImages)
+        val customMapFragment = CustomPhotomapFragment.newInstance(includedImages)
 
         // As the map is a fragment, initialise it in a view (but just the constraint as the map fills the view)
         supportFragmentManager.beginTransaction()

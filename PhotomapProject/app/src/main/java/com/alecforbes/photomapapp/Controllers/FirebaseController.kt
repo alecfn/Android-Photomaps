@@ -1,13 +1,11 @@
 package com.alecforbes.photomapapp.Controllers
 
 import android.content.ContentResolver
-import android.graphics.BitmapFactory
-import android.media.ExifInterface
-import android.net.Uri
 import android.os.Build
 import android.support.annotation.RequiresApi
-import com.alecforbes.photomapapp.Activities.PlacePhotomap
+import com.alecforbes.photomapapp.Activities.Photomaps.PlacePhotomap
 import com.alecforbes.photomapapp.Model.ImageData
+import com.alecforbes.photomapapp.Model.ImageDataCreator
 import com.alecforbes.photomapapp.Model.PlacesLinksHashmap
 import com.google.firebase.storage.FirebaseStorage
 import java.io.File
