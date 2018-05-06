@@ -9,6 +9,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        // FIXME this layout should be a proper card view
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         title = "Photomaps"

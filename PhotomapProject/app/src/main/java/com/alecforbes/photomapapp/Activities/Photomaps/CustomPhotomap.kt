@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.support.v7.app.AppCompatActivity
+import android.view.LayoutInflater
 import com.alecforbes.photomapapp.Activities.MapFragments.CustomPhotomapFragment
 import com.alecforbes.photomapapp.Model.ImageData
 import com.alecforbes.photomapapp.R
@@ -21,15 +22,20 @@ open class CustomPhotomap : AppCompatActivity() {
     var selectedImages = ArrayList<ImageData>()
     // Store the images as objects with all relevant info
 
+
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         title = "Custom Photomap"
 
+        //val timelineScroll = LayoutInflater.from(applicationContext).inflate(R.layout.timeline_scroll, parent, false)
+
         val imagesIntent = intent
         getSelectedImageUris(imagesIntent)
 
         setContentView(R.layout.activity_photomap)
+
+        setupOptionsButton()
 
         // Create bundle to send images to fragment
         val images = Bundle()
@@ -42,11 +48,19 @@ open class CustomPhotomap : AppCompatActivity() {
                 .commit()
 
 
+        print("")
         //val test = Intent(this, TimelineScroll::class.java)
         //startActivity(test)
 
         //test.bringToFront()
 
+    }
+
+    /**
+     * Set up the Floating Action Button (FAB) for interactions with the map
+     */
+    private fun setupOptionsButton(){
+       // val fab =
     }
 
 
