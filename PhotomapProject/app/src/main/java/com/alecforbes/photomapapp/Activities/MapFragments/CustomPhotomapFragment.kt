@@ -113,4 +113,6 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
         photomap.moveCamera(cameraUpdate)
     }
 
+
+
 }

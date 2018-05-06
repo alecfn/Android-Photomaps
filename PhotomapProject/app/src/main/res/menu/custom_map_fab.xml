@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/main_photomap_option"
+        android:icon="@drawable/ic_perm_media"
+        android:title=""
+        />
+
+    <item
+        android:id="@+id/add_files_option"
+        android:icon="@drawable/ic_perm_media"
+        android:title=""
+        />
+
+</menu>

@@ -12,12 +12,13 @@ import android.view.LayoutInflater
 import com.alecforbes.photomapapp.Activities.MapFragments.CustomPhotomapFragment
 import com.alecforbes.photomapapp.Model.ImageData
 import com.alecforbes.photomapapp.R
+import com.dekoservidoni.omfm.OneMoreFabMenu
 import kotlinx.android.synthetic.main.activity_photomap.*
 import kotlinx.android.synthetic.main.timeline_scroll.*
 import java.io.File
 
 // FIXME Open keyword means this class can be inherited from, needed?
-open class CustomPhotomap : AppCompatActivity() {
+open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
 
     var selectedImages = ArrayList<ImageData>()
     // Store the images as objects with all relevant info
@@ -48,6 +49,8 @@ open class CustomPhotomap : AppCompatActivity() {
                 .commit()
 
 
+
+
         print("")
         //val test = Intent(this, TimelineScroll::class.java)
         //startActivity(test)
@@ -56,11 +59,27 @@ open class CustomPhotomap : AppCompatActivity() {
 
     }
 
+    override fun onRefres
+
+    override fun onOptionClick(optionId: Int?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        var test = ""
+
+        when(optionId) {
+            R.id.main_photomap_option -> test = "Clicky"
+            R.id.add_files_option -> test = "nyes"
+        }
+    }
+
     /**
      * Set up the Floating Action Button (FAB) for interactions with the map
      */
     private fun setupOptionsButton(){
-       // val fab =
+       //val optionsFab = photomapActionButton
+       // photomapActionButton.setOnClickListener {
+            // Bring up menu of options
+
+       // }
     }
 
 
