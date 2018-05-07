@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/photomapConstraint"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".Activities.Photomaps.CustomPhotomap">
 
     <include
-        android:id="@+id/include"
+        android:id="@+id/customTimeline"
         layout="@layout/timeline_scroll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <fragment
+        xmlns:map="http://schemas.android.com/apk/res-auto"
         android:id="@+id/photomapFragment"
         android:name="com.google.android.gms.maps.MapFragment"
         android:layout_width="wrap_content"
@@ -20,7 +22,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent"
+        class="com.google.android.gms.maps.SupportMapFragment" />
 
     <!-- Uses the following library https://github.com/DeKoServidoni/OMFM -->
     <com.dekoservidoni.omfm.OneMoreFabMenu
@@ -29,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         app:content_options="@menu/custom_map_fab"
-
+        android:elevation="6dp"
 
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
@@ -39,6 +42,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_input_add" />
 
-    </fragment>
-
-</android.support.constraint.ConstraintLayout>
+</FrameLayout>

@@ -15,7 +15,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import kotlinx.android.synthetic.main.activity_photo_selection.*
 import kotlinx.android.synthetic.main.activity_photomap.*
-import kotlinx.android.synthetic.main.activity_photomap.view.*
+
 
 /**
  * Created by Alec on 4/26/2018.
@@ -37,30 +37,43 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
     override fun onCreate(p0: Bundle?) {
         super.onCreate(p0)
 
+        //this.activity.photomapActionButton.bringToFront()
+        //photomapActionButton.bringToFront()
 
 
 
     }
 
-    override fun onCreateView(p0: LayoutInflater, p1: ViewGroup?, p2: Bundle?): View? {
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        val test = p0.inflate(R.layout.activity_photomap, p1, false)
-        test.photomapActionButton.bringToFront()
+        //this.activity.photomapActionButton.bringToFront()
+        //photomapActionButton
+        //photomapActionButton.bringToFront()
+    }
+
+    override fun onCreateView(p0: LayoutInflater?, p1: ViewGroup?, p2: Bundle?): View? {
+        //val test = layoutInflater.inflate(R.layout.activity_photomap, p1, false)
+        //customSelectionButton.bringToFront()
+
         return super.onCreateView(p0, p1, p2)
-        // fixme https://stackoverflow.com/questions/17023376/get-view-of-fragment-from-fragmentactivity?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
-
     }
 
     override fun onResume() {
         super.onResume()
+
+        //this.activity.findViewById<OneMoreFabMenu>(R.id.photomapActionButton).bringToFront()
 
     }
 
     override fun onActivityCreated(p0: Bundle?) {
         super.onActivityCreated(p0)
         getMapAsync(this)
+        //this.activity.photomapActionButton.bringToFront()
+        //customSelectionButton.bringToFront()
        // photomapActionButton.bringToFront()
     }
+
 
     override fun onMapReady(p0: GoogleMap?) {
         photomap = p0 as GoogleMap
@@ -69,6 +82,8 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
 
         // fixme bug redrawing when you go back to the select screen and make a new one
         setMapBounds()
+        //customSelectionButton.bringToFront()
+        //this.activity.photomapActionButton.bringToFront()
 
 
         //TODO Populate photomap with custom views based on image data passed in
@@ -139,6 +154,7 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
 
 
         photomap.moveCamera(cameraUpdate)
+       // this.activity.photomapActionButton.bringToFront()
     }
 
 

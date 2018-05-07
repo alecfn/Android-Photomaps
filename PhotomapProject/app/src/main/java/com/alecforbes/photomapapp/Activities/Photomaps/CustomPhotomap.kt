@@ -48,6 +48,9 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
                 .add(R.id.photomapConstraint, customMapFragment)
                 .commit()
 
+        //timelineConstraintLayout.bringToFront()
+        photomapActionButton.bringToFront()
+        //photomapFragment.elevation(6)
 
 
 
@@ -57,6 +60,12 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
 
         //test.bringToFront()
 
+    }
+
+    override fun onResumeFragments() {
+        super.onResumeFragments()
+        photomapActionButton.bringToFront()
+        customTimeline.bringToFront()
     }
 
     //override fun onRefres
