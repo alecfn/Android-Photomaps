@@ -37,9 +37,6 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
     override fun onCreate(p0: Bundle?) {
         super.onCreate(p0)
 
-        //this.activity.photomapActionButton.bringToFront()
-        //photomapActionButton.bringToFront()
-
 
 
     }
@@ -47,14 +44,9 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //this.activity.photomapActionButton.bringToFront()
-        //photomapActionButton
-        //photomapActionButton.bringToFront()
     }
 
     override fun onCreateView(p0: LayoutInflater?, p1: ViewGroup?, p2: Bundle?): View? {
-        //val test = layoutInflater.inflate(R.layout.activity_photomap, p1, false)
-        //customSelectionButton.bringToFront()
 
         return super.onCreateView(p0, p1, p2)
     }
@@ -62,16 +54,13 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
     override fun onResume() {
         super.onResume()
 
-        //this.activity.findViewById<OneMoreFabMenu>(R.id.photomapActionButton).bringToFront()
 
     }
 
     override fun onActivityCreated(p0: Bundle?) {
         super.onActivityCreated(p0)
         getMapAsync(this)
-        //this.activity.photomapActionButton.bringToFront()
-        //customSelectionButton.bringToFront()
-       // photomapActionButton.bringToFront()
+
     }
 
 
@@ -82,8 +71,6 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
 
         // fixme bug redrawing when you go back to the select screen and make a new one
         setMapBounds()
-        //customSelectionButton.bringToFront()
-        //this.activity.photomapActionButton.bringToFront()
 
 
         //TODO Populate photomap with custom views based on image data passed in
@@ -154,7 +141,7 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
 
 
         photomap.moveCamera(cameraUpdate)
-       // this.activity.photomapActionButton.bringToFront()
+
     }
 
 

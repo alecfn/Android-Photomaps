@@ -48,22 +48,12 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
                 .add(R.id.photomapConstraint, customMapFragment)
                 .commit()
 
-        //timelineConstraintLayout.bringToFront()
-        photomapActionButton.bringToFront()
-        //photomapFragment.elevation(6)
-
-
-
-        print("")
-        //val test = Intent(this, TimelineScroll::class.java)
-        //startActivity(test)
-
-        //test.bringToFront()
-
     }
 
     override fun onResumeFragments() {
         super.onResumeFragments()
+
+        // Call bring to front on the other elements or the map will draw on top and hide them
         photomapActionButton.bringToFront()
         customTimeline.bringToFront()
     }
