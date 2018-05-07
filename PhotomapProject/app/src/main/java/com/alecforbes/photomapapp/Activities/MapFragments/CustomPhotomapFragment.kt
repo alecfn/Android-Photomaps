@@ -2,12 +2,20 @@ package com.alecforbes.photomapapp.Activities.MapFragments
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import com.alecforbes.photomapapp.Model.ImageData
+import com.alecforbes.photomapapp.R
+import com.dekoservidoni.omfm.OneMoreFabMenu
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import kotlinx.android.synthetic.main.activity_photo_selection.*
+import kotlinx.android.synthetic.main.activity_photomap.*
+import kotlinx.android.synthetic.main.activity_photomap.view.*
 
 /**
  * Created by Alec on 4/26/2018.
@@ -29,11 +37,29 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
     override fun onCreate(p0: Bundle?) {
         super.onCreate(p0)
 
+
+
+
+    }
+
+    override fun onCreateView(p0: LayoutInflater, p1: ViewGroup?, p2: Bundle?): View? {
+
+        val test = p0.inflate(R.layout.activity_photomap, p1, false)
+        test.photomapActionButton.bringToFront()
+        return super.onCreateView(p0, p1, p2)
+        // fixme https://stackoverflow.com/questions/17023376/get-view-of-fragment-from-fragmentactivity?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+
     }
 
     override fun onActivityCreated(p0: Bundle?) {
         super.onActivityCreated(p0)
         getMapAsync(this)
+       // photomapActionButton.bringToFront()
     }
 
     override fun onMapReady(p0: GoogleMap?) {
@@ -44,7 +70,9 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
         // fixme bug redrawing when you go back to the select screen and make a new one
         setMapBounds()
 
+
         //TODO Populate photomap with custom views based on image data passed in
+
     }
 
 

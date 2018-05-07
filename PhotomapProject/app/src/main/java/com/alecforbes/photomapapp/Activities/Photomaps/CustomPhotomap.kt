@@ -59,7 +59,7 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
 
     }
 
-    override fun onRefres
+    //override fun onRefres
 
     override fun onOptionClick(optionId: Int?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
