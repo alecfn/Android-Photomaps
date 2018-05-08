@@ -31,13 +31,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        app:content_options="@menu/custom_map_fab"
-        android:elevation="6dp"
-
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
+
         android:clickable="true"
+        android:elevation="6dp"
         app:close_on_click="true"
+        app:content_options="@menu/custom_map_fab"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_input_add" />

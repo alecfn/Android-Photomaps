@@ -38,7 +38,7 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
     override fun onMapReady(p0: GoogleMap?) {
         photomap = p0 as GoogleMap
 
-        // todo i think this probably should just be moved to it's own class FIX ME
+        // todo i think place probably should just be moved to it's own class FIX ME
         if (isPlaceMap) {
             addImagePreviews()
 

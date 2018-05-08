@@ -5,11 +5,17 @@ import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.support.v7.app.AppCompatActivity
+import android.view.Gravity
+import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.LinearLayout
 import com.alecforbes.photomapapp.Activities.MapFragments.CustomPhotomapFragment
 import com.alecforbes.photomapapp.Controllers.FileDataController
 import com.alecforbes.photomapapp.R
 import com.dekoservidoni.omfm.OneMoreFabMenu
 import kotlinx.android.synthetic.main.activity_photomap.*
+import kotlinx.android.synthetic.main.timeline_scroll.*
 
 // FIXME Open keyword means this class can be inherited from, needed?
 open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
@@ -23,16 +29,13 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
     lateinit var fileDataController: FileDataController
     lateinit var customMapFragment: CustomPhotomapFragment
 
+    //private val imagePreviewPane = imagePreviewPane
+
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         title = "Custom Photomap"
-
-        //val timelineScroll = LayoutInflater.from(applicationContext).inflate(R.layout.timeline_scroll, parent, false)
-
-        //val imagesIntent = intent
-        //getSelectedImageUris(imagesIntent)
 
         fileDataController = FileDataController(contentResolver)
 
@@ -41,9 +44,6 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
         // Set up the FAB on the custom map with options
         photomapActionButton.setOptionsClick(this@CustomPhotomap)
 
-        // Create bundle to send images to fragment
-        //val images = Bundle()
-        //images.putParcelableArrayList("selectedData", selectedData)
         customMapFragment = CustomPhotomapFragment.newCustomInstance()
 
         // As the map is a fragment, initialise it in a view (but just the constraint as the map fills the view)
@@ -81,6 +81,30 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
         print("")
     }
 
+    /**
+     * Add images that exist on the map to the preview pane at the top of the screen
+     */
+    private fun addImagesToPreview(){
+
+        fileDataController.selectedData.forEach{
+
+            val layout = LinearLayout(applicationContext)
+            val layoutParams = ViewGroup.LayoutParams(200, 200)
+            layout.layoutParams = layoutParams
+            layout.gravity = Gravity.CENTER
+
+            // Each image should be a button to tap to bring up a larger preview
+            val imageView = ImageButton(applicationContext) // todo button listeners
+            imageView.layoutParams = layoutParams
+            imageView.scaleType = ImageView.ScaleType.CENTER_CROP
+            imageView.setImageBitmap(it.getImageBitmap()) //fixme not thumbnail bitmap
+            // todo organise by date taken, dont let duplicates appear
+
+            imagePreviewPane.addView(imageView)
+
+        }
+    }
+
     private fun getDataFromGallery(){
 
         val customSelectIntent = Intent(Intent.ACTION_PICK)
@@ -104,13 +128,15 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
 
         if (requestCode == PICK_DATA){
 
-            //addDataIntent.putExtra("imageData", data)
             if (data != null) {
 
                 fileDataController.getSelectedImageUris(data)
                 customMapFragment.setSelectedData(fileDataController.selectedData)
                 customMapFragment.addImagePreviews()
                 customMapFragment.setMapBounds()
+
+                // Create the preview pane from selected images
+                this.addImagesToPreview()
 
             }
 
