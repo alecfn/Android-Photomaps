@@ -3,6 +3,7 @@ package com.alecforbes.photomapapp.Activities
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.alecforbes.photomapapp.Activities.Photomaps.CustomPhotomap
 import com.alecforbes.photomapapp.R
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -28,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
         createmMapButton.setOnClickListener {
             // Send the map creation intent
-            val createIntent = Intent(this, PhotoSelection::class.java)
+            val createIntent = Intent(this, CustomPhotomap::class.java)
             startActivity(createIntent)
 
         }

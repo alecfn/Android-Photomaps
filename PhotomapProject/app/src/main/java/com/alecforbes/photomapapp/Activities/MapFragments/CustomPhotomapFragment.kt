@@ -34,29 +34,6 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
     private var markers = ArrayList<Marker>()
 
 
-    override fun onCreate(p0: Bundle?) {
-        super.onCreate(p0)
-
-
-
-    }
-
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-    }
-
-    override fun onCreateView(p0: LayoutInflater?, p1: ViewGroup?, p2: Bundle?): View? {
-
-        return super.onCreateView(p0, p1, p2)
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-
-    }
-
     override fun onActivityCreated(p0: Bundle?) {
         super.onActivityCreated(p0)
         getMapAsync(this)
@@ -67,10 +44,10 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
     override fun onMapReady(p0: GoogleMap?) {
         photomap = p0 as GoogleMap
 
-        addImagePreviews()
+        //addImagePreviews()
 
         // fixme bug redrawing when you go back to the select screen and make a new one
-        setMapBounds()
+        //setMapBounds()
 
 
         //TODO Populate photomap with custom views based on image data passed in
@@ -83,13 +60,17 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
      * call the lifecycle functions like onMapReady, the fragment must be linked to a view for that.
      */
     companion object {
-        fun newInstance(images: ArrayList<ImageData>): CustomPhotomapFragment {
+        fun newInstance(): CustomPhotomapFragment {
             val f = CustomPhotomapFragment()
             val args = Bundle()
-            args.putParcelableArrayList("selectedImages", images)
-            f.arguments = args
+            //args.putParcelableArrayList("selectedImages", images)
+            //f.arguments = args
             return f
         }
+    }
+
+    fun setSelectedData(selectedData: ArrayList<ImageData>){
+        selectedImages = selectedData
     }
 
     /**
@@ -100,7 +81,7 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
 
         val testLine = PolylineOptions() // fixme testing
 
-        selectedImages = arguments.getParcelableArrayList<ImageData>("selectedImages")
+        //selectedImages = arguments.getParcelableArrayList<ImageData>("selectedImages")
 
         val markerOpts = MarkerOptions()
 
