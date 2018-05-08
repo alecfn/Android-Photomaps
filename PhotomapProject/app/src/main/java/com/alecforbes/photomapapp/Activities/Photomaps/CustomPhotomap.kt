@@ -36,7 +36,7 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
 
         setContentView(R.layout.activity_photomap)
 
-        setupOptionsButton()
+        setupOptionsButtons()
 
         // Create bundle to send images to fragment
         val images = Bundle()
@@ -73,12 +73,16 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
     /**
      * Set up the Floating Action Button (FAB) for interactions with the map
      */
-    private fun setupOptionsButton(){
+    private fun setupOptionsButtons(){
        //val optionsFab = photomapActionButton
        // photomapActionButton.setOnClickListener {
             // Bring up menu of options
 
        // }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
 
