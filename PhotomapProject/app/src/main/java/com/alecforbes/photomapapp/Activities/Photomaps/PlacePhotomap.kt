@@ -37,13 +37,18 @@ class PlacePhotomap : AppCompatActivity() {
     fun onFirebaseComplete(includedImages: ArrayList<ImageData>){
 
         // fixme the new instance needs to be fixed for placesmaps now
-        val customMapFragment = CustomPhotomapFragment.newInstance()
-        //val customMapFragment = CustomPhotomapFragment.newInstance(includedImages)
+        val placeMapFragment = CustomPhotomapFragment.newPlaceInstance(includedImages)
+        //val placeMapFragment = CustomPhotomapFragment.newCustomInstance(includedImages)
+
+        placeMapFragment.setSelectedDataFromIntent()
 
         // As the map is a fragment, initialise it in a view (but just the constraint as the map fills the view)
         supportFragmentManager.beginTransaction()
-                .add(R.id.placePhotomapConstraint, customMapFragment)
+                .add(R.id.placePhotomapConstraint, placeMapFragment)
                 .commit()
+
+        //placeMapFragment.addImagePreviews()
+        //placeMapFragment.setMapBounds()
     }
 
 

@@ -2,19 +2,12 @@ package com.alecforbes.photomapapp.Activities.MapFragments
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.alecforbes.photomapapp.Model.ImageData
-import com.alecforbes.photomapapp.R
-import com.dekoservidoni.omfm.OneMoreFabMenu
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
-import kotlinx.android.synthetic.main.activity_photo_selection.*
-import kotlinx.android.synthetic.main.activity_photomap.*
 
 
 /**
@@ -29,6 +22,7 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
 
     private lateinit var photomap: GoogleMap
     private var selectedImages = ArrayList<ImageData>()
+    private var isPlaceMap = false
 
     // TODO this could be custom views later
     private var markers = ArrayList<Marker>()
@@ -44,33 +38,55 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
     override fun onMapReady(p0: GoogleMap?) {
         photomap = p0 as GoogleMap
 
-        //addImagePreviews()
+        // todo i think this probably should just be moved to it's own class FIX ME
+        if (isPlaceMap) {
+            addImagePreviews()
 
-        // fixme bug redrawing when you go back to the select screen and make a new one
-        //setMapBounds()
+            // fixme bug redrawing when you go back to the select screen and make a new one
+            setMapBounds()
+        }
 
 
         //TODO Populate photomap with custom views based on image data passed in
 
     }
 
+    //todo fix descriptions n such
 
     /**
      * Define the necessary objects for the map fragment when the instance is created. This does not
      * call the lifecycle functions like onMapReady, the fragment must be linked to a view for that.
+     *
+     *
+     * Define placemap objects
      */
     companion object {
-        fun newInstance(): CustomPhotomapFragment {
-            val f = CustomPhotomapFragment()
-            val args = Bundle()
+        fun newCustomInstance(): CustomPhotomapFragment {
+            val fragment = CustomPhotomapFragment()
+            //val args = Bundle()
             //args.putParcelableArrayList("selectedData", images)
-            //f.arguments = args
-            return f
+            //fragment.arguments = args
+            return fragment
+        }
+
+        fun newPlaceInstance(images: ArrayList<ImageData>): CustomPhotomapFragment{
+            val fragment = CustomPhotomapFragment()
+            val args = Bundle()
+            args.putParcelableArrayList("selectedData", images)
+            fragment.arguments = args
+            fragment.isPlaceMap = true
+            return fragment
         }
     }
 
+
+
     fun setSelectedData(selectedData: ArrayList<ImageData>){
         selectedImages = selectedData
+    }
+
+    fun setSelectedDataFromIntent(){
+        selectedImages = arguments.getParcelableArrayList<ImageData>("selectedData")
     }
 
     /**

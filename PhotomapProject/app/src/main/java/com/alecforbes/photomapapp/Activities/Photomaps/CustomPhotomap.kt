@@ -44,7 +44,7 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
         // Create bundle to send images to fragment
         //val images = Bundle()
         //images.putParcelableArrayList("selectedData", selectedData)
-        customMapFragment = CustomPhotomapFragment.newInstance()
+        customMapFragment = CustomPhotomapFragment.newCustomInstance()
 
         // As the map is a fragment, initialise it in a view (but just the constraint as the map fills the view)
         supportFragmentManager.beginTransaction()
