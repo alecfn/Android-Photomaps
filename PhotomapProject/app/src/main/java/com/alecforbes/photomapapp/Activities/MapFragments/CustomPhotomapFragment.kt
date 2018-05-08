@@ -63,7 +63,7 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
         fun newInstance(): CustomPhotomapFragment {
             val f = CustomPhotomapFragment()
             val args = Bundle()
-            //args.putParcelableArrayList("selectedImages", images)
+            //args.putParcelableArrayList("selectedData", images)
             //f.arguments = args
             return f
         }
@@ -81,7 +81,7 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
 
         val testLine = PolylineOptions() // fixme testing
 
-        //selectedImages = arguments.getParcelableArrayList<ImageData>("selectedImages")
+        //selectedData = arguments.getParcelableArrayList<ImageData>("selectedData")
 
         val markerOpts = MarkerOptions()
 

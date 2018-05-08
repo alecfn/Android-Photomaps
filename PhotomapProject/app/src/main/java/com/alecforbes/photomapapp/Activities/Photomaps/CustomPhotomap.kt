@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.activity_photomap.*
 // FIXME Open keyword means this class can be inherited from, needed?
 open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
 
-    //var selectedImages = ArrayList<ImageData>()
+    //var selectedData = ArrayList<ImageData>()
     // Store the images as objects with all relevant info
 
     // TODO permission handling
@@ -43,7 +43,7 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
 
         // Create bundle to send images to fragment
         //val images = Bundle()
-        //images.putParcelableArrayList("selectedImages", selectedImages)
+        //images.putParcelableArrayList("selectedData", selectedData)
         customMapFragment = CustomPhotomapFragment.newInstance()
 
         // As the map is a fragment, initialise it in a view (but just the constraint as the map fills the view)
@@ -92,7 +92,6 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
             startActivityForResult(Intent.createChooser(customSelectIntent, "Select photos for photomap"), PICK_DATA)
         }
 
-
     }
 
 
@@ -109,7 +108,7 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
             if (data != null) {
 
                 fileDataController.getSelectedImageUris(data)
-                customMapFragment.setSelectedData(fileDataController.selectedImages)
+                customMapFragment.setSelectedData(fileDataController.selectedData)
                 customMapFragment.addImagePreviews()
                 customMapFragment.setMapBounds()
 

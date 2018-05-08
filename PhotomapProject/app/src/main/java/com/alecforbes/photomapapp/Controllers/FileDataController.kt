@@ -16,20 +16,20 @@ import java.io.File
 
 class FileDataController (private val contentResolver: ContentResolver){
 
-    val imageUris = ArrayList<Uri>()
-    var selectedImages = ArrayList<ImageData>()
+    val imageUris = ArrayList<Uri>() // All selected image URI values
+    val newImageUris = ArrayList<Uri>() // Only newly selected URI values
+    var selectedData = ArrayList<ImageData>()
 
     @RequiresApi(Build.VERSION_CODES.N) // FIXME exif stream needs android N
     /**
      * For each image URI, build an input stream object, then an exif interface. This allows access
      * to exif data. The data can then stored as an ImageData object.
      */
-    private fun createImageData(imageUris: ArrayList<Uri>){
+    private fun createImageData(){
 
 
-        imageUris.forEach {
+        newImageUris.forEach {
 
-            // Not every object can be created in the object because we have to resolve the current content, so pass those in
             val stream = contentResolver.openInputStream(it)
             val exif = ExifInterface(stream)
             val file = File(it.path)
@@ -41,26 +41,23 @@ class FileDataController (private val contentResolver: ContentResolver){
             // TODO any more creation stuff should be done here
 
             val selectedImage = ImageData(file, bitmap, exif)
-            selectedImages.add(selectedImage)
+            selectedData.add(selectedImage)
         }
 
-    }
-
-    private fun getSelectedImageUri(){
-
-        //val uri =
+        // Clearing the array means image data isn't created again in the above loop
+        newImageUris.clear()
 
     }
 
 
     @RequiresApi(Build.VERSION_CODES.N)
     /**
+     * Get the URI of images selected in the gallery application.
      *
+     * As the data being looped through comes from the selection intent, only those images are
+     * looped through to get URI data, not images that are already selected.
      */
     fun getSelectedImageUris(fileData: Intent){
-
-        //val imageData = imagesIntent.getParcelableExtra<Intent>("imageData")
-        //val imageUris= ArrayList<Uri>()
 
         if (fileData.clipData != null) {
 
@@ -71,26 +68,19 @@ class FileDataController (private val contentResolver: ContentResolver){
             for (i in 0..(numberImages - 1)){
                 val uri = fileData.clipData.getItemAt(i).uri
 
-                imageUris.add(uri)
+                newImageUris.add(uri)
             }
 
         } else {
 
             // If the user only selects one image, clipData is unused and will be null
             val uri = fileData.data
+            newImageUris.add(uri)
             imageUris.add(uri)
 
         }
 
-        createImageData(imageUris)
-
-    }
-
-    fun updateImageList(){
-
-    }
-
-    fun getImageList(){
+        createImageData()
 
     }
 
