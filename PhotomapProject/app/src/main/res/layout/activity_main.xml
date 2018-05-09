@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mainConstraintLayout"
@@ -7,18 +7,14 @@
     android:layout_height="match_parent"
     tools:context="com.alecforbes.photomapapp.Activities.MainActivity">
 
-    <ScrollView
-        android:id="@+id/mainScrollView"
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
 
         <LinearLayout
             android:id="@+id/mainLinearLayout"
@@ -29,10 +25,10 @@
             <ImageButton
                 android:id="@+id/createPhotomapButton"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="160dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
                 android:padding="0dp"
+                android:scaleType="fitCenter"
                 app:srcCompat="@mipmap/main_placeholder" />
 
             <TextView
@@ -44,10 +40,10 @@
             <ImageButton
                 android:id="@+id/placesPhotomapButton"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="160dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
                 android:padding="0dp"
+                android:scaleType="fitCenter"
                 app:srcCompat="@mipmap/newyorkmain" />
 
             <TextView
@@ -59,10 +55,10 @@
             <ImageButton
                 android:id="@+id/savedPhotomapsButton"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="160dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
                 android:padding="0dp"
+                android:scaleType="fitCenter"
                 app:srcCompat="@mipmap/main_placeholder" />
 
             <TextView
@@ -70,6 +66,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/saved_photomaps" />
+
         </LinearLayout>
-    </ScrollView>
-</android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

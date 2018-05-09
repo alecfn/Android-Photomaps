@@ -68,7 +68,7 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
 
         // Use Kotlin lambdas to set up FAB click responses
         when(optionId) {
-            R.id.main_photomap_option -> test()
+            //R.id.main_photomap_option -> test()
             R.id.add_files_option -> getDataFromGallery()
             R.id.add_timeline_option -> test()
             R.id.remove_timeline_option -> test()
