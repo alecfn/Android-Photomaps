@@ -1,6 +1,9 @@
 package com.alecforbes.photomapapp.Activities.MapFragments
 
+import android.content.Context
 import android.graphics.BitmapFactory
+import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
 import com.alecforbes.photomapapp.Model.ImageData
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -21,6 +24,7 @@ import com.google.android.gms.maps.model.*
 open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
 
     private lateinit var photomap: GoogleMap
+    private lateinit var lastLoc: Location
     private var selectedImages = ArrayList<ImageData>()
     private var isPlaceMap = false
 
@@ -44,7 +48,15 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
 
             // fixme bug redrawing when you go back to the select screen and make a new one
             setMapBounds()
+        } else{
+            // Set camera to current location
+            print("")
+            //locationMan.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+            //val currLatLng = LatLng(locationMan.ge)
         }
+
+
+
 
 
         //TODO Populate photomap with custom views based on image data passed in
@@ -63,9 +75,6 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
     companion object {
         fun newCustomInstance(): CustomPhotomapFragment {
             val fragment = CustomPhotomapFragment()
-            //val args = Bundle()
-            //args.putParcelableArrayList("selectedData", images)
-            //fragment.arguments = args
             return fragment
         }
 

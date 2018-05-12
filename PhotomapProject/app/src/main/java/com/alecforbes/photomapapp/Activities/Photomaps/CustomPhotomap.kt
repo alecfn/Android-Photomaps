@@ -1,9 +1,14 @@
 package com.alecforbes.photomapapp.Activities.Photomaps
 
+import android.content.Context
 import android.content.Intent
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
+import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.Gravity
 import android.view.ViewGroup
@@ -14,8 +19,11 @@ import com.alecforbes.photomapapp.Activities.MapFragments.CustomPhotomapFragment
 import com.alecforbes.photomapapp.Controllers.FileDataController
 import com.alecforbes.photomapapp.R
 import com.dekoservidoni.omfm.OneMoreFabMenu
+//import com.google.android.gms.location.FusedLocationProviderClient
+//import com.google.android.gms.location.LocationServices
 import kotlinx.android.synthetic.main.activity_photomap.*
 import kotlinx.android.synthetic.main.timeline_scroll.*
+
 
 // FIXME Open keyword means this class can be inherited from, needed?
 open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
@@ -28,8 +36,16 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
 
     lateinit var fileDataController: FileDataController
     lateinit var customMapFragment: CustomPhotomapFragment
+    private var locationManager: LocationManager? = null
+    private var lastLoc: Location? = null
+    //private val locationListener: LocationListener? = null
 
     //private val imagePreviewPane = imagePreviewPane
+    // Polling values for GPS update intervals
+    private val INTERVAL = 400.toLong()
+    private val MIN_DISTANCE = 1000.toFloat()
+
+    //private lateinit var fusedLocationClient: FusedLocationProviderClient
 
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -44,6 +60,23 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
         // Set up the FAB on the custom map with options
         photomapActionButton.setOptionsClick(this@CustomPhotomap)
 
+        // Set camera to current location FIXME
+/*                requestGPSPermissions()
+        locationManager = getSystemService(LOCATION_SERVICE) as LocationManager?
+
+                try {
+                    // We don't need continuous location updates, just the last one to centre camera
+
+                    fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+                    fusedLocationClient.lastLocation
+                            .addOnSuccessListener { location : Location? ->
+                                // Got last known location
+                                lastLoc = location
+                            }
+                } catch (securityEx: SecurityException){
+                    requestGPSPermissions()
+                    // todo could set it up so if they deny, it just default to default pos on map
+                }*/
         customMapFragment = CustomPhotomapFragment.newCustomInstance()
 
         // As the map is a fragment, initialise it in a view (but just the constraint as the map fills the view)
@@ -60,6 +93,7 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
         photomapActionButton.bringToFront()
         customTimeline.bringToFront()
     }
+
 
     /**
      * Set up the Floating Action Button (FAB) for interactions with the map
@@ -79,6 +113,12 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
 
     private fun test(){
         print("")
+    }
+
+    private fun requestGPSPermissions(){
+        val permissions = arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION)
+        ActivityCompat.requestPermissions(this, permissions,0)
     }
 
     /**
@@ -117,6 +157,28 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
         }
 
     }
+
+/*    private fun getLastKnownLocation(){
+
+        locationManager = applicationContext.getSystemService(LOCATION_SERVICE) as LocationManager?
+        val providers = locationManager!!.getProviders(true)
+        var bestLoc = null
+
+        providers.forEach{
+            var location = locationManager!!.getLastKnownLocation(it)
+
+            if (location == null){
+                // Continue
+            }
+
+            if (bestLoc == null || location.accuracy < bestLoc.accuracy){
+                bestLoc = location
+            }
+
+        }
+
+        return bestLoc
+    }*/
 
 
     /**
