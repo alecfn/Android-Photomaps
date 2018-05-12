@@ -26,7 +26,8 @@ data class ImageData(val file: File,
                      var timeTaken: String="",
                      var latLong: LatLng= LatLng(0.0, 0.0),
                      var unixTime: Long = 0L,
-                     private var thumbnailData: ByteArray= byteArrayOf()): Parcelable {
+                     private var thumbnailData: ByteArray= byteArrayOf()): Parcelable, Comparable<ImageData> {
+
     // TODO time taken probably isnt a string
 
     // TODO any more exifInterface
@@ -99,6 +100,16 @@ data class ImageData(val file: File,
         return thumbnailData
     }
 
+    /**
+     * As images need to be sorted for the timelines, the comparable interface needs to be
+     * implemented to compare based on the value of the unix time stamp.
+     */
+    override fun compareTo(other: ImageData): Int {
+
+        val compareTime = other.unixTime.toInt()
+        return this.unixTime.toInt() - compareTime
+
+    }
 
 
 

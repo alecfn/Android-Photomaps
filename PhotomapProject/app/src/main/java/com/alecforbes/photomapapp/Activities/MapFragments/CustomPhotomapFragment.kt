@@ -33,7 +33,7 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
     private var imageUriHashMap = HashMap<String, String>()
 
     private var selectedImages = ArrayList<ImageData>()
-    private var sortedImages = ArrayList<ImageData>()
+    //private var sortedImages = ArrayList<ImageData>()
     private var isPlaceMap = false
 
     // TODO this could be custom views later
@@ -210,31 +210,10 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
             }
 
             it.unixTime = unixStamp
-            print("")
-
-
-
-            //val unixTime = LocalDate.parse(date, DateTimeFormatter.ofPattern("YYYY:MM:DD"))
-
         }
 
-
+        selectedImages.sort()
 
     }
-
-/*    private fun stringToDate(dateString: String): DateFormat{
-        var date = null
-
-        try{
-            val dateFormat = SimpleDateFormat("yyyy:MM:dd HH:mm:ss")
-            date = dateFormat.parse(dateString)
-        }catch (ex: ParseException){
-
-        }
-
-        return date
-    }*/
-
-
 
 }
