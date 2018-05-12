@@ -45,6 +45,8 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
     private val INTERVAL = 400.toLong()
     private val MIN_DISTANCE = 1000.toFloat()
 
+    // Images stored in the preview pane
+    private var previewImageUriHashMap = HashMap<String, String>()
     //private lateinit var fusedLocationClient: FusedLocationProviderClient
 
 
@@ -140,19 +142,25 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
 
         fileDataController.selectedData.forEach{
 
-            val layout = LinearLayout(applicationContext)
-            val layoutParams = ViewGroup.LayoutParams(200, 200)
-            layout.layoutParams = layoutParams
-            layout.gravity = Gravity.CENTER
+            val imageUri = it.file.absolutePath.toString()
 
-            // Each image should be a button to tap to bring up a larger preview
-            val imageView = ImageButton(applicationContext) // todo button listeners
-            imageView.layoutParams = layoutParams
-            imageView.scaleType = ImageView.ScaleType.CENTER_CROP
-            imageView.setImageBitmap(it.getImageBitmap()) //fixme not thumbnail bitmap
-            // todo organise by date taken, dont let duplicates appear
+            // Only add the image to the preview if it isn't already on the map
+            if (!previewImageUriHashMap.containsKey(imageUri)) {
+                val layout = LinearLayout(applicationContext)
+                val layoutParams = ViewGroup.LayoutParams(200, 200)
+                layout.layoutParams = layoutParams
+                layout.gravity = Gravity.CENTER
 
-            imagePreviewPane.addView(imageView)
+                // Each image should be a button to tap to bring up a larger preview
+                val imageView = ImageButton(applicationContext) // todo button listeners
+                imageView.layoutParams = layoutParams
+                imageView.scaleType = ImageView.ScaleType.CENTER_CROP
+                imageView.setImageBitmap(it.getImageBitmap()) //fixme not thumbnail bitmap
+                // todo organise by date taken, dont let duplicates appear
+
+                imagePreviewPane.addView(imageView)
+                previewImageUriHashMap[imageUri] = ""
+            }
 
         }
     }
@@ -171,6 +179,7 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
                 fileDataController.getSelectedImageUris(data)
                 customMapFragment.setSelectedData(fileDataController.selectedData)
                 customMapFragment.addImagePreviews()
+                customMapFragment.sortByTimeTaken()
                 customMapFragment.setMapBounds()
 
                 // Create the preview pane from selected images

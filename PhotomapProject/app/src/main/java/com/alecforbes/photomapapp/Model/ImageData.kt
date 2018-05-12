@@ -17,7 +17,7 @@ import java.io.File
 
 @SuppressLint("ParcelCreator") // Known unnecessary warning with Kotlin when using Parcelize
 @Parcelize
-data class ImageData(private val file: File,
+data class ImageData(val file: File,
                      private var bitmap: Bitmap,
                      private val exifInterface: @RawValue ExifInterface,
                      private var latitude: Float=0F,
@@ -59,8 +59,6 @@ data class ImageData(private val file: File,
         val tagsList = listOf(TAG_GPS_DATESTAMP, TAG_DATETIME, TAG_DATETIME_DIGITIZED)
 
         //try {
-
-        //val bleh = exifInterface.getAttribute(TAG_GPS_DATESTAMP)
 
             tagsList.forEach {
                 val dateStamp = exifInterface.getAttribute(it)

@@ -25,7 +25,12 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
 
     private lateinit var photomap: GoogleMap
     private lateinit var lastLoc: Location
+
+    // Store uris as a hashmap to check if added already (Value is unused, just the key)
+    private var imageUriHashMap = HashMap<String, String>()
+
     private var selectedImages = ArrayList<ImageData>()
+    private var sortedImages = ArrayList<ImageData>()
     private var isPlaceMap = false
 
     // TODO this could be custom views later
@@ -52,6 +57,8 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
             // Set camera to current location
             //locationMan.getLastKnownLocation(LocationManager.GPS_PROVIDER)
             //val currLatLng = LatLng(locationMan.ge)
+
+
         }
 
 
@@ -106,16 +113,22 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
 
         selectedImages.forEach {
 
-            markerOpts.position(it.latLong)
+            val imageUri = it.file.absolutePath.toString()
 
-            val thumbnail = BitmapFactory.decodeByteArray(it.getImageThumbnail(), 0, it.getImageThumbnail().size)
-            val thumbnailDesc = BitmapDescriptorFactory.fromBitmap(thumbnail)
-            markerOpts.icon(thumbnailDesc)
+            if (!imageUriHashMap.containsKey(imageUri)) {
 
-            val marker = photomap.addMarker(markerOpts)
-            marker.isDraggable  // TODO, make movable and edit file data with new loc?
-            markers.add(marker)
+                markerOpts.position(it.latLong)
 
+                val thumbnail = BitmapFactory.decodeByteArray(it.getImageThumbnail(), 0, it.getImageThumbnail().size)
+                val thumbnailDesc = BitmapDescriptorFactory.fromBitmap(thumbnail)
+                markerOpts.icon(thumbnailDesc)
+
+                val marker = photomap.addMarker(markerOpts)
+                marker.isDraggable  // TODO, make movable and edit file data with new loc?
+                markers.add(marker)
+
+                imageUriHashMap[imageUri] = ""
+            }
 
         }
 
@@ -165,9 +178,12 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
     }
 
     /**
-     * Sort the selected images by the time they were taken
+     * Sort the selected images by the time they were taken so they can appear in order in the
+     * preview
      */
-    private fun sortByTimeTaken(){
+    fun sortByTimeTaken(){
+
+        var sortedImages = ArrayList<ImageData>()
 
 
 
