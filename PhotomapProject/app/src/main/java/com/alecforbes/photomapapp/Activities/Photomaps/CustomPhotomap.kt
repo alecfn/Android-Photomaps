@@ -102,17 +102,29 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
 
         // Use Kotlin lambdas to set up FAB click responses
         when(optionId) {
-            //R.id.main_photomap_option -> test()
             R.id.add_files_option -> getDataFromGallery()
-            R.id.add_timeline_option -> test()
-            R.id.remove_timeline_option -> test()
-            R.id.clear_map_option -> test()
-            R.id.share_map_option -> test()
+            R.id.add_timeline_option -> customMapFragment.addPhotoTimeline()
+            R.id.remove_timeline_option -> customMapFragment.clearPhotoTimeline()
+            R.id.clear_map_option -> customMapFragment.clearMap()
+            R.id.share_map_option -> shareMap()
         }
     }
 
-    private fun test(){
-        print("")
+    private fun getDataFromGallery(){
+
+        val customSelectIntent = Intent(Intent.ACTION_PICK)
+        customSelectIntent.type = "image/*"
+        customSelectIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        customSelectIntent.action = Intent.ACTION_GET_CONTENT
+
+        if (customSelectIntent.resolveActivity(packageManager) != null){
+            startActivityForResult(Intent.createChooser(customSelectIntent, "Select photos for photomap"), PICK_DATA)
+        }
+
+    }
+
+    private fun shareMap(){
+        // TODO
     }
 
     private fun requestGPSPermissions(){
@@ -144,42 +156,6 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
 
         }
     }
-
-    private fun getDataFromGallery(){
-
-        val customSelectIntent = Intent(Intent.ACTION_PICK)
-        customSelectIntent.type = "image/*"
-        customSelectIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-        customSelectIntent.action = Intent.ACTION_GET_CONTENT
-
-        if (customSelectIntent.resolveActivity(packageManager) != null){
-            startActivityForResult(Intent.createChooser(customSelectIntent, "Select photos for photomap"), PICK_DATA)
-        }
-
-    }
-
-/*    private fun getLastKnownLocation(){
-
-        locationManager = applicationContext.getSystemService(LOCATION_SERVICE) as LocationManager?
-        val providers = locationManager!!.getProviders(true)
-        var bestLoc = null
-
-        providers.forEach{
-            var location = locationManager!!.getLastKnownLocation(it)
-
-            if (location == null){
-                // Continue
-            }
-
-            if (bestLoc == null || location.accuracy < bestLoc.accuracy){
-                bestLoc = location
-            }
-
-        }
-
-        return bestLoc
-    }*/
-
 
     /**
      * This function will handle the selected images a user adds to a photomap

@@ -50,13 +50,9 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
             setMapBounds()
         } else{
             // Set camera to current location
-            print("")
             //locationMan.getLastKnownLocation(LocationManager.GPS_PROVIDER)
             //val currLatLng = LatLng(locationMan.ge)
         }
-
-
-
 
 
         //TODO Populate photomap with custom views based on image data passed in
@@ -104,8 +100,6 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
     fun addImagePreviews(){
 
 
-        val testLine = PolylineOptions() // fixme testing
-
         //selectedData = arguments.getParcelableArrayList<ImageData>("selectedData")
 
         val markerOpts = MarkerOptions()
@@ -113,17 +107,19 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
         selectedImages.forEach {
 
             markerOpts.position(it.latLong)
+
             val thumbnail = BitmapFactory.decodeByteArray(it.getImageThumbnail(), 0, it.getImageThumbnail().size)
             val thumbnailDesc = BitmapDescriptorFactory.fromBitmap(thumbnail)
             markerOpts.icon(thumbnailDesc)
 
             val marker = photomap.addMarker(markerOpts)
+            marker.isDraggable  // TODO, make movable and edit file data with new loc?
             markers.add(marker)
 
-            testLine.add(it.latLong)
+
         }
 
-        photomap.addPolyline(testLine)
+
 
     }
 
@@ -147,6 +143,31 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
 
 
         photomap.moveCamera(cameraUpdate)
+
+    }
+
+    fun addPhotoTimeline(){
+        val testLine = PolylineOptions() // fixme testing
+
+        markers.forEach {
+            val markerLoc = it.position
+            testLine.add(markerLoc)
+            photomap.addPolyline(testLine)
+        }
+    }
+
+    fun clearPhotoTimeline(){
+
+    }
+
+    fun clearMap(){
+
+    }
+
+    /**
+     * Sort the selected images by the time they were taken
+     */
+    private fun sortByTimeTaken(){
 
     }
 
