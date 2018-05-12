@@ -169,6 +169,8 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
      */
     private fun sortByTimeTaken(){
 
+
+
     }
 
 

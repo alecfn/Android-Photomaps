@@ -3,6 +3,7 @@ package com.alecforbes.photomapapp.Model
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.media.ExifInterface
+import android.media.ExifInterface.*
 import android.os.Parcelable
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.parcel.Parcelize
@@ -21,25 +22,26 @@ data class ImageData(private val file: File,
                      private val exifInterface: @RawValue ExifInterface,
                      private var latitude: Float=0F,
                      private var longitude: Float=0F,
+                     var dateTaken: String="",
+                     var timeTaken: String="",
                      var latLong: LatLng= LatLng(0.0, 0.0),
                      private var thumbnailData: ByteArray= byteArrayOf()): Parcelable {
     // TODO time taken probably isnt a string
 
     // TODO any more exifInterface
 
-    private var timeTaken = ""
-
     init {
         setAllImageData()
     }
 
-
-    fun setAllImageData(){
+    private fun setAllImageData(){
         setLatLong()
+        dateTaken = setDateTaken()
         setImageThumbnail()
+
     }
 
-    fun setLatLong(){
+    private fun setLatLong(){
 
         val latLongArr = FloatArray(2)
         exifInterface.getLatLong(latLongArr)
@@ -51,19 +53,35 @@ data class ImageData(private val file: File,
 
     }
 
-    fun convertCoordToDegree(){
+    private fun setDateTaken(): String {
 
-    }
+        // Number of potential date stamps stored in an image, so try to get the best first
+        val tagsList = listOf(TAG_GPS_DATESTAMP, TAG_DATETIME, TAG_DATETIME_DIGITIZED)
 
-    fun setTimeTaken(){
+        //try {
 
+        //val bleh = exifInterface.getAttribute(TAG_GPS_DATESTAMP)
+
+            tagsList.forEach {
+                val dateStamp = exifInterface.getAttribute(it)
+
+                if (dateStamp != null){
+                    return dateStamp
+                }
+
+            }
+        return "0" // If we never got a datetime, just return 0
+
+        //}catch (readEx: Exception){
+            // TODO
+        //}
     }
 
     fun getImageBitmap(): Bitmap {
         return bitmap
     }
 
-    fun setImageThumbnail(){
+    private fun setImageThumbnail(){
 
         try {
 
@@ -82,9 +100,7 @@ data class ImageData(private val file: File,
         return thumbnailData
     }
 
-    fun getTimeTaken(){
 
-    }
 
 
 }
