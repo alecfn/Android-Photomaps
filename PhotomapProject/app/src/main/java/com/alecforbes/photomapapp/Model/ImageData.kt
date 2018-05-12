@@ -107,10 +107,10 @@ data class ImageData(val file: File,
     override fun compareTo(other: ImageData): Int {
 
         val compareTime = other.unixTime.toInt()
-        return this.unixTime.toInt() - compareTime
+        // return this.unixTime.toInt() - compareTime  // Oldest to newest taken photo
+
+         return compareTime - this.unixTime.toInt() // Newest to oldest
 
     }
-
-
 
 }

@@ -1,9 +1,7 @@
 package com.alecforbes.photomapapp.Activities.Photomaps
 
-import android.content.Context
 import android.content.Intent
 import android.location.Location
-import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
@@ -12,6 +10,7 @@ import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.Gravity
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -83,7 +82,7 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
 
         // As the map is a fragment, initialise it in a view (but just the constraint as the map fills the view)
         supportFragmentManager.beginTransaction()
-                .add(R.id.photomapConstraint, customMapFragment)
+                .add(R.id.photomapFrameLayout, customMapFragment)
                 .commit()
 
     }
@@ -105,9 +104,9 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
         // Use Kotlin lambdas to set up FAB click responses
         when(optionId) {
             R.id.add_files_option -> getDataFromGallery()
-            R.id.add_timeline_option -> customMapFragment.addPhotoTimeline()
+            R.id.add_timeline_option -> addImagesToPreview()
             R.id.remove_timeline_option -> customMapFragment.clearPhotoTimeline()
-            R.id.clear_map_option -> customMapFragment.clearMap()
+            R.id.clear_map_option -> clearViewsAndData()
             R.id.share_map_option -> shareMap()
         }
     }
@@ -123,6 +122,17 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
             startActivityForResult(Intent.createChooser(customSelectIntent, "Select photos for photomap"), PICK_DATA)
         }
 
+    }
+
+    private fun clearViewsAndData(){
+        val mapLayout = findViewById<FrameLayout>(R.id.photomapFrameLayout)
+        imagePreviewPane.removeAllViews()
+        mapLayout.removeView(imagePreviewPane)
+        mapLayout.removeView(findViewById(R.id.customTimeline))
+        customMapFragment.clearMap() // Also clear drawables on the map fragment
+        fileDataController.selectedData.clear()
+        //mapLayout.removeView(imagePreviewPane)
+        previewImageUriHashMap.clear() // Clear uri hashmap so old images can be added again
     }
 
     private fun shareMap(){
@@ -163,6 +173,8 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
             }
 
         }
+        // Now draw lines between the images
+        customMapFragment.addPhotoTimeline()
     }
 
     /**
@@ -181,9 +193,6 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
                 customMapFragment.addImagePreviews()
                 customMapFragment.sortByTimeTaken()
                 customMapFragment.setMapBounds()
-
-                // Create the preview pane from selected images
-                this.addImagesToPreview()
 
             }
 

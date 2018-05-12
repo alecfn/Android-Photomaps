@@ -3,7 +3,11 @@ package com.alecforbes.photomapapp.Activities.MapFragments
 import android.graphics.BitmapFactory
 import android.location.Location
 import android.os.Bundle
+import android.view.View
+import android.view.ViewGroup
+import com.alecforbes.photomapapp.Activities.Photomaps.CustomPhotomap
 import com.alecforbes.photomapapp.Model.ImageData
+import com.alecforbes.photomapapp.R
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -162,6 +166,10 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
 
     }
 
+    /**
+     * Add a polyLine drawn between two images on the map. These will be in succession of when the
+     * image was taken (based on how the selectedImages list is sorted).
+     */
     fun addPhotoTimeline(){
         val testLine = PolylineOptions() // fixme testing
 
@@ -176,8 +184,12 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
 
     }
 
+    /**
+     * Clear all markers and polylines from the map, and invalidate the timeline preview of parent.
+     */
     fun clearMap(){
-
+        photomap.clear()
+        imageUriHashMap.clear() // Also clear the hashmap, or no new data can be added
     }
 
     /**
@@ -186,8 +198,6 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
      * except in Android O, so the process is a bit more complicated here.
      */
     fun sortByTimeTaken(){
-
-        var sortedImages = ArrayList<ImageData>()
 
         selectedImages.forEach{
 
