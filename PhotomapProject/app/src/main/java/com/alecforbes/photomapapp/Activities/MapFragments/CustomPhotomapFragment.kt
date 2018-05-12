@@ -1,9 +1,7 @@
 package com.alecforbes.photomapapp.Activities.MapFragments
 
-import android.content.Context
 import android.graphics.BitmapFactory
 import android.location.Location
-import android.location.LocationManager
 import android.os.Bundle
 import com.alecforbes.photomapapp.Model.ImageData
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -11,6 +9,11 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import java.text.DateFormat
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.util.*
 
 
 /**
@@ -179,15 +182,58 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
 
     /**
      * Sort the selected images by the time they were taken so they can appear in order in the
-     * preview
+     * preview. Unfortunately some newer Java/Kotlin features like .parse for a datetime don't work
+     * except in Android O, so the process is a bit more complicated here.
      */
     fun sortByTimeTaken(){
 
         var sortedImages = ArrayList<ImageData>()
 
+        selectedImages.forEach{
+
+            // Set the unix time stamp on each object by converting timestamp values and use to sort
+            val dateTime = it.dateTimeTaken.split(" ")
+            val date = dateTime[0]
+            val time = dateTime[1]
+            var unixStamp = 0L
+
+            if (date != "0" && time != "0") {
+                val dateComponents = date.split(":")
+                val timeComponents = time.split(":")
+
+                // FIXME: is the hour correct? keeps coming back as 0
+                val cal = Calendar.getInstance()
+                cal.set(dateComponents[0].toInt(), dateComponents[1].toInt(), dateComponents[2].toInt(),
+                        timeComponents[0].toInt(), timeComponents[1].toInt(), timeComponents[2].toInt())
+
+                unixStamp = cal.timeInMillis / 1000
+            }
+
+            it.unixTime = unixStamp
+            print("")
+
+
+
+            //val unixTime = LocalDate.parse(date, DateTimeFormatter.ofPattern("YYYY:MM:DD"))
+
+        }
+
 
 
     }
+
+/*    private fun stringToDate(dateString: String): DateFormat{
+        var date = null
+
+        try{
+            val dateFormat = SimpleDateFormat("yyyy:MM:dd HH:mm:ss")
+            date = dateFormat.parse(dateString)
+        }catch (ex: ParseException){
+
+        }
+
+        return date
+    }*/
 
 
 

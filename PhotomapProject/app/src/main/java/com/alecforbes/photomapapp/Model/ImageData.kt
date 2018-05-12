@@ -22,9 +22,10 @@ data class ImageData(val file: File,
                      private val exifInterface: @RawValue ExifInterface,
                      private var latitude: Float=0F,
                      private var longitude: Float=0F,
-                     var dateTaken: String="",
+                     var dateTimeTaken: String="",
                      var timeTaken: String="",
                      var latLong: LatLng= LatLng(0.0, 0.0),
+                     var unixTime: Long = 0L,
                      private var thumbnailData: ByteArray= byteArrayOf()): Parcelable {
     // TODO time taken probably isnt a string
 
@@ -36,7 +37,7 @@ data class ImageData(val file: File,
 
     private fun setAllImageData(){
         setLatLong()
-        dateTaken = setDateTaken()
+        dateTimeTaken = setDateTimeTaken()
         setImageThumbnail()
 
     }
@@ -53,7 +54,7 @@ data class ImageData(val file: File,
 
     }
 
-    private fun setDateTaken(): String {
+    private fun setDateTimeTaken(): String {
 
         // Number of potential date stamps stored in an image, so try to get the best first
         val tagsList = listOf(TAG_GPS_DATESTAMP, TAG_DATETIME, TAG_DATETIME_DIGITIZED)
@@ -68,7 +69,7 @@ data class ImageData(val file: File,
                 }
 
             }
-        return "0" // If we never got a datetime, just return 0
+        return "0 0" // If we never got a datetime, just return 0
 
         //}catch (readEx: Exception){
             // TODO
