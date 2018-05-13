@@ -9,4 +9,10 @@
     <string name="remove_timeline">Remove timeline</string>
     <string name="clear_photomap">Clear photomap</string>
     <string name="share">Share</string>
+    <string name="view">View</string>
+    <string name="create">Create</string>
+    <string name="saved_title">Saved Photomaps</string>
+    <string name="places_title">Places</string>
+    <string name="button_create">Create</string>
+    <string name="custom_photomap_title">Custom Photomaps</string>
 </resources>

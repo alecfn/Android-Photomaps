@@ -1,8 +1,10 @@
 package com.alecforbes.photomapapp.Activities
 
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.widget.ImageView
 import com.alecforbes.photomapapp.Activities.Photomaps.CustomPhotomap
 import com.alecforbes.photomapapp.R
 import kotlinx.android.synthetic.main.activity_main.*
@@ -24,8 +26,8 @@ class MainActivity : AppCompatActivity() {
 
         // Get the buttons with Kotlin extensions, so we don't have to use findById
         val createmMapButton = createPhotomapButton
-        val placesMapButton = placesPhotomapButton
-        val savedMapButton = savedPhotomapsButton
+        val placesMapButton = createPlacesButton
+        val savedMapButton = savedPhotomapButton
 
         createmMapButton.setOnClickListener {
             // Send the map creation intent
