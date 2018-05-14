@@ -15,7 +15,9 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.alecforbes.photomapapp.Activities.MapFragments.CustomPhotomapFragment
+import com.alecforbes.photomapapp.Controllers.DatabaseController
 import com.alecforbes.photomapapp.Controllers.FileDataController
+import com.alecforbes.photomapapp.Controllers.FirebaseController
 import com.alecforbes.photomapapp.R
 import com.dekoservidoni.omfm.OneMoreFabMenu
 //import com.google.android.gms.location.FusedLocationProviderClient
@@ -43,6 +45,8 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
     // Polling values for GPS update intervals
     private val INTERVAL = 400.toLong()
     private val MIN_DISTANCE = 1000.toFloat()
+
+    private lateinit var databaseController: DatabaseController
 
     // Images stored in the preview pane
     private var previewImageUriHashMap = HashMap<String, String>()
@@ -136,8 +140,12 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
         previewImageUriHashMap.clear() // Clear uri hashmap so old images can be added again
     }
 
+    /**
+     * Save the map ImageData objects to an SQLite instance (controlled by the DatabaseController)
+     */
     private fun saveMap(){
         // TODO
+
     }
 
     private fun shareMap(){

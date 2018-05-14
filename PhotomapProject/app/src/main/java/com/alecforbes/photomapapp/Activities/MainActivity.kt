@@ -40,7 +40,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         savedMapButton.setOnClickListener {
-
+            val savedPlacesIntent = Intent(this, SavedMaps::class.java)
+            startActivity(savedPlacesIntent)
         }
 
     }
