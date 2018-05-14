@@ -11,6 +11,10 @@ class SavedMaps : AppCompatActivity() {
         setContentView(R.layout.activity_saved_maps)
 
         title = "Your Saved Photomaps"
+
+        getSavedMapsFromDB()
+
+        populateSavedView()
     }
 
     private fun getSavedMapsFromDB(){
