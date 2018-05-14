@@ -3,20 +3,12 @@ package com.alecforbes.photomapapp.Activities.MapFragments
 import android.graphics.BitmapFactory
 import android.location.Location
 import android.os.Bundle
-import android.view.View
-import android.view.ViewGroup
-import com.alecforbes.photomapapp.Activities.Photomaps.CustomPhotomap
 import com.alecforbes.photomapapp.Model.ImageData
-import com.alecforbes.photomapapp.R
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
-import java.text.DateFormat
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.time.LocalDateTime
 import java.util.*
 
 

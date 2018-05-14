@@ -106,6 +106,7 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
             R.id.add_files_option -> getDataFromGallery()
             R.id.add_timeline_option -> addImagesToPreview()
             R.id.remove_timeline_option -> customMapFragment.clearPhotoTimeline()
+            R.id.save_photomap_option -> saveMap()
             R.id.clear_map_option -> clearViewsAndData()
             R.id.share_map_option -> shareMap()
         }
@@ -133,6 +134,10 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
         fileDataController.selectedData.clear()
         //mapLayout.removeView(imagePreviewPane)
         previewImageUriHashMap.clear() // Clear uri hashmap so old images can be added again
+    }
+
+    private fun saveMap(){
+        // TODO
     }
 
     private fun shareMap(){

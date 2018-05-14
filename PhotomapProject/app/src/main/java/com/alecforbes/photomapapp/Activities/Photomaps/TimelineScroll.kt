@@ -2,8 +2,6 @@ package com.alecforbes.photomapapp.Activities.Photomaps
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.alecforbes.photomapapp.R
-import kotlinx.android.synthetic.main.timeline_scroll.*
 
 /**
  * Created by Alec on 5/5/2018.

@@ -25,6 +25,12 @@
         />
 
     <item
+        android:id="@+id/save_photomap_option"
+        android:icon="@drawable/ic_save_action"
+        android:title="@string/save_photomap"
+        />
+
+    <item
         android:id="@+id/clear_map_option"
         android:icon="@drawable/ic_delete_action"
         android:title="@string/clear_photomap"
