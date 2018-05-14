@@ -1,6 +1,7 @@
 package com.alecforbes.photomapapp.Activities.Photomaps
 
 import android.content.Intent
+import android.database.sqlite.SQLiteDatabase
 import android.location.Location
 import android.location.LocationManager
 import android.os.Build
@@ -15,9 +16,8 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.alecforbes.photomapapp.Activities.MapFragments.CustomPhotomapFragment
-import com.alecforbes.photomapapp.Controllers.DatabaseController
+import com.alecforbes.photomapapp.Controllers.Database.DatabaseHelper
 import com.alecforbes.photomapapp.Controllers.FileDataController
-import com.alecforbes.photomapapp.Controllers.FirebaseController
 import com.alecforbes.photomapapp.R
 import com.dekoservidoni.omfm.OneMoreFabMenu
 //import com.google.android.gms.location.FusedLocationProviderClient
@@ -46,7 +46,7 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
     private val INTERVAL = 400.toLong()
     private val MIN_DISTANCE = 1000.toFloat()
 
-    private lateinit var databaseController: DatabaseController
+    private lateinit var databaseHelper: DatabaseHelper
 
     // Images stored in the preview pane
     private var previewImageUriHashMap = HashMap<String, String>()
@@ -141,10 +141,11 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
     }
 
     /**
-     * Save the map ImageData objects to an SQLite instance (controlled by the DatabaseController)
+     * Save the map ImageData objects to an SQLite instance (controlled by the DatabaseHelper)
      */
     private fun saveMap(){
         // TODO
+        databaseHelper = DatabaseHelper(this, "savedDBHelper", SQLiteDatabase.CursorFactory?, 1,)
 
     }
 

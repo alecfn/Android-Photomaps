@@ -1,4 +1,4 @@
-package com.alecforbes.photomapapp.Controllers
+package com.alecforbes.photomapapp.Controllers.Database
 
 import android.content.Context
 import android.database.sqlite.SQLiteOpenHelper
@@ -8,9 +8,9 @@ import android.database.sqlite.SQLiteDatabase
  * Created by Alec on 4/26/2018.
  */
 
-class DatabaseController(context: Context, name: String?,
-                         factory: SQLiteDatabase.CursorFactory?,
-                         version: Int):
+class DatabaseHelper(context: Context, name: String?,
+                     factory: SQLiteDatabase.CursorFactory?,
+                     version: Int):
                          SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION){
 
     // todo, this should be simple enough, save the image date in sqlite either raw in rows, or as the objects themselves (preferrably)
@@ -50,12 +50,21 @@ class DatabaseController(context: Context, name: String?,
 
     // todo useful http://androidopentutorials.com/android-sqlite-join-multiple-tables-example/
 
-    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        //TODO
     }
 
-    override fun onCreate(db: SQLiteDatabase?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun onCreate(db: SQLiteDatabase) {
+        db.execSQL(CREATE_PHOTOMAP_TABLE)
+        db.execSQL(CREATE_URIS_TABLE)
+    }
+
+    override fun onOpen(db: SQLiteDatabase) {
+        super.onOpen(db)
+        if (!db.isReadOnly){
+            // Must enable foreign key constraints
+            db.execSQL("PRAGMA foreign_keys=ON;")
+        }
     }
 
 
