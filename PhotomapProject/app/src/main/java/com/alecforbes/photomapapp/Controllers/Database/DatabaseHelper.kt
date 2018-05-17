@@ -29,7 +29,6 @@ class DatabaseHelper(context: Context):
 
         private const val COLUMN_MAP_ID = "_id"
         private const val COLUMN_MAPNAME = "mapname"
-        //private const val COLUMN_IMAGEURIS_ID = "uris_id"
 
         private const val TABLE_PHOTOMAPURIS = "photomapuris"
         private const val COLUMN_URI = "uris"
@@ -39,8 +38,6 @@ class DatabaseHelper(context: Context):
                 "CREATE TABLE $TABLE_SAVEDPHOTOMAPS(" +
                 "$COLUMN_MAP_ID INTEGER PRIMARY KEY, " +
                 "$COLUMN_MAPNAME TEXT)"
-                     //   "$COLUMN_IMAGEURIS_ID INT, " +
-                      //  "FOREIGN KEY($COLUMN_IMAGEURIS_ID) REFERENCES $TABLE_PHOTOMAPURIS (id))"
 
         private const val CREATE_URIS_TABLE =
                 "CREATE TABLE $TABLE_PHOTOMAPURIS(" +
@@ -51,7 +48,6 @@ class DatabaseHelper(context: Context):
         private const val SQL_DELETE_URI_ENTRIES = "DROP TABLES IF EXISTS $TABLE_PHOTOMAPURIS"
     }
 
-    // todo useful http://androidopentutorials.com/android-sqlite-join-multiple-tables-example/
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         db.execSQL(SQL_DELETE_URI_ENTRIES)
@@ -125,7 +121,53 @@ class DatabaseHelper(context: Context):
 
     }
 
-    fun getSavedMap(){
+    fun getSavedMaps(): ArrayList<String> {
+
+        val savedMaps = ArrayList<String>()
+
+        val SELECT_ALL_MAPS = "SELECT * FROM $TABLE_SAVEDPHOTOMAPS"
+
+        val db = this.readableDatabase
+        val cursor = db.rawQuery(SELECT_ALL_MAPS, null)
+
+        if(cursor != null && cursor.moveToNext()){
+            val mapName = cursor.getString(cursor.getColumnIndex(COLUMN_MAPNAME))
+            savedMaps.add(mapName)
+
+        }; while (cursor.moveToNext());
+
+        cursor.close()
+        return savedMaps
+
+    }
+
+    fun getSavedMapUris(savedMapName: String): ArrayList<Uri>{
+
+        val savedUris = ArrayList<Uri>()
+
+        // Get the ID index for the map, then look for uris with that value
+        val GET_ROWID_SQL = "SELECT _id FROM $TABLE_SAVEDPHOTOMAPS WHERE mapname='$savedMapName';"
+
+
+        val db = this.readableDatabase
+
+        val mapTableCursor = db.rawQuery(GET_ROWID_SQL, null)
+
+        val associatedMapId = mapTableCursor.getLong(mapTableCursor.getColumnIndexOrThrow("_id"))
+        mapTableCursor.close()
+
+        val SELECT_ALL_URIS_SQL = "SELECT * FROM $TABLE_PHOTOMAPURIS WHERE $COLUMN_ASSOCIATED_MAP='$associatedMapId';"
+        val uriTableCursor = db.rawQuery(SELECT_ALL_URIS_SQL, null)
+
+        if (uriTableCursor != null && uriTableCursor.moveToFirst()){
+
+            val uri = uriTableCursor.getString(uriTableCursor.getColumnIndex(COLUMN_URI))
+            savedUris.add(Uri.parse(uri))
+
+        }; while (uriTableCursor.moveToNext());
+
+        uriTableCursor.close()
+        return savedUris
 
     }
 

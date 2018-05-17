@@ -43,8 +43,6 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
 
     //private val imagePreviewPane = imagePreviewPane
     // Polling values for GPS update intervals
-    private val INTERVAL = 400.toLong()
-    private val MIN_DISTANCE = 1000.toFloat()
 
     // Images stored in the preview pane
     private var previewImageUriHashMap = HashMap<String, String>()
