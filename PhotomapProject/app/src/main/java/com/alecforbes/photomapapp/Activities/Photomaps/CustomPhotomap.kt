@@ -1,20 +1,17 @@
 package com.alecforbes.photomapapp.Activities.Photomaps
 
 import android.content.Intent
-import android.database.sqlite.SQLiteDatabase
 import android.location.Location
 import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.support.v4.app.ActivityCompat
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.Gravity
 import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.LinearLayout
+import android.widget.*
 import com.alecforbes.photomapapp.Activities.MapFragments.CustomPhotomapFragment
 import com.alecforbes.photomapapp.Controllers.Database.DatabaseHelper
 import com.alecforbes.photomapapp.Controllers.FileDataController
@@ -143,9 +140,34 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
      * Save the map ImageData objects to an SQLite instance (controlled by the DatabaseHelper)
      */
     private fun saveMap(){
-        // TODO should bring up a dialogue asking for the name, just temp name for now
 
-        databaseHelper.addMap("tempmapname", fileDataController.imageUris)
+        val saveInputBuilder = AlertDialog.Builder(this)
+
+
+        // Set up an alert dialog style box for the user to enter a name
+        val saveInputText = EditText(this)
+        // fixme padding
+
+        with(saveInputBuilder) {
+            saveInputBuilder.setTitle("Enter a name for your creation!")
+            val savedMapName = saveInputText.text.toString()
+
+            setPositiveButton("Save"){
+                dialog, posButton ->
+                dialog.dismiss()
+
+                databaseHelper.addMap(savedMapName, fileDataController.imageUris)
+            }
+
+            setNegativeButton("Cancel"){
+                dialog, negButton ->
+                dialog.dismiss()
+            }
+        }
+
+        val saveDialog = saveInputBuilder.create()
+        saveDialog.setView(saveInputText)
+        saveDialog.show()
 
     }
 
