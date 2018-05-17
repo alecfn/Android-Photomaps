@@ -75,9 +75,9 @@ class DatabaseHelper(context: Context):
     fun addMap(mapName: String, imageUris: ArrayList<Uri>){
         val db = writableDatabase
         val photomapValues = ContentValues()
-        //photomapValues.put("_id", 0)
+
         photomapValues.put("mapname", mapName)
-        //photomapValues.put("uris_id", 0)
+
 
         if (!checkMapExists(db, mapName)) {
             val newMapRowId = db.insert(TABLE_SAVEDPHOTOMAPS, null, photomapValues)
@@ -97,29 +97,31 @@ class DatabaseHelper(context: Context):
                     addURI(db, oldMapRowId, it)
                 }
 
-
             }
-
             cursor.close()
 
-
         }
-
-
 
     }
 
     fun addURI(db: SQLiteDatabase, mapRowId: Long, uri: Uri) {
 
-        val savedMapUris = ContentValues()
-
-        //savedMapUris.put("_id", 0)
+        val savedMapUri = ContentValues()
 
         // If the URI doesn't exist in the DB, add it otherwise ignore it
-        savedMapUris.put("savedmap", mapRowId)
-        savedMapUris.put("uris", uri.toString())
+        val GET_URI_SQL = "SELECT uris FROM $TABLE_PHOTOMAPURIS WHERE uris='$uri';"
 
-        db.insert(TABLE_PHOTOMAPURIS, null, savedMapUris)
+        val cursor = db.rawQuery(GET_URI_SQL, null)
+
+        if (cursor != null){
+            cursor.close()
+            return
+        }
+
+        savedMapUri.put("savedmap", mapRowId)
+        savedMapUri.put("uris", uri.toString())
+
+        db.insert(TABLE_PHOTOMAPURIS, null, savedMapUri)
 
     }
 
