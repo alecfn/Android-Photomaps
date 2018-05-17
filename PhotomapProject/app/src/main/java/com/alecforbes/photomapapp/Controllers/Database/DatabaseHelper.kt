@@ -1,17 +1,17 @@
 package com.alecforbes.photomapapp.Controllers.Database
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteOpenHelper
 import android.database.sqlite.SQLiteDatabase
+import android.net.Uri
 
 /**
  * Created by Alec on 4/26/2018.
  */
 
-class DatabaseHelper(context: Context, name: String?,
-                     factory: SQLiteDatabase.CursorFactory?,
-                     version: Int):
-                         SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION){
+class DatabaseHelper(context: Context):
+                         SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION){
 
     // todo, this should be simple enough, save the image date in sqlite either raw in rows, or as the objects themselves (preferrably)
     // todo, check if already exists, raise dialog if the data is to be overwritten etc.
@@ -23,35 +23,40 @@ class DatabaseHelper(context: Context, name: String?,
      * of the photomap, and a link (foreign key) to another table containing the list of URIs used.
      */
     companion object {
-        private val DATABASE_VERSION = 1
-        private val DATABASE_NAME = "savedPhotomapsdb"
-        val TABLE_SAVEDPHOTOMAPS = "savedphotomaps"
+        private const val DATABASE_VERSION = 1
+        private const val DATABASE_NAME = "savedPhotomapsdb"
+        private const val TABLE_SAVEDPHOTOMAPS = "savedphotomaps"
 
-        val COLUMN_ID = "_id"
-        val COLUMN_MAPNAME = "mapname"
-        val COLUMN_IMAGEURIS_ID = "uris_id"
+        private const val COLUMN_MAP_ID = "_id"
+        private const val COLUMN_MAPNAME = "mapname"
+        //private const val COLUMN_IMAGEURIS_ID = "uris_id"
 
-        val TABLE_PHOTOMAPURIS = "photomapuris"
-        val COLUMN_URI = "uris"
+        private const val TABLE_PHOTOMAPURIS = "photomapuris"
+        private const val COLUMN_URI = "uris"
+        private const val COLUMN_ASSOCIATED_MAP = "savedmap"
 
-        val CREATE_PHOTOMAP_TABLE =
+        private const val CREATE_PHOTOMAP_TABLE =
                 "CREATE TABLE $TABLE_SAVEDPHOTOMAPS(" +
-                "$COLUMN_ID INTEGER PRIMARY KEY, " +
-                "$COLUMN_MAPNAME TEXT, " +
-                        "$COLUMN_IMAGEURIS_ID INT, " +
-                        "FOREIGN KEY($COLUMN_IMAGEURIS_ID) REFERENCES $TABLE_PHOTOMAPURIS (id))"
+                "$COLUMN_MAP_ID INTEGER PRIMARY KEY, " +
+                "$COLUMN_MAPNAME TEXT)"
+                     //   "$COLUMN_IMAGEURIS_ID INT, " +
+                      //  "FOREIGN KEY($COLUMN_IMAGEURIS_ID) REFERENCES $TABLE_PHOTOMAPURIS (id))"
 
-        val CREATE_URIS_TABLE =
+        private const val CREATE_URIS_TABLE =
                 "CREATE TABLE $TABLE_PHOTOMAPURIS(" +
-                        "$COLUMN_ID INTEGER PRIMARY KEY, " +
-                        "$COLUMN_URI TEXT)"
+                        "$COLUMN_MAP_ID INTEGER PRIMARY KEY, " +
+                        "$COLUMN_URI TEXT, $COLUMN_ASSOCIATED_MAP INTEGER)"
 
+        private const val SQL_DELETE_PHOTOMAP_ENTRIES = "DROP TABLES IF EXISTS $TABLE_SAVEDPHOTOMAPS"
+        private const val SQL_DELETE_URI_ENTRIES = "DROP TABLES IF EXISTS $TABLE_PHOTOMAPURIS"
     }
 
     // todo useful http://androidopentutorials.com/android-sqlite-join-multiple-tables-example/
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        //TODO
+        db.execSQL(SQL_DELETE_URI_ENTRIES)
+        db.execSQL(SQL_DELETE_PHOTOMAP_ENTRIES)
+        onCreate(db)
     }
 
     override fun onCreate(db: SQLiteDatabase) {
@@ -67,9 +72,39 @@ class DatabaseHelper(context: Context, name: String?,
         }
     }
 
+    fun addMap(mapName: String, imageUris: ArrayList<Uri>){
+        val db = writableDatabase
+        val photomapValues = ContentValues()
+        //photomapValues.put("_id", 0)
+        photomapValues.put("mapname", mapName)
+        //photomapValues.put("uris_id", 0)
 
+        val newMapRowId = db.insert(TABLE_SAVEDPHOTOMAPS, null, photomapValues)
 
+        imageUris.forEach {
+            addURI(db, newMapRowId, it)
+        }
 
+    }
 
+    fun addURI(db: SQLiteDatabase, newMapRowId: Long, uri: Uri) {
+
+        val savedMapUris = ContentValues()
+
+        //savedMapUris.put("_id", 0)
+        savedMapUris.put("savedmap", newMapRowId)
+        savedMapUris.put("uris", uri.toString())
+
+        val newMapUrisId = db.insert(TABLE_PHOTOMAPURIS, null, savedMapUris)
+
+    }
+
+    fun getSavedMap(){
+
+    }
+
+    fun getURIs(){
+
+    }
 
 }

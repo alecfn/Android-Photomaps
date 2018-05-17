@@ -46,11 +46,11 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
     private val INTERVAL = 400.toLong()
     private val MIN_DISTANCE = 1000.toFloat()
 
-    private lateinit var databaseHelper: DatabaseHelper
-
     // Images stored in the preview pane
     private var previewImageUriHashMap = HashMap<String, String>()
     //private lateinit var fusedLocationClient: FusedLocationProviderClient
+
+    private  var databaseHelper = DatabaseHelper(this)
 
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -144,8 +144,9 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
      * Save the map ImageData objects to an SQLite instance (controlled by the DatabaseHelper)
      */
     private fun saveMap(){
-        // TODO
-        databaseHelper = DatabaseHelper(this, "savedDBHelper", SQLiteDatabase.CursorFactory?, 1,)
+        // TODO should bring up a dialogue asking for the name, just temp name for now
+
+        databaseHelper.addMap("tempmapname", fileDataController.imageUris)
 
     }
 
