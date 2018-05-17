@@ -109,10 +109,10 @@ class DatabaseHelper(context: Context):
 
         val cursor = db.rawQuery(GET_URI_SQL, null)
 
-        if (cursor != null){
-            cursor.close()
-            return
-        }
+        //if (cursor != null){ fixme, think this breaks cause its always null?
+        //    cursor.close()
+        //    return
+        //}
 
         savedMapUri.put("savedmap", mapRowId)
         savedMapUri.put("uris", uri.toString())
@@ -146,25 +146,26 @@ class DatabaseHelper(context: Context):
         val savedUris = ArrayList<Uri>()
 
         // Get the ID index for the map, then look for uris with that value
-        val GET_ROWID_SQL = "SELECT _id FROM $TABLE_SAVEDPHOTOMAPS WHERE mapname='$savedMapName';"
+        val GET_ROWID_SQL = "SELECT * FROM $TABLE_SAVEDPHOTOMAPS WHERE mapname='$savedMapName';"
 
 
         val db = this.readableDatabase
 
         val mapTableCursor = db.rawQuery(GET_ROWID_SQL, null)
 
+        mapTableCursor.moveToFirst()
         val associatedMapId = mapTableCursor.getLong(mapTableCursor.getColumnIndexOrThrow("_id"))
         mapTableCursor.close()
 
         val SELECT_ALL_URIS_SQL = "SELECT * FROM $TABLE_PHOTOMAPURIS WHERE $COLUMN_ASSOCIATED_MAP='$associatedMapId';"
         val uriTableCursor = db.rawQuery(SELECT_ALL_URIS_SQL, null)
 
-        if (uriTableCursor != null && uriTableCursor.moveToFirst()){
+        while (uriTableCursor.moveToNext()){
 
             val uri = uriTableCursor.getString(uriTableCursor.getColumnIndex(COLUMN_URI))
             savedUris.add(Uri.parse(uri))
 
-        }; while (uriTableCursor.moveToNext());
+        }
 
         uriTableCursor.close()
         return savedUris

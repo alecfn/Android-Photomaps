@@ -41,6 +41,7 @@ class FileDataController (private val contentResolver: ContentResolver){
             // TODO any more creation stuff should be done here
 
             val selectedImage = ImageData(file, bitmap, exif)
+            imageUris.add(it)
             selectedData.add(selectedImage)
         }
 
