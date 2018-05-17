@@ -109,10 +109,10 @@ class DatabaseHelper(context: Context):
 
         val cursor = db.rawQuery(GET_URI_SQL, null)
 
-        //if (cursor != null){ fixme, think this breaks cause its always null?
-        //    cursor.close()
-        //    return
-        //}
+        if (cursor.moveToFirst()){  // If the cursor can move, that uri is already stored
+            cursor.close()
+            return
+        }
 
         savedMapUri.put("savedmap", mapRowId)
         savedMapUri.put("uris", uri.toString())

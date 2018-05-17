@@ -134,6 +134,7 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
         mapLayout.removeView(findViewById(R.id.customTimeline))
         customMapFragment.clearMap() // Also clear drawables on the map fragment
         fileDataController.selectedData.clear()
+        fileDataController.imageUris.clear()
         //mapLayout.removeView(imagePreviewPane)
         previewImageUriHashMap.clear() // Clear uri hashmap so old images can be added again
     }
