@@ -79,11 +79,18 @@ class DatabaseHelper(context: Context):
         photomapValues.put("mapname", mapName)
         //photomapValues.put("uris_id", 0)
 
-        val newMapRowId = db.insert(TABLE_SAVEDPHOTOMAPS, null, photomapValues)
+        if (!checkMapExists(db, mapName)) {
+            val newMapRowId = db.insert(TABLE_SAVEDPHOTOMAPS, null, photomapValues)
 
-        imageUris.forEach {
-            addURI(db, newMapRowId, it)
+            imageUris.forEach {
+                addURI(db, newMapRowId, it)
+            }
+
+        } else {
+            // Map already exists, so just add any new URI values
         }
+
+
 
     }
 
@@ -105,6 +112,19 @@ class DatabaseHelper(context: Context):
 
     fun getURIs(){
 
+    }
+
+    private fun checkMapExists(db: SQLiteDatabase, mapName: String): Boolean {
+        val FIND_MAP_SQL = "SELECT mapname FROM $TABLE_SAVEDPHOTOMAPS WHERE mapname='$mapName';"
+
+        val cursor = db.rawQuery(FIND_MAP_SQL, null)
+
+        if (cursor.count > 0) {
+            cursor.close()
+            return true
+        } else
+            cursor.close()
+            return false
     }
 
 }
