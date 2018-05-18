@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v7.widget.CardView
 import android.widget.*
+import com.alecforbes.photomapapp.Activities.Photomaps.CustomPhotomap
 import com.alecforbes.photomapapp.Activities.Photomaps.PlacePhotomap
 import com.alecforbes.photomapapp.Controllers.Database.DatabaseHelper
 import com.alecforbes.photomapapp.Model.ImageData
@@ -57,17 +58,6 @@ class SavedMaps : AppCompatActivity() {
         savedMaps.forEach {
 
 
-            val savedName = TextView(this)
-            val savedPreview = ImageView(this)
-            val viewButton = Button(this, null, R.style.PrimaryFlatButton)
-
-            //savedName.text = it.key
-            //viewButton.text = getString(R.string.view)
-
-            //savedCardLinearLayout.addView(savedName)
-            //savedCardLinearLayout.addView(savedPreview)
-            //savedCardLinearLayout.addView(viewButton)
-
             // Now create a bitmap from the first uri to act as the image preview for the saved map
 
             // Only system apps can use MANAGE_DOCUMENTS permissions, so get the byte stream
@@ -79,12 +69,14 @@ class SavedMaps : AppCompatActivity() {
                 val savedMapAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, ArrayList(savedMaps.keys))
                 savedMapListView.adapter = savedMapAdapter
 
-                placesListView.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, i, l ->
+                savedMapListView.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, i, l ->
 
-                    //val selectedLoc = placesListView.getItemAtPosition(i) as String
-                    //val placePhotoMapIntent = Intent(this, PlacePhotomap::class.java)
-                    //placePhotoMapIntent.putExtra("SelectedLocation", selectedLoc)
-                    //startActivity(placePhotoMapIntent)
+                    // todo make this look pretty, maybe colour and different layout
+                    val selectedSavedMap = savedMapListView.getItemAtPosition(i) as String
+                    val savedMapIntent = Intent(this, CustomPhotomap::class.java)
+                    savedMapIntent.putExtra("SavedMapName", selectedSavedMap)
+                    startActivity(savedMapIntent)
+
                 }
 
             }catch (ex: Exception){
