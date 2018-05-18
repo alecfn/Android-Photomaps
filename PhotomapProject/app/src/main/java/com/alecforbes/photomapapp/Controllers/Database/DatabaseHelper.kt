@@ -130,11 +130,11 @@ class DatabaseHelper(context: Context):
         val db = this.readableDatabase
         val cursor = db.rawQuery(SELECT_ALL_MAPS, null)
 
-        if(cursor != null && cursor.moveToNext()){
-            val mapName = cursor.getString(cursor.getColumnIndex(COLUMN_MAPNAME))
+        while(cursor.moveToNext()){
+            val mapName = cursor.getString(cursor.getColumnIndex(COLUMN_MAPNAME.toString()))
             savedMaps.add(mapName)
 
-        }; while (cursor.moveToNext());
+        }
 
         cursor.close()
         return savedMaps

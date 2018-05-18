@@ -150,10 +150,11 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
 
         with(saveInputBuilder) {
             saveInputBuilder.setTitle("Enter a name for your creation!")
-            val savedMapName = saveInputText.text.toString()
+
 
             setPositiveButton("Save"){
                 dialog, posButton ->
+                val savedMapName = saveInputText.text.toString()
                 dialog.dismiss()
 
                 databaseHelper.addMap(savedMapName, fileDataController.imageUris)

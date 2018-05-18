@@ -1,5 +1,6 @@
 package com.alecforbes.photomapapp.Activities
 
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.alecforbes.photomapapp.Controllers.Database.DatabaseHelper
@@ -8,6 +9,7 @@ import com.alecforbes.photomapapp.R
 class SavedMaps : AppCompatActivity() {
 
     private var databaseHelper = DatabaseHelper(this)
+    private var savedMaps = HashMap<String, ArrayList<Uri>>() // This stores the map name and uris
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,9 +27,16 @@ class SavedMaps : AppCompatActivity() {
      * the maps again
      */
     private fun getSavedMapsFromDB(){
-        val savedMaps = databaseHelper.getSavedMaps()
-        val test = databaseHelper.getSavedMapUris(savedMaps[0])
-        print("")
+        val savedMapNames = databaseHelper.getSavedMaps()
+
+
+        savedMapNames.forEach {
+            val savedMapUris = databaseHelper.getSavedMapUris(it)
+            savedMaps.put(it,savedMapUris)
+            print("")
+        }
+        //val test = databaseHelper.getSavedMapUris(savedMaps[0])
+        //print("")
     }
 
     /**
