@@ -1,11 +1,11 @@
 package com.alecforbes.photomapapp.Activities.Photomaps
 
+//import com.google.android.gms.location.FusedLocationProviderClient
+//import com.google.android.gms.location.LocationServices
 import android.content.Intent
 import android.location.Location
 import android.location.LocationManager
-import android.os.Build
 import android.os.Bundle
-import android.support.annotation.RequiresApi
 import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
@@ -17,8 +17,6 @@ import com.alecforbes.photomapapp.Controllers.Database.DatabaseHelper
 import com.alecforbes.photomapapp.Controllers.FileDataController
 import com.alecforbes.photomapapp.R
 import com.dekoservidoni.omfm.OneMoreFabMenu
-//import com.google.android.gms.location.FusedLocationProviderClient
-//import com.google.android.gms.location.LocationServices
 import kotlinx.android.synthetic.main.activity_photomap.*
 import kotlinx.android.synthetic.main.timeline_scroll.*
 
@@ -48,7 +46,6 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
     private  var databaseHelper = DatabaseHelper(this)
 
 
-    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         title = "Custom Photomap"
@@ -229,7 +226,6 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
     /**
      * This function will handle the selected images a user adds to a photomap
      */
-    @RequiresApi(Build.VERSION_CODES.N) //todo versions
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -237,7 +233,7 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
 
             if (data != null) {
 
-                fileDataController.getSelectedImageUris(data)
+                fileDataController.getSelectedImageUrisFromIntent(data)
                 customMapFragment.setSelectedData(fileDataController.selectedData)
                 customMapFragment.addImagePreviews()
                 customMapFragment.sortByTimeTaken()

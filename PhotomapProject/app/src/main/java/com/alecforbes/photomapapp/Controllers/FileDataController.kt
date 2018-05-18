@@ -5,8 +5,6 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.media.ExifInterface
 import android.net.Uri
-import android.os.Build
-import android.support.annotation.RequiresApi
 import com.alecforbes.photomapapp.Model.ImageData
 import java.io.File
 
@@ -20,7 +18,7 @@ class FileDataController (private val contentResolver: ContentResolver){
     val newImageUris = ArrayList<Uri>() // Only newly selected URI values
     var selectedData = ArrayList<ImageData>()
 
-    @RequiresApi(Build.VERSION_CODES.N) // FIXME exif stream needs android N
+
     /**
      * For each image URI, build an input stream object, then an exif interface. This allows access
      * to exif data. The data can then stored as an ImageData object.
@@ -45,20 +43,19 @@ class FileDataController (private val contentResolver: ContentResolver){
             selectedData.add(selectedImage)
         }
 
-        // Clearing the array means image data isn't cfreated again in the above loop
+        // Clearing the array means image data isn't created again in the above loop
         newImageUris.clear()
 
     }
 
 
-    @RequiresApi(Build.VERSION_CODES.N)
     /**
      * Get the URI of images selected in the gallery application.
      *
      * As the data being looped through comes from the selection intent, only those images are
      * looped through to get URI data, not images that are already selected.
      */
-    fun getSelectedImageUris(fileData: Intent){
+    fun getSelectedImageUrisFromIntent(fileData: Intent){
 
         if (fileData.clipData != null) {
 
@@ -82,6 +79,17 @@ class FileDataController (private val contentResolver: ContentResolver){
         }
 
         createImageData()
+
+    }
+
+    fun getSelectedImageUrisFromArray(fileData: ArrayList<Uri>){
+
+        fileData.forEach {
+            newImageUris.add(it)
+        }
+
+        createImageData()
+
 
     }
 

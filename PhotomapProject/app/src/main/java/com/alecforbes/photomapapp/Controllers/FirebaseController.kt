@@ -1,8 +1,6 @@
 package com.alecforbes.photomapapp.Controllers
 
 import android.content.ContentResolver
-import android.os.Build
-import android.support.annotation.RequiresApi
 import com.alecforbes.photomapapp.Activities.Photomaps.PlacePhotomap
 import com.alecforbes.photomapapp.Model.ImageData
 import com.alecforbes.photomapapp.Model.ImageDataCreator
@@ -29,7 +27,6 @@ class FirebaseController(content: ContentResolver,
     /**
      * Get the images from firebase for the selected location and return the array of URIs
      */
-    @RequiresApi(Build.VERSION_CODES.N)
     fun retrieveSelectedPlaceImages(placeName: String) {
 
         // Handle cases to download the correct data

@@ -4,8 +4,6 @@ import android.content.ContentResolver
 import android.graphics.BitmapFactory
 import android.media.ExifInterface
 import android.net.Uri
-import android.os.Build
-import android.support.annotation.RequiresApi
 import java.io.File
 
 /**
@@ -21,7 +19,6 @@ class  ImageDataCreator( private val content: ContentResolver,
      * Place map Image data objects need to be created differently from a CustomPhotomap, as they
      * are not selected via intents
      */
-    @RequiresApi(Build.VERSION_CODES.N) // Todo api levels
 
     fun createIncludedImageData(): ArrayList<ImageData> {
 

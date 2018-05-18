@@ -2,6 +2,7 @@ package com.alecforbes.photomapapp.Activities.MapFragments
 
 import android.graphics.BitmapFactory
 import android.location.Location
+import android.net.Uri
 import android.os.Bundle
 import com.alecforbes.photomapapp.Model.ImageData
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -10,6 +11,8 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 /**
@@ -86,6 +89,13 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
             args.putParcelableArrayList("selectedData", images)
             fragment.arguments = args
             fragment.isPlaceMap = true
+            return fragment
+        }
+
+        fun newSavedInstance(images: HashMap<String, ArrayList<Uri>>): CustomPhotomapFragment{
+            val fragment = CustomPhotomapFragment()
+            val args = Bundle()
+
             return fragment
         }
     }

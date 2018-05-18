@@ -1,8 +1,6 @@
 package com.alecforbes.photomapapp.Activities.Photomaps
 
-import android.os.Build
 import android.os.Bundle
-import android.support.annotation.RequiresApi
 import android.support.v7.app.AppCompatActivity
 import com.alecforbes.photomapapp.Activities.MapFragments.CustomPhotomapFragment
 import com.alecforbes.photomapapp.Controllers.FirebaseController
@@ -15,7 +13,6 @@ import com.alecforbes.photomapapp.R
  */
 class PlacePhotomap : AppCompatActivity() {
 
-    @RequiresApi(Build.VERSION_CODES.N)// TODO api level
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_place_photomap)
