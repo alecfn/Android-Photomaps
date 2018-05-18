@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.net.Uri
+import java.io.InputStream
 
 /**
  * Created by Alec on 4/26/2018.
@@ -114,6 +115,7 @@ class DatabaseHelper(context: Context):
             return
         }
 
+
         savedMapUri.put("savedmap", mapRowId)
         savedMapUri.put("uris", uri.toString())
 
@@ -131,7 +133,7 @@ class DatabaseHelper(context: Context):
         val cursor = db.rawQuery(SELECT_ALL_MAPS, null)
 
         while(cursor.moveToNext()){
-            val mapName = cursor.getString(cursor.getColumnIndex(COLUMN_MAPNAME.toString()))
+            val mapName = cursor.getString(cursor.getColumnIndex(COLUMN_MAPNAME))
             savedMaps.add(mapName)
 
         }
@@ -177,7 +179,7 @@ class DatabaseHelper(context: Context):
     }
 
     fun deleteMap(){
-
+        // todo
     }
 
     private fun checkMapExists(db: SQLiteDatabase, mapName: String): Boolean {

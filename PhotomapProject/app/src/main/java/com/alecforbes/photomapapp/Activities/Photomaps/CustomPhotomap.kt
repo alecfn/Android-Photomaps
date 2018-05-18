@@ -110,7 +110,7 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
 
     private fun getDataFromGallery(){
 
-        val customSelectIntent = Intent(Intent.ACTION_PICK)
+        val customSelectIntent = Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         customSelectIntent.type = "image/*"
         customSelectIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
         customSelectIntent.action = Intent.ACTION_GET_CONTENT

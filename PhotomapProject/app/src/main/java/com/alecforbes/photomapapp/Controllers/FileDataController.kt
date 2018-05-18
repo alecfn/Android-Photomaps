@@ -74,7 +74,6 @@ class FileDataController (private val contentResolver: ContentResolver){
             // If the user only selects one image, clipData is unused and will be null
             val uri = fileData.data
             newImageUris.add(uri)
-            // imageUris.add(uri)
 
         }
 
@@ -82,14 +81,17 @@ class FileDataController (private val contentResolver: ContentResolver){
 
     }
 
+    /**
+     * When creating a map again from saved data, the URI data comes from an ArrayList
+     */
     fun getSelectedImageUrisFromArray(fileData: ArrayList<Uri>){
 
         fileData.forEach {
+            //val realUri = contentResolver.openInputStream(it)
             newImageUris.add(it)
         }
 
         createImageData()
-
 
     }
 
