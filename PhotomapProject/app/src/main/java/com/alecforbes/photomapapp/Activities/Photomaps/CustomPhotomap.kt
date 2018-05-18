@@ -148,6 +148,13 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
         val saveInputText = EditText(this)
         // fixme padding
 
+        // Toast alert to tell user to add images
+        if (fileDataController.imageUris.size == 0) {
+            Toast.makeText(this@CustomPhotomap, "There are no images to save!",
+                    Toast.LENGTH_LONG).show()
+            return
+        }
+
         with(saveInputBuilder) {
             saveInputBuilder.setTitle("Enter a name for your creation!")
 
@@ -157,7 +164,12 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
                 val savedMapName = saveInputText.text.toString()
                 dialog.dismiss()
 
-                databaseHelper.addMap(savedMapName, fileDataController.imageUris)
+                // If there's no images added, don't save
+                if (fileDataController.imageUris.size > 0) {
+                    databaseHelper.addMap(savedMapName, fileDataController.imageUris)
+                } else {
+                    // todo do something appropriate
+                }
             }
 
             setNegativeButton("Cancel"){

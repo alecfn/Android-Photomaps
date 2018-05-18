@@ -60,7 +60,7 @@ class SavedMaps : AppCompatActivity() {
 
             val savedName = TextView(this)
             val savedPreview = ImageView(this)
-            val viewButton = Button(this)
+            val viewButton = Button(this, null, R.style.PrimaryFlatButton)
 
             savedName.text = it.key
             viewButton.text = getString(R.string.view)
