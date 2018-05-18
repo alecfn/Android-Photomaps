@@ -72,15 +72,15 @@ class SavedMaps : AppCompatActivity() {
             // Now create a bitmap from the first uri to act as the image preview for the saved map
 
             // Only system apps can use MANAGE_DOCUMENTS permissions, so get the byte stream
-            val previewUriStream = contentResolver.openInputStream(it.value[0])
+            //val previewUriStream = contentResolver.openInputStream(it.value[0])
 
-            val byteData = previewUriStream.readBytes()
+            //val byteData = previewUriStream.readBytes()
 
-            previewUriStream.close()
+            //previewUriStream.close()
 
-            val previewBitmap = BitmapFactory.decodeByteArray(byteData, 0, byteData.size)
+            //val previewBitmap = BitmapFactory.decodeByteArray(byteData, 0, byteData.size)
 
-            savedPreview.setImageBitmap(previewBitmap)
+            //savedPreview.setImageBitmap(previewBitmap)
 
 
         }

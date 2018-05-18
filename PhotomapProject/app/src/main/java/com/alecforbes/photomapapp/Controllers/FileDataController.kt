@@ -45,7 +45,7 @@ class FileDataController (private val contentResolver: ContentResolver){
             selectedData.add(selectedImage)
         }
 
-        // Clearing the array means image data isn't created again in the above loop
+        // Clearing the array means image data isn't cfreated again in the above loop
         newImageUris.clear()
 
     }
@@ -77,7 +77,7 @@ class FileDataController (private val contentResolver: ContentResolver){
             // If the user only selects one image, clipData is unused and will be null
             val uri = fileData.data
             newImageUris.add(uri)
-            imageUris.add(uri)
+            // imageUris.add(uri)
 
         }
 
