@@ -5,6 +5,8 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.media.ExifInterface
 import android.net.Uri
+import android.support.v4.provider.DocumentFile
+import android.widget.ImageView
 import com.alecforbes.photomapapp.Model.ImageData
 import java.io.File
 
@@ -88,7 +90,11 @@ class FileDataController (private val contentResolver: ContentResolver){
 
         fileData.forEach {
             //val realUri = contentResolver.openInputStream(it)
-            newImageUris.add(it)
+            //val test2 = DocumentFile.fromTreeUri(contentResolve, Uri.fromFile(File(it.path.toString())))
+            val uriFromPath = Uri.fromFile(File(it.toString()))
+            newImageUris.add(uriFromPath)
+            val test = File(uriFromPath.path)
+            print("")
         }
 
         createImageData()
