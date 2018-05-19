@@ -16,6 +16,7 @@ import android.widget.*
 import com.alecforbes.photomapapp.Activities.MapFragments.CustomPhotomapFragment
 import com.alecforbes.photomapapp.Controllers.Database.DatabaseHelper
 import com.alecforbes.photomapapp.Controllers.FileDataController
+import com.alecforbes.photomapapp.Controllers.ImageGeocoder
 import com.alecforbes.photomapapp.Model.ImageData
 import com.alecforbes.photomapapp.R
 import com.dekoservidoni.omfm.OneMoreFabMenu
@@ -36,6 +37,7 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
     lateinit var customMapFragment: CustomPhotomapFragment
     private var locationManager: LocationManager? = null
     private var lastLoc: Location? = null
+
     //private val locationListener: LocationListener? = null
 
     //private val imagePreviewPane = imagePreviewPane
@@ -170,6 +172,7 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
                 // If there's no images added, don't save
                 if (fileDataController.imageUris.size > 0) {
                     databaseHelper.addMap(savedMapName, fileDataController.imageUris)
+
                 } else {
                     // todo do something appropriate
                 }
@@ -229,7 +232,11 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
 
                     // Only get the address data if is not already collected
                     if (imageData.realAddress == null){
-
+                        val lat = imageData.latitude.toDouble()
+                        val long = imageData.longitude.toDouble()
+                        val imageGeocoder = ImageGeocoder(lat, long, applicationContext)
+                        val imageAddress = imageGeocoder.getAddressFromLocation()
+                        imageData.realAddress = imageAddress
                     }
 
                     imageAddressValue.text = imageData.realAddress
@@ -247,12 +254,10 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
         customMapFragment.addPhotoTimeline()
     }
 
-    fun createIndvView(imageData: ImageData){
+    private fun createIndvView(imageData: ImageData){
 
         // Fill the included Image View with the data of the image clicked in timeline
         indvImageView.setImageBitmap(imageData.getImageBitmap())
-
-        imageAddressValue.text = "REVERSE GEOCDOE"
 
         if (imageData.dateTimeTaken != "0 0") { // 0 0 is returned when no timestamp was found
 
