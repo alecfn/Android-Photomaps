@@ -6,6 +6,7 @@ import android.media.ExifInterface
 import android.media.ExifInterface.*
 import android.os.Parcelable
 import com.google.android.gms.maps.model.LatLng
+import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 import kotlinx.android.parcel.RawValue
 import java.io.ByteArrayOutputStream
@@ -19,7 +20,7 @@ import java.io.File
 @Parcelize
 data class ImageData(val file: File,
                      private var bitmap: Bitmap,
-                     private val exifInterface: @RawValue ExifInterface,
+                     @IgnoredOnParcel private val exifInterface: @RawValue ExifInterface,
                      private var latitude: Float=0F,
                      private var longitude: Float=0F,
                      var dateTimeTaken: String="",

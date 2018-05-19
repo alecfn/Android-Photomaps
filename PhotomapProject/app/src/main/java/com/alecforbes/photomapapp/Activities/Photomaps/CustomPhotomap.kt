@@ -3,6 +3,7 @@ package com.alecforbes.photomapapp.Activities.Photomaps
 //import com.google.android.gms.location.FusedLocationProviderClient
 //import com.google.android.gms.location.LocationServices
 import android.content.Intent
+import android.graphics.Bitmap
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
@@ -12,6 +13,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.*
+import com.alecforbes.photomapapp.Activities.IndividualImage
 import com.alecforbes.photomapapp.Activities.MapFragments.CustomPhotomapFragment
 import com.alecforbes.photomapapp.Controllers.Database.DatabaseHelper
 import com.alecforbes.photomapapp.Controllers.FileDataController
@@ -19,7 +21,9 @@ import com.alecforbes.photomapapp.R
 import com.dekoservidoni.omfm.OneMoreFabMenu
 import kotlinx.android.synthetic.main.activity_photomap.*
 import kotlinx.android.synthetic.main.timeline_scroll.*
-
+import kotlinx.android.synthetic.main.individual_image_view.*
+import kotlinx.android.synthetic.main.individual_image_view.view.*
+import java.io.ByteArrayOutputStream
 
 // FIXME Open keyword means this class can be inherited from, needed?
 open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
@@ -89,6 +93,7 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
         // Call bring to front on the other elements or the map will draw on top and hide them
         photomapActionButton.bringToFront()
         customTimeline.bringToFront()
+
     }
 
 
@@ -196,25 +201,47 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
      */
     private fun addImagesToPreview(){
 
-        fileDataController.selectedData.forEach{
+        fileDataController.selectedData.forEach{ imageData ->
 
-            val imageUri = it.file.absolutePath.toString()
+            val imageUri = imageData.file.absolutePath.toString()
 
             // Only add the image to the preview if it isn't already on the map
             if (!previewImageUriHashMap.containsKey(imageUri)) {
+
                 val layout = LinearLayout(applicationContext)
                 val layoutParams = ViewGroup.LayoutParams(200, 200)
                 layout.layoutParams = layoutParams
                 layout.gravity = Gravity.CENTER
 
                 // Each image should be a button to tap to bring up a larger preview
-                val imageView = ImageButton(applicationContext) // todo button listeners
-                imageView.layoutParams = layoutParams
-                imageView.scaleType = ImageView.ScaleType.CENTER_CROP
-                imageView.setImageBitmap(it.getImageBitmap()) //fixme not thumbnail bitmap
-                // todo organise by date taken, dont let duplicates appear
+                val imageButton = ImageButton(applicationContext) // todo button listeners
+                imageButton.layoutParams = layoutParams
+                imageButton.scaleType = ImageView.ScaleType.CENTER_CROP
+                imageButton.setImageBitmap(imageData.getImageBitmap()) //fixme not thumbnail bitmap
 
-                imagePreviewPane.addView(imageView)
+                // Set up the listener for clicking to create a more detailed view
+
+                imageButton.setOnClickListener {
+
+                    val indvImageIntent = Intent(this, IndividualImage::class.java)
+                    // In this case, only pass the relevant data fields in the intent, as parceling
+                    // an exif interface unfortunately doesn't work in Kotlin and the Bitmap may be
+                    // too large, so compress it
+
+                    val byteStream = ByteArrayOutputStream()
+                    imageData.getImageBitmap().compress(
+                            Bitmap.CompressFormat.PNG, 100, byteStream)
+                    val compressedBitmapBytes = byteStream.toByteArray()
+
+                    indvImageIntent.putExtra("CompressedImageBitmap", compressedBitmapBytes)
+                    indvImageIntent.putExtra("DateTimeTaken", imageData.dateTimeTaken)
+                    indvImageIntent.putExtra("LatLong", imageData.latLong)
+
+                    startActivity(indvImageIntent)
+
+                }
+
+                imagePreviewPane.addView(imageButton)
                 previewImageUriHashMap[imageUri] = ""
             }
 
