@@ -4,12 +4,18 @@ import android.graphics.BitmapFactory
 import android.location.Location
 import android.net.Uri
 import android.os.Bundle
+import android.support.constraint.ConstraintLayout
+import android.view.View
+import android.widget.FrameLayout
+import com.alecforbes.photomapapp.Activities.Photomaps.CustomPhotomap
 import com.alecforbes.photomapapp.Model.ImageData
+import com.alecforbes.photomapapp.R
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import kotlinx.android.synthetic.main.activity_photomap.*
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -23,7 +29,7 @@ import kotlin.collections.HashMap
  * classes are final in Kotlin)
  */
 
-open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
+open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private lateinit var photomap: GoogleMap
     private lateinit var lastLoc: Location
@@ -227,5 +233,13 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback {
         selectedImages.sort()
 
     }
+
+    override fun onMarkerClick(marker: Marker?): Boolean {
+        // tODO
+
+        return true
+
+    }
+
 
 }

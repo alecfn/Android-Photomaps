@@ -16,6 +16,7 @@ import android.widget.*
 import com.alecforbes.photomapapp.Activities.MapFragments.CustomPhotomapFragment
 import com.alecforbes.photomapapp.Controllers.Database.DatabaseHelper
 import com.alecforbes.photomapapp.Controllers.FileDataController
+import com.alecforbes.photomapapp.Model.ImageData
 import com.alecforbes.photomapapp.R
 import com.dekoservidoni.omfm.OneMoreFabMenu
 import kotlinx.android.synthetic.main.activity_photomap.*
@@ -223,19 +224,17 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
 
                 imageButton.setOnClickListener {
 
-                    // Fill the included Image View with the data of the image clicked in timeline
-                    indvImageView.setImageBitmap(imageData.getImageBitmap())
+                    // Get the address of the image from the lat long
+                    // TODO maybe store it, and only get if it's not already stored in the imagedata
 
-                    imageAddressValue.text = "REVERSE GEOCDOE"
+                    // Only get the address data if is not already collected
+                    if (imageData.realAddress == null){
 
-                    if (imageData.dateTimeTaken != "0 0") {
-                        imageTimeTakenValue.text = imageData.dateTimeTaken
-                    }else{
-                        imageTimeTakenValue.text = "Unknown"
                     }
 
-                    photomapIndvImageView.visibility = View.VISIBLE
-                    photomapIndvImageView.bringToFront()
+                    imageAddressValue.text = imageData.realAddress
+
+                    createIndvView(imageData)
 
                 }
 
@@ -246,6 +245,27 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
         }
         // Now draw lines between the images
         customMapFragment.addPhotoTimeline()
+    }
+
+    fun createIndvView(imageData: ImageData){
+
+        // Fill the included Image View with the data of the image clicked in timeline
+        indvImageView.setImageBitmap(imageData.getImageBitmap())
+
+        imageAddressValue.text = "REVERSE GEOCDOE"
+
+        if (imageData.dateTimeTaken != "0 0") { // 0 0 is returned when no timestamp was found
+
+            // Split the date time into the time and data values
+            val splitDateTime = imageData.dateTimeTaken.split(" ")
+            dateTakenValue.text = splitDateTime[0]
+            imageTimeTakenValue.text = splitDateTime[1]
+        }else{
+            imageTimeTakenValue.text = "Unknown"
+        }
+
+        photomapIndvImageView.visibility = View.VISIBLE
+        photomapIndvImageView.bringToFront()
     }
 
 

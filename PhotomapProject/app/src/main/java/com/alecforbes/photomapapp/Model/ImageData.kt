@@ -27,6 +27,7 @@ data class ImageData(val file: File,
                      var timeTaken: String="",
                      var latLong: LatLng= LatLng(0.0, 0.0),
                      var unixTime: Long = 0L,
+                     var realAddress: String? = null,
                      private var thumbnailData: ByteArray= byteArrayOf()): Parcelable, Comparable<ImageData> {
 
     // TODO time taken probably isnt a string
