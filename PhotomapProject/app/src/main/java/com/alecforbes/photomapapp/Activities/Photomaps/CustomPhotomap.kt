@@ -3,7 +3,6 @@ package com.alecforbes.photomapapp.Activities.Photomaps
 //import com.google.android.gms.location.FusedLocationProviderClient
 //import com.google.android.gms.location.LocationServices
 import android.content.Intent
-import android.graphics.Bitmap
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
@@ -11,18 +10,17 @@ import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.Gravity
+import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import com.alecforbes.photomapapp.Activities.IndividualImage
 import com.alecforbes.photomapapp.Activities.MapFragments.CustomPhotomapFragment
 import com.alecforbes.photomapapp.Controllers.Database.DatabaseHelper
 import com.alecforbes.photomapapp.Controllers.FileDataController
-import com.alecforbes.photomapapp.Model.ImageData
 import com.alecforbes.photomapapp.R
 import com.dekoservidoni.omfm.OneMoreFabMenu
 import kotlinx.android.synthetic.main.activity_photomap.*
+import kotlinx.android.synthetic.main.individual_image_view.*
 import kotlinx.android.synthetic.main.timeline_scroll.*
-import java.io.ByteArrayOutputStream
 
 // FIXME Open keyword means this class can be inherited from, needed?
 open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
@@ -223,6 +221,18 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
                 imageButton.setOnClickListener {
 
                     //createIndividualView(imageData)
+                    indvImageView.setImageBitmap(imageData.getImageBitmap())
+
+                    imageAddressValue.text = "REVERSE GEOCDOE"
+
+                    if (imageData.dateTimeTaken != "0 0") {
+                        imageTimeTakenValue.text = imageData.dateTimeTaken
+                    }else{
+                        imageTimeTakenValue.text = "Unknown"
+                    }
+
+                    photomapIndvImageView.visibility = View.VISIBLE
+                    photomapIndvImageView.bringToFront()
 
                 }
 
@@ -235,24 +245,6 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
         customMapFragment.addPhotoTimeline()
     }
 
-    private fun createIndividualView(imageData: ImageData){
-        val indvImageIntent = Intent(applicationContext, IndividualImage::class.java)
-        // In this case, only pass the relevant data fields in the intent, as parceling
-        // an exif interface unfortunately doesn't work in Kotlin and the Bitmap may be
-        // too large, so compress it
-
-        //val byteStream = ByteArrayOutputStream()
-       // imageData.getImageBitmap().compress(
-               // Bitmap.CompressFormat.PNG, 10, byteStream)
-       // val compressedBitmapBytes = byteStream.toByteArray()
-
-        //indvImageIntent.putExtra("CompressedImageBitmap", compressedBitmapBytes)
-        indvImageIntent.putExtra("ImageFile", imageData.file)
-        indvImageIntent.putExtra("DateTimeTaken", imageData.dateTimeTaken)
-        indvImageIntent.putExtra("LatLong", imageData.latLong)
-
-        startActivity(indvImageIntent)
-    }
 
     /**
      * This function will handle the selected images a user adds to a photomap

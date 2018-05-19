@@ -25,6 +25,13 @@
         app:layout_constraintTop_toTopOf="parent"
         class="com.google.android.gms.maps.SupportMapFragment" />
 
+    <include
+        android:id="@+id/photomapIndvImageView"
+        layout="@layout/individual_image_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
     <!-- Uses the following library https://github.com/DeKoServidoni/OMFM -->
     <com.dekoservidoni.omfm.OneMoreFabMenu
         android:id="@+id/photomapActionButton"
