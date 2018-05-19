@@ -8,20 +8,32 @@
     android:elevation="6dp">
 
     <ImageView
+        android:id="@+id/whiteBackground"
+        android:layout_width="373dp"
+        android:layout_height="338dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="64dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@color/cardview_light_background" />
+
+    <ImageView
         android:id="@+id/indvImageView"
-        android:layout_width="363dp"
-        android:layout_height="206dp"
+        android:layout_width="351dp"
+        android:layout_height="189dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/whiteBackground"
         app:srcCompat="@color/colorPrimary" />
 
     <TextView
         android:id="@+id/imageAddressTitle"
+        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="19dp"
         android:layout_marginStart="8dp"
@@ -44,6 +56,7 @@
 
     <TextView
         android:id="@+id/imageTimeTakenTitle"
+        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -64,6 +77,29 @@
         app:layout_constraintStart_toEndOf="@+id/imageTimeTakenTitle"
         app:layout_constraintTop_toBottomOf="@+id/imageAddressValue" />
 
+    <TextView
+        android:id="@+id/dateTakenTitle"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Date Taken:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageTimeTakenTitle" />
+
+    <TextView
+        android:id="@+id/dateTakenValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="dateValue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/dateTakenTitle"
+        app:layout_constraintTop_toBottomOf="@+id/imageTimeTakenValue" />
+
     <Button
         android:id="@+id/viewInMapsButton"
         android:layout_width="wrap_content"
@@ -72,7 +108,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="View In Maps"
+        android:theme="@style/PrimaryFlatButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageTimeTakenTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/dateTakenTitle" />
+
 </android.support.constraint.ConstraintLayout>

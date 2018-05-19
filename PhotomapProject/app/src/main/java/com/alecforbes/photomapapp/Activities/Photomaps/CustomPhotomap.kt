@@ -82,6 +82,8 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
                 .add(R.id.photomapFrameLayout, customMapFragment)
                 .commit()
 
+
+
     }
 
     override fun onResumeFragments() {
@@ -92,6 +94,7 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
         customTimeline.bringToFront()
 
     }
+
 
 
     /**
@@ -220,7 +223,7 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
 
                 imageButton.setOnClickListener {
 
-                    //createIndividualView(imageData)
+                    // Fill the included Image View with the data of the image clicked in timeline
                     indvImageView.setImageBitmap(imageData.getImageBitmap())
 
                     imageAddressValue.text = "REVERSE GEOCDOE"
