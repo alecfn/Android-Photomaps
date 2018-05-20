@@ -58,9 +58,8 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
         super.onCreate(savedInstanceState)
         title = "Custom Photomap"
 
-        fileDataController = FileDataController(contentResolver)
-
-        this.getScreenResolution()
+        this.setScreenResolution()
+        fileDataController = FileDataController(contentResolver, screenSize!!)
 
         setContentView(R.layout.activity_photomap)
 
@@ -103,7 +102,6 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
         customTimeline.bringToFront()
 
     }
-
 
 
     /**
@@ -220,13 +218,13 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
 
                 val layout = LinearLayout(applicationContext)
 
-                var THUMBNAIL_SIZES = 300
+                var PREVIEW_THUMBNAIL_SIZE = 300
 
                 if (screenSize!! > 2073600){  // Greater than 1080p
-                    THUMBNAIL_SIZES = 500
+                    PREVIEW_THUMBNAIL_SIZE = 500
                 }
 
-                val layoutParams = ViewGroup.LayoutParams(THUMBNAIL_SIZES, THUMBNAIL_SIZES)
+                val layoutParams = ViewGroup.LayoutParams(PREVIEW_THUMBNAIL_SIZE, PREVIEW_THUMBNAIL_SIZE)
                 layout.layoutParams = layoutParams
                 layout.gravity = Gravity.CENTER_HORIZONTAL
 
@@ -337,7 +335,7 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
      * Helper function to get the resolution of a screen. If greater than 1080p, the image
      * thumbnails and timeline photos should be larger.
      */
-    private fun getScreenResolution(){
+    private fun setScreenResolution(){
         val displayMetrics = DisplayMetrics()
 
         windowManager.defaultDisplay.getMetrics(displayMetrics)

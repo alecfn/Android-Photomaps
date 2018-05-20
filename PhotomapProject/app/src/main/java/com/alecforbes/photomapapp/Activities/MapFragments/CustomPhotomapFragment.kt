@@ -5,6 +5,7 @@ import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import com.alecforbes.photomapapp.Activities.Photomaps.CustomPhotomap
 import com.alecforbes.photomapapp.Model.ImageData
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -28,6 +29,7 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Goo
 
     private lateinit var photomap: GoogleMap
     private lateinit var lastLoc: Location
+    private var screenSize: Int? = null
 
     // Store uris as a hashmap to check if added already (Value is unused, just the key)
     private var imageUriHashMap = HashMap<String, String>()

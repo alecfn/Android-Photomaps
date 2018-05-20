@@ -12,10 +12,11 @@ import java.io.File
  * Created by Alec on 5/8/2018.
  */
 
-class FileDataController (private val contentResolver: ContentResolver){
+class FileDataController (private val contentResolver: ContentResolver,
+                          private val screenSize: Int){
 
     val imageUris = ArrayList<Uri>() // All selected image URI values
-    val newImageUris = ArrayList<Uri>() // Only newly selected URI values
+    private val newImageUris = ArrayList<Uri>() // Only newly selected URI values
     var selectedData = ArrayList<ImageData>()
 
 
@@ -38,7 +39,7 @@ class FileDataController (private val contentResolver: ContentResolver){
 
             // TODO any more creation stuff should be done here
 
-            val selectedImage = ImageData(file, bitmap, exif)
+            val selectedImage = ImageData(file, bitmap, exif, screenSize = screenSize)
             imageUris.add(it)
             selectedData.add(selectedImage)
         }

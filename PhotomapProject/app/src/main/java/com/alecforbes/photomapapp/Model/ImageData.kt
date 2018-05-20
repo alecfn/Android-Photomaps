@@ -29,7 +29,8 @@ data class ImageData(val file: File,
                      var latLong: LatLng= LatLng(0.0, 0.0),
                      var unixTime: Long = 0L,
                      var realAddress: String? = null,
-                     private var thumbnailData: ByteArray= byteArrayOf()): Parcelable, Comparable<ImageData> {
+                     private var thumbnailData: ByteArray= byteArrayOf(),
+                     private var screenSize: Int? = null): Parcelable, Comparable<ImageData> {
 
     // TODO time taken probably isnt a string
 
@@ -88,7 +89,13 @@ data class ImageData(val file: File,
 
         try {
 
-            val THUMBNAIL_SIZE = 200 // Controls the size of displayed thumbnails on map fragments
+
+            var THUMBNAIL_SIZE = 250 // Controls the size of displayed thumbnails on map fragments
+
+            if (screenSize!! > 2073600){  // Greater than 1080p
+                THUMBNAIL_SIZE = 350
+            }
+
             val thumbnail = Bitmap.createScaledBitmap(bitmap, THUMBNAIL_SIZE, THUMBNAIL_SIZE, false)
 
             val outputStream = ByteArrayOutputStream()

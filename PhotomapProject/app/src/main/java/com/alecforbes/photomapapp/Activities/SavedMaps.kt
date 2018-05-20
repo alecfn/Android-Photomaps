@@ -74,7 +74,7 @@ class SavedMaps : AppCompatActivity() {
                     val selectedMapImages = savedMaps[selectedSavedMap]
 
                     // Now create the image data objects
-                    val savedFileData = FileDataController(contentResolver)
+                    val savedFileData = FileDataController(contentResolver, screenSize = 0)  // todo screen size here?
                     savedFileData.getSelectedImageUrisFromArray(selectedMapImages!!)
                     //val selectedImages = ArrayList<ImageData>()
 
