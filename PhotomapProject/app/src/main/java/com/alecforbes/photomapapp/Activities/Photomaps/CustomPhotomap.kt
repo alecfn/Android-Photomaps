@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.util.DisplayMetrics
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -39,6 +40,8 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
     private var locationManager: LocationManager? = null
     private var lastLoc: Location? = null
 
+    private var screenSize: Int? = null
+
     //private val locationListener: LocationListener? = null
 
     //private val imagePreviewPane = imagePreviewPane
@@ -56,6 +59,8 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
         title = "Custom Photomap"
 
         fileDataController = FileDataController(contentResolver)
+
+        this.getScreenResolution()
 
         setContentView(R.layout.activity_photomap)
 
@@ -214,7 +219,14 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
             if (!previewImageUriHashMap.containsKey(imageUri)) {
 
                 val layout = LinearLayout(applicationContext)
-                val layoutParams = ViewGroup.LayoutParams(300, 300)
+
+                var THUMBNAIL_SIZES = 300
+
+                if (screenSize!! > 2073600){  // Greater than 1080p
+                    THUMBNAIL_SIZES = 500
+                }
+
+                val layoutParams = ViewGroup.LayoutParams(THUMBNAIL_SIZES, THUMBNAIL_SIZES)
                 layout.layoutParams = layoutParams
                 layout.gravity = Gravity.CENTER_HORIZONTAL
 
@@ -319,6 +331,20 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
             }
 
         }
+    }
+
+    /**
+     * Helper function to get the resolution of a screen. If greater than 1080p, the image
+     * thumbnails and timeline photos should be larger.
+     */
+    private fun getScreenResolution(){
+        val displayMetrics = DisplayMetrics()
+
+        windowManager.defaultDisplay.getMetrics(displayMetrics)
+        val screenHeight = displayMetrics.heightPixels
+        val screenWidth = displayMetrics.widthPixels
+
+        screenSize = screenHeight * screenWidth
     }
 
 }
