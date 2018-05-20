@@ -4,9 +4,12 @@ import android.graphics.BitmapFactory
 import android.location.Location
 import android.net.Uri
 import android.os.Bundle
+import android.support.constraint.ConstraintLayout
 import android.util.Log
+import android.view.View
 import com.alecforbes.photomapapp.Activities.Photomaps.CustomPhotomap
 import com.alecforbes.photomapapp.Model.ImageData
+import com.alecforbes.photomapapp.R
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -25,7 +28,7 @@ import kotlin.collections.HashMap
  * classes are final in Kotlin)
  */
 
-open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, View.OnClickListener, GoogleMap.OnMarkerClickListener {
 
     private lateinit var photomap: GoogleMap
     private lateinit var lastLoc: Location
@@ -249,5 +252,13 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Goo
 
     }
 
+    override fun onClick(view: View?) {
+
+        // fixme not being called?
+        val displayedImageView = parentFragment.activity.findViewById<ConstraintLayout>(R.id.indvImageViewConstraint)
+
+        displayedImageView.invalidate()
+        displayedImageView.visibility = View.GONE
+    }
 
 }
