@@ -262,7 +262,8 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
         // Fill the included Image View with the data of the image clicked in timeline
         indvImageView.setImageBitmap(imageData.getImageBitmap())
 
-        if (imageData.dateTimeTaken != "0 0") { // 0 0 is returned when no timestamp was found
+        // FIXME this logic is a bit weird, could just get this earlier and assign
+        if (imageData.timeTaken != "0" || imageData.datetaken != "0") { // 0 0 is returned when no timestamp was found
 
             // Split the date time into the time and data values
             val splitDateTime = imageData.dateTimeTaken.split(" ")
@@ -270,10 +271,14 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
             // There may be some cases where only one value was so found handle that
             if (imageData.datetaken != "0") {
                 dateTakenValue.text = splitDateTime[0]
+            } else {
+                dateTakenValue.text = "Unknown"
             }
 
             if (imageData.timeTaken != "0"){
                 imageTimeTakenValue.text = splitDateTime[1]
+            } else {
+                imageTimeTakenValue.text = "Unknown"
             }
 
         }else{
