@@ -7,6 +7,7 @@ import android.location.Location
 import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
+import android.support.constraint.ConstraintLayout
 import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
@@ -134,7 +135,7 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
     }
 
     private fun clearViewsAndData(){
-        val mapLayout = findViewById<FrameLayout>(R.id.photomapConstraintLayout)
+        val mapLayout = findViewById<ConstraintLayout>(R.id.photomapConstraintLayout)
         imagePreviewPane.removeAllViews()
         mapLayout.removeView(imagePreviewPane)
         mapLayout.removeView(findViewById(R.id.customTimeline))
