@@ -214,14 +214,16 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
             if (!previewImageUriHashMap.containsKey(imageUri)) {
 
                 val layout = LinearLayout(applicationContext)
-                val layoutParams = ViewGroup.LayoutParams(200, 200)
+                val layoutParams = ViewGroup.LayoutParams(300, 300)
                 layout.layoutParams = layoutParams
-                layout.gravity = Gravity.CENTER
+                layout.gravity = Gravity.CENTER_HORIZONTAL
 
                 // Each image should be a button to tap to bring up a larger preview
                 val imageButton = ImageButton(applicationContext) // todo button listeners
                 imageButton.layoutParams = layoutParams
-                imageButton.scaleType = ImageView.ScaleType.CENTER_CROP
+                imageButton.adjustViewBounds = true
+                imageButton.scaleType = ImageView.ScaleType.FIT_XY
+
                 imageButton.setImageBitmap(imageData.getImageBitmap()) //fixme not thumbnail bitmap
 
                 // Set up the listener for clicking to create a more detailed view
