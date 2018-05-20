@@ -83,7 +83,7 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
 
         // As the map is a fragment, initialise it in a view (but just the constraint as the map fills the view)
         supportFragmentManager.beginTransaction()
-                .add(R.id.photomapFrameLayout, customMapFragment)
+                .add(R.id.photomapConstraintLayout, customMapFragment)
                 .commit()
 
 
@@ -131,7 +131,7 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
     }
 
     private fun clearViewsAndData(){
-        val mapLayout = findViewById<FrameLayout>(R.id.photomapFrameLayout)
+        val mapLayout = findViewById<FrameLayout>(R.id.photomapConstraintLayout)
         imagePreviewPane.removeAllViews()
         mapLayout.removeView(imagePreviewPane)
         mapLayout.removeView(findViewById(R.id.customTimeline))
