@@ -4,6 +4,7 @@ import android.graphics.BitmapFactory
 import android.location.Location
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import com.alecforbes.photomapapp.Model.ImageData
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -201,17 +202,28 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Goo
      */
     fun sortByTimeTaken(){
 
-        selectedImages.forEach{
+        selectedImages.forEach{ imageData ->
 
             // Set the unix time stamp on each object by converting timestamp values and use to sort
-            val dateTime = it.dateTimeTaken.split(" ")
-            val date = dateTime[0]
-            val time = dateTime[1]
+
+            val dateTime = imageData.dateTimeTaken.split(" ")
+
+            imageData.datetaken = "0"
+            imageData.timeTaken = "0"
+            try {
+                imageData.datetaken = dateTime[0]
+                imageData.timeTaken = dateTime[1]
+            }catch (indexEx: IndexOutOfBoundsException){
+                // Some images may not have both date and time, only one, just cont.
+                Log.e("Bad dateTime","Image missing time or date value, set to default of 0")
+            }
+
+
             var unixStamp = 0L
 
-            if (date != "0" && time != "0") {
-                val dateComponents = date.split(":")
-                val timeComponents = time.split(":")
+            if (imageData.datetaken != "0" && imageData.timeTaken != "0") {
+                val dateComponents = imageData.datetaken.split(":")
+                val timeComponents = imageData.timeTaken.split(":")
 
                 // FIXME: is the hour correct? keeps coming back as 0
                 val cal = Calendar.getInstance()
@@ -221,7 +233,7 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Goo
                 unixStamp = cal.timeInMillis / 1000
             }
 
-            it.unixTime = unixStamp
+            imageData.unixTime = unixStamp
         }
 
         selectedImages.sort()

@@ -266,9 +266,18 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
 
             // Split the date time into the time and data values
             val splitDateTime = imageData.dateTimeTaken.split(" ")
-            dateTakenValue.text = splitDateTime[0]
-            imageTimeTakenValue.text = splitDateTime[1]
+
+            // There may be some cases where only one value was so found handle that
+            if (imageData.datetaken != "0") {
+                dateTakenValue.text = splitDateTime[0]
+            }
+
+            if (imageData.timeTaken != "0"){
+                imageTimeTakenValue.text = splitDateTime[1]
+            }
+
         }else{
+            dateTakenValue.text = "Unknown"
             imageTimeTakenValue.text = "Unknown"
         }
 
