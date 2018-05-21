@@ -27,20 +27,20 @@ class FileDataController (private val contentResolver: ContentResolver,
     private fun createImageData(){
 
 
-        newImageUris.forEach {
+        newImageUris.forEach { uri ->
 
-            val stream = contentResolver.openInputStream(it)
+            val stream = contentResolver.openInputStream(uri)
             val exif = ExifInterface(stream)
-            val file = File(it.path)
+            val file = File(uri.path)
             // TODO bitmap may need to be byte array not a Bitmap due to parcelable limits
 
-            val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(it))
+            val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(uri))
             // You can't reuse an InputStream in Android, so it has to be declared again
 
             // TODO any more creation stuff should be done here
 
             val selectedImage = ImageData(file, bitmap, exif, screenSize = screenSize)
-            imageUris.add(it)
+            imageUris.add(uri)
             selectedData.add(selectedImage)
         }
 
@@ -90,7 +90,7 @@ class FileDataController (private val contentResolver: ContentResolver,
         fileData.forEach {
             //val realUri = contentResolver.openInputStream(it)
             //val test2 = DocumentFile.fromTreeUri(contentResolve, Uri.fromFile(File(it.path.toString())))
-            val uriFromPath = Uri.fromFile(File(it.toString())) // FIXME uri access problem
+            val uriFromPath = Uri.parse(it.toString()) // FIXME uri access problem
             newImageUris.add(uriFromPath)
             val test = File(uriFromPath.path)
             print("")

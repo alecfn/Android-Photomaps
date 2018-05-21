@@ -114,9 +114,9 @@ class DatabaseHelper(context: Context):
             return
         }
 
-        val realPath = uri.path
+        //val realPath = uri.path
         savedMapUri.put("savedmap", mapRowId)
-        savedMapUri.put("uris", realPath)
+        savedMapUri.put("uris", uri.toString())
 
         db.insert(TABLE_PHOTOMAPURIS, null, savedMapUri)
 
