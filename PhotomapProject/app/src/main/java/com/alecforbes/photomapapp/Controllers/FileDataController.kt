@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.media.ExifInterface
 import android.net.Uri
+import android.support.v4.app.ActivityCompat.startActivityForResult
 import com.alecforbes.photomapapp.Model.ImageData
 import java.io.File
 
@@ -28,6 +29,15 @@ class FileDataController (private val contentResolver: ContentResolver,
 
 
         newImageUris.forEach { uri ->
+
+            // fixme some test stuff https://developer.android.com/guide/topics/providers/document-provider#client
+            // fixme https://androidforums.com/threads/permission-denied-android-permission-manage_documents.920600/
+            //val i = Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            //startActivityForResult(i, CHOOSE_IMAGE);
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+            intent.addCategory(Intent.CATEGORY_OPENABLE)
+            intent.setType("image/*")
+            startActivityForResult(intent, KITKAT_VALUE)
 
             val stream = contentResolver.openInputStream(uri)
             val exif = ExifInterface(stream)
