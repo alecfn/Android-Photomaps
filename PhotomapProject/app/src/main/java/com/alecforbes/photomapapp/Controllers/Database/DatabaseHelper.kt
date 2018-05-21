@@ -5,12 +5,14 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.net.Uri
+import android.os.Environment
+import java.io.File
 
 /**
  * Created by Alec on 4/26/2018.
  */
 
-class DatabaseHelper(context: Context):
+class DatabaseHelper(val context: Context):
                          SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION){
 
     // todo, this should be simple enough, save the image date in sqlite either raw in rows, or as the objects themselves (preferrably)
@@ -114,9 +116,28 @@ class DatabaseHelper(context: Context):
             return
         }
 
+        // fixme instead of this, try saving the file locally to app internal storage, and storing THAT uri
+
+        val filename = "testcopy"
+        val fileContents = context.contentResolver.openInputStream(uri)
+
+        val fileBytes = fileContents.readBytes()
+
+
+        var newUri: Uri? = null
+        context.openFileOutput(filename, Context.MODE_PRIVATE).use {
+            it.write(fileBytes)
+            val newFile = File(Environment.getDataDirectory(), filename)
+            newUri = Uri.fromFile(newFile)
+            it.close()
+        }
+
+        // fixme
+
         //val realPath = uri.path
         savedMapUri.put("savedmap", mapRowId)
-        savedMapUri.put("uris", uri.toString())
+        savedMapUri.put("uris", newUri.toString())
+        //savedMapUri.put("uris", uri.toString())
 
         db.insert(TABLE_PHOTOMAPURIS, null, savedMapUri)
 

@@ -37,7 +37,6 @@ class FileDataController (private val contentResolver: ContentResolver,
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
             intent.addCategory(Intent.CATEGORY_OPENABLE)
             intent.setType("image/*")
-            startActivityForResult(intent, KITKAT_VALUE)
 
             val stream = contentResolver.openInputStream(uri)
             val exif = ExifInterface(stream)
