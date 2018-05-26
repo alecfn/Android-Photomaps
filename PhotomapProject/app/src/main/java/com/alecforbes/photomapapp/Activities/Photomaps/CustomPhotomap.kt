@@ -137,6 +137,7 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
     private fun clearViewsAndData(){
         val mapLayout = findViewById<ConstraintLayout>(R.id.photomapConstraintLayout)
         imagePreviewPane.removeAllViews()
+        timelineCardView.visibility = View.GONE
         mapLayout.removeView(imagePreviewPane)
         mapLayout.removeView(findViewById(R.id.customTimeline))
         customMapFragment.clearMap() // Also clear drawables on the map fragment
@@ -209,6 +210,8 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
      * Add images that exist on the map to the preview pane at the top of the screen
      */
     private fun addImagesToPreview(){
+
+        timelineCardView.visibility = View.VISIBLE
 
         fileDataController.selectedData.forEach{ imageData ->
 
