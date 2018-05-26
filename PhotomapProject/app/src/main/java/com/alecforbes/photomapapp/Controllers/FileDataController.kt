@@ -29,18 +29,9 @@ class FileDataController (private val contentResolver: ContentResolver,
 
         newImageUris.forEach { uri ->
 
-            // fixme some test stuff https://developer.android.com/guide/topics/providers/document-provider#client
-            // fixme https://androidforums.com/threads/permission-denied-android-permission-manage_documents.920600/
-            //val i = Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            //startActivityForResult(i, CHOOSE_IMAGE);
-            //val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-           // intent.addCategory(Intent.CATEGORY_OPENABLE)
-           // intent.setType("image/*")
-
             val stream = contentResolver.openInputStream(uri)
             val exif = ExifInterface(stream)
             val file = File(uri.path)
-            // TODO bitmap may need to be byte array not a Bitmap due to parcelable limits
 
             val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(uri))
             // You can't reuse an InputStream in Android, so it has to be declared again

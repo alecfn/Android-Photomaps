@@ -102,7 +102,16 @@ class DatabaseHelper(val context: Context):
 
     }
 
-    fun addURI(db: SQLiteDatabase, mapRowId: Long, mapName: String, uri: Uri) {
+
+    /**
+     * When the user saves a map, save the URI into a new local file accessible to to application.
+     *
+     * This has to be done as the Application does not have access to the files stored in other
+     * applications (documents, gallery etc.) due to Android security sandboxing. The only other
+     * way to access images would be through an intent, which can't be done when loading a saved
+     * map.
+     */
+    private fun addURI(db: SQLiteDatabase, mapRowId: Long, mapName: String, uri: Uri) {
 
         val savedMapUri = ContentValues()
 
@@ -116,9 +125,9 @@ class DatabaseHelper(val context: Context):
             return
         }
 
-        // fixme instead of this, try saving the file locally to app internal storage, and storing THAT uri
+        // To save the new image copy, get the path and append the mapname a copy to be unique
 
-        val filename = "testcopy"
+        val filename = File(uri.path).name + "_" + mapName + "_copy" //fixme check exists
         val fileContents = context.contentResolver.openInputStream(uri)
 
         val fileBytes = fileContents.readBytes()
@@ -127,17 +136,14 @@ class DatabaseHelper(val context: Context):
         var newUri: Uri? = null
         context.openFileOutput(filename, Context.MODE_PRIVATE).use {
             it.write(fileBytes)
-            val newFile = File(context.filesDir, filename)
+            val newFile = File(context.filesDir, filename) // Application data directory
             newUri = Uri.fromFile(newFile)
             it.close()
         }
 
-        // fixme
-
-        //val realPath = uri.path
         savedMapUri.put("savedmap", mapRowId)
         savedMapUri.put("uris", newUri.toString())
-        //savedMapUri.put("uris", uri.toString())
+
 
         db.insert(TABLE_PHOTOMAPURIS, null, savedMapUri)
 
