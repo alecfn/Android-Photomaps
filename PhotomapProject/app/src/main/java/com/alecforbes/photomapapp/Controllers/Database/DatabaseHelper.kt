@@ -127,7 +127,7 @@ class DatabaseHelper(val context: Context):
         var newUri: Uri? = null
         context.openFileOutput(filename, Context.MODE_PRIVATE).use {
             it.write(fileBytes)
-            val newFile = File(Environment.getDataDirectory(), filename)
+            val newFile = File(context.filesDir, filename)
             newUri = Uri.fromFile(newFile)
             it.close()
         }
