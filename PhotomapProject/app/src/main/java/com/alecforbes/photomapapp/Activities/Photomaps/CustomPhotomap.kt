@@ -71,14 +71,12 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
         val isSavedMap = intent.getBooleanExtra("IsSavedMap", false)
 
         if(isSavedMap) {
-            // Only the URIs can be parceled, not the image data so that must be built here
+            // Image data cannot be parceled, so that is built here (Kotlin parcelize issue)
             val savedImageUris = intent.getStringArrayListExtra("SavedImageUris")
             fileDataController.getSelectedImageUrisFromArray(savedImageUris)
-            //savedMapIntent.putExtra("SavedMapImages", savedFileData.selectedData)
-
-            //val selectedImages = ArrayList<ImageData>()
-
             customMapFragment = CustomPhotomapFragment.newSavedInstance(fileDataController.selectedData)
+            customMapFragment.setSelectedData(fileDataController.selectedData)
+
         } else {
             customMapFragment = CustomPhotomapFragment.newCustomInstance()
         }

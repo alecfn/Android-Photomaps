@@ -60,11 +60,11 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
 
             // fixme bug redrawing when you go back to the select screen and make a new one
             setMapBounds()
-        } else{
-            // Set camera to current location
-            //locationMan.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-            //val currLatLng = LatLng(locationMan.ge)
+        } else if (isSavedMap){
+            addImagePreviews()
 
+
+        } else {
 
         }
 
