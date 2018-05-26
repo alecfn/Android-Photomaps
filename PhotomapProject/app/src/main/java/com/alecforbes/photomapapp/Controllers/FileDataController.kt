@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.media.ExifInterface
 import android.net.Uri
-import android.support.v4.app.ActivityCompat.startActivityForResult
 import com.alecforbes.photomapapp.Model.ImageData
 import java.io.File
 

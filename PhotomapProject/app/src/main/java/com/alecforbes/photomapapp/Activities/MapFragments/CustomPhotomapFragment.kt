@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.util.Log
 import android.view.View
-import com.alecforbes.photomapapp.Activities.Photomaps.CustomPhotomap
 import com.alecforbes.photomapapp.Model.ImageData
 import com.alecforbes.photomapapp.R
 import com.google.android.gms.maps.CameraUpdateFactory

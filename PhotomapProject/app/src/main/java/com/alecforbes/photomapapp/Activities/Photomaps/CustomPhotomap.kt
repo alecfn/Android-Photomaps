@@ -8,7 +8,6 @@ import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
-import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.DisplayMetrics
@@ -67,23 +66,6 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
         // Set up the FAB on the custom map with options
         photomapActionButton.setOptionsClick(this@CustomPhotomap)
 
-        // Set camera to current location FIXME
-/*                requestGPSPermissions()
-        locationManager = getSystemService(LOCATION_SERVICE) as LocationManager?
-
-                try {
-                    // We don't need continuous location updates, just the last one to centre camera
-
-                    fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-                    fusedLocationClient.lastLocation
-                            .addOnSuccessListener { location : Location? ->
-                                // Got last known location
-                                lastLoc = location
-                            }
-                } catch (securityEx: SecurityException){
-                    requestGPSPermissions()
-                    // todo could set it up so if they deny, it just default to default pos on map
-                }*/
         customMapFragment = CustomPhotomapFragment.newCustomInstance()
 
         // As the map is a fragment, initialise it in a view (but just the constraint as the map fills the view)
@@ -200,11 +182,6 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
         // TODO
     }
 
-    private fun requestGPSPermissions(){
-        val permissions = arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION,
-                android.Manifest.permission.ACCESS_COARSE_LOCATION)
-        ActivityCompat.requestPermissions(this, permissions,0)
-    }
 
     /**
      * Add images that exist on the map to the preview pane at the top of the screen
