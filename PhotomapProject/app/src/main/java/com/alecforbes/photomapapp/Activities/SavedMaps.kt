@@ -48,7 +48,6 @@ class SavedMaps : AppCompatActivity() {
      */
     private fun populateSavedView(){
 
-        // Duplicate the card layout and populate with the retrieved information
 
         savedMaps.forEach {
 
@@ -73,9 +72,19 @@ class SavedMaps : AppCompatActivity() {
                     //savedMapIntent.putExtra("SelectedMapImages", savedMaps[selectedSavedMap])
                     val selectedMapImages = savedMaps[selectedSavedMap]
 
-                    // Now create the image data objects
-                    val savedFileData = FileDataController(contentResolver, screenSize = 0)  // todo screen size here?
-                    savedFileData.getSelectedImageUrisFromArray(selectedMapImages!!)
+                    // Data returned from the DB will be of 'URIString' data types, recast to string
+                    val selectedImageUriStrings = ArrayList<String>()
+                    selectedMapImages!!.forEach { uri ->
+                        selectedImageUriStrings.add(uri.toString())
+                    }
+
+                    // Now create the image data objects fixme dont do this here cant be parceled
+                    savedMapIntent.putStringArrayListExtra("SavedImageUris", selectedImageUriStrings)
+                    savedMapIntent.putExtra("IsSavedMap", true)
+                    //val savedFileData = FileDataController(contentResolver, screenSize = 0)  // todo screen size here?
+                    //savedFileData.getSelectedImageUrisFromArray(selectedMapImages!!)
+                    //savedMapIntent.putExtra("SavedMapImages", savedFileData.selectedData)
+
                     //val selectedImages = ArrayList<ImageData>()
 
 

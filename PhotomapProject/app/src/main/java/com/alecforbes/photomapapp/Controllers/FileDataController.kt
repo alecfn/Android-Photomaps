@@ -93,15 +93,11 @@ class FileDataController (private val contentResolver: ContentResolver,
     /**
      * When creating a map again from saved data, the URI data comes from an ArrayList
      */
-    fun getSelectedImageUrisFromArray(fileData: ArrayList<Uri>){
+    fun getSelectedImageUrisFromArray(fileData: ArrayList<String>){
 
         fileData.forEach {
-            //val realUri = contentResolver.openInputStream(it)
-            //val test2 = DocumentFile.fromTreeUri(contentResolve, Uri.fromFile(File(it.path.toString())))
-            val uriFromPath = Uri.parse(it.toString()) // FIXME uri access problem
-            newImageUris.add(uriFromPath)
-            val test = File(uriFromPath.path)
-            print("")
+
+            newImageUris.add(Uri.parse(it))
         }
 
         createImageData()

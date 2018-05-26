@@ -2,7 +2,6 @@ package com.alecforbes.photomapapp.Activities.MapFragments
 
 import android.graphics.BitmapFactory
 import android.location.Location
-import android.net.Uri
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.util.Log
@@ -39,6 +38,7 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
     private var selectedImages = ArrayList<ImageData>()
     //private var sortedImages = ArrayList<ImageData>()
     private var isPlaceMap = false
+    private var isSavedMap = false // FIXME: probably refactor this stuff
 
     // TODO this could be custom views later
     private var markers = ArrayList<Marker>()
@@ -97,9 +97,12 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
             return fragment
         }
 
-        fun newSavedInstance(images: HashMap<String, ArrayList<Uri>>): CustomPhotomapFragment{
+        fun newSavedInstance(savedImages: ArrayList<ImageData>): CustomPhotomapFragment{
             val fragment = CustomPhotomapFragment()
             val args = Bundle()
+            args.putParcelableArrayList("savedData", savedImages)
+            fragment.arguments = args
+            fragment.isSavedMap = true
 
             return fragment
         }

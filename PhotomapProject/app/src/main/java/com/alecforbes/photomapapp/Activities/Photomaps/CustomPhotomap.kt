@@ -66,7 +66,22 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
         // Set up the FAB on the custom map with options
         photomapActionButton.setOptionsClick(this@CustomPhotomap)
 
-        customMapFragment = CustomPhotomapFragment.newCustomInstance()
+
+        // Get the arguments from the intent to check if this is a saved map or a new one
+        val isSavedMap = intent.getBooleanExtra("IsSavedMap", false)
+
+        if(isSavedMap) {
+            // Only the URIs can be parceled, not the image data so that must be built here
+            val savedImageUris = intent.getStringArrayListExtra("SavedImageUris")
+            fileDataController.getSelectedImageUrisFromArray(savedImageUris)
+            //savedMapIntent.putExtra("SavedMapImages", savedFileData.selectedData)
+
+            //val selectedImages = ArrayList<ImageData>()
+
+            customMapFragment = CustomPhotomapFragment.newSavedInstance(fileDataController.selectedData)
+        } else {
+            customMapFragment = CustomPhotomapFragment.newCustomInstance()
+        }
 
         // As the map is a fragment, initialise it in a view (but just the constraint as the map fills the view)
         supportFragmentManager.beginTransaction()
