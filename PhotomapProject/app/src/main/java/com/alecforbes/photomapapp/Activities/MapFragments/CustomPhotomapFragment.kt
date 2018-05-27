@@ -13,6 +13,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import com.google.maps.android.clustering.ClusterManager
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -20,15 +21,13 @@ import kotlin.collections.HashMap
 
 /**
  * Created by Alec on 4/26/2018.
- * The base class from which individual map fragments inherit from.
- *
- * The 'open' modifier defines the class as not being final and can be inherited from (by default
- * classes are final in Kotlin)
  */
 
 open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, View.OnClickListener, GoogleMap.OnMarkerClickListener {
 
     private lateinit var photomap: GoogleMap
+    private var imageClusterManager: ClusterManager<ImagePreviewClusterItem>? = null
+
     private lateinit var lastLoc: Location
     private var screenSize: Int? = null
 
@@ -36,7 +35,7 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
     private var imageUriHashMap = HashMap<String, String>()
 
     private var selectedImages = ArrayList<ImageData>()
-    //private var sortedImages = ArrayList<ImageData>()
+
     private var isPlaceMap = false
     private var isSavedMap = false // FIXME: probably refactor this stuff
 
@@ -51,8 +50,9 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
     }
 
 
-    override fun onMapReady(p0: GoogleMap?) {
-        photomap = p0 as GoogleMap
+    override fun onMapReady(map: GoogleMap?) {
+        photomap = map as GoogleMap
+        setUpClusterer()
 
         // todo i think place probably should just be moved to it's own class FIX ME
         if (isPlaceMap) {
@@ -128,15 +128,15 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
 
         val markerOpts = MarkerOptions()
 
-        selectedImages.forEach {
+        selectedImages.forEach { imageData ->
 
-            val imageUri = it.file.absolutePath.toString()
+            val imageUri = imageData.file.absolutePath.toString()
 
             if (!imageUriHashMap.containsKey(imageUri)) {
 
-                markerOpts.position(it.latLong)
+                markerOpts.position(imageData.latLong)
 
-                val thumbnail = BitmapFactory.decodeByteArray(it.getImageThumbnail(), 0, it.getImageThumbnail().size)
+                val thumbnail = BitmapFactory.decodeByteArray(imageData.getImageThumbnail(), 0, imageData.getImageThumbnail().size)
                 val thumbnailDesc = BitmapDescriptorFactory.fromBitmap(thumbnail)
                 markerOpts.icon(thumbnailDesc)
 
@@ -261,6 +261,14 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
 
         displayedImageView.invalidate()
         displayedImageView.visibility = View.GONE
+    }
+
+    private fun setUpClusterer(){
+        imageClusterManager = ClusterManager<ImagePreviewClusterItem>(this.context, photomap)
+        photomap.setOnCameraIdleListener(imageClusterManager)
+        photomap.setOnMarkerClickListener(imageClusterManager)
+
+        addImagePreviews()
     }
 
 }
