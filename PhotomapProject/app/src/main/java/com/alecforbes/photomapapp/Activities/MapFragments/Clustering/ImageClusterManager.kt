@@ -3,6 +3,7 @@ package com.alecforbes.photomapapp.Activities.MapFragments.Clustering
 import android.content.Context
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
+import com.google.maps.android.MarkerManager
 import com.google.maps.android.clustering.ClusterManager
 
 /**
@@ -23,5 +24,14 @@ class ImageClusterManager(context: Context,
         super.onCameraIdle()
         cameraIdleListener?.onCameraIdle()
     }
+
+    fun setRenderer(){
+
+    }
+
+   // override fun getMarkerCollection(): MarkerManager.Collection? {
+
+       // return
+   // }
 
 }

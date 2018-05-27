@@ -30,7 +30,8 @@ class ImageClusterRenderer(context: Context?, map: GoogleMap?,
         super.onBeforeClusterRendered(cluster, markerOptions)
 
         // Make the icon image the photo that was selected
-        markerOptions!!.icon(this.photomapBitmap)
+        markerOptions!!.icon
+       // markerOptions!!.icon(this.photomapBitmap)
     }
 
     override fun shouldRenderAsCluster(cluster: Cluster<ImageClusterItem>?): Boolean {

@@ -21,6 +21,8 @@ class ImageClusterItem(private val position: LatLng,
                        private val title: String,
                        private val snippet: String): ClusterItem{
 
+    private lateinit var bitmapDesc: BitmapDescriptor
+
     override fun getTitle(): String {
         return title
     }
@@ -31,6 +33,10 @@ class ImageClusterItem(private val position: LatLng,
 
     override fun getSnippet(): String {
         return snippet
+    }
+
+    fun setBitmapDesc(bitmapDesc: BitmapDescriptor){
+        this.bitmapDesc = bitmapDesc
     }
 
 

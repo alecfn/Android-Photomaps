@@ -148,7 +148,8 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
 
 
                 val imageClusterItem = ImageClusterItem(imageData.latLong, "some title", "snippet")
-                imageClusterRenderer.setImage(thumbnailDesc)
+                imageClusterItem.setBitmapDesc(thumbnailDesc)
+                //imageClusterRenderer.setImage(thumbnailDesc)
                // imageClusterItem.
 
                 imageClusterManager.addItem(imageClusterItem)
