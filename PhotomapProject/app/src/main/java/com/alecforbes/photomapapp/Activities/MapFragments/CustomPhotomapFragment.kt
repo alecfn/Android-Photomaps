@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.util.Log
 import android.view.View
+import com.alecforbes.photomapapp.Activities.MapFragments.Clustering.ImageClusterItem
+import com.alecforbes.photomapapp.Activities.MapFragments.Clustering.ImageClusterRenderer
 import com.alecforbes.photomapapp.Model.ImageData
 import com.alecforbes.photomapapp.R
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -26,7 +28,8 @@ import kotlin.collections.HashMap
 open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, View.OnClickListener, GoogleMap.OnMarkerClickListener {
 
     private lateinit var photomap: GoogleMap
-    private var imageClusterManager: ClusterManager<ImagePreviewClusterItem>? = null
+    private lateinit var imageClusterManager: ClusterManager<ImageClusterItem>
+    private lateinit var imageClusterRenderer: ImageClusterRenderer
 
     private lateinit var lastLoc: Location
     private var screenSize: Int? = null
@@ -53,6 +56,7 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
     override fun onMapReady(map: GoogleMap?) {
         photomap = map as GoogleMap
         setUpClusterer()
+
 
         // todo i think place probably should just be moved to it's own class FIX ME
         if (isPlaceMap) {
@@ -138,11 +142,23 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
 
                 val thumbnail = BitmapFactory.decodeByteArray(imageData.getImageThumbnail(), 0, imageData.getImageThumbnail().size)
                 val thumbnailDesc = BitmapDescriptorFactory.fromBitmap(thumbnail)
-                markerOpts.icon(thumbnailDesc)
 
-                val marker = photomap.addMarker(markerOpts)
-                marker.isDraggable  // TODO, make movable and edit file data with new loc?
-                markers.add(marker)
+
+                //markerOpts.icon(thumbnailDesc)
+
+
+                val imageClusterItem = ImageClusterItem(imageData.latLong, "some title", "snippet")
+                imageClusterRenderer.setImage(thumbnailDesc)
+               // imageClusterItem.
+
+                imageClusterManager.addItem(imageClusterItem)
+                //imageClusterItem.
+                //imageClusterManager!!.addItem(imageClusterItem)
+
+                //val marker = photomap.addMarker(markerOpts)
+                //marker.isDraggable  // TODO, make movable and edit file data with new loc?
+
+                //markers.add(marker)
 
                 imageUriHashMap[imageUri] = ""
             }
@@ -264,7 +280,7 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
     }
 
     private fun setUpClusterer(){
-        imageClusterManager = ClusterManager<ImagePreviewClusterItem>(this.context, photomap)
+        imageClusterManager = ClusterManager<ImageClusterItem>(this.context, photomap)
         photomap.setOnCameraIdleListener(imageClusterManager)
         photomap.setOnMarkerClickListener(imageClusterManager)
 

@@ -323,7 +323,7 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
                 customMapFragment.setSelectedData(fileDataController.selectedData)
                 customMapFragment.addImagePreviews()
                 customMapFragment.sortByTimeTaken()
-                customMapFragment.setMapBounds()
+//                customMapFragment.setMapBounds() FIXME, needs to be fixed to work with new markers
 
             }
 
