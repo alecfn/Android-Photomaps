@@ -81,6 +81,10 @@ class SavedMaps : AppCompatActivity() {
                 savedMapListView.onItemLongClickListener = AdapterView.OnItemLongClickListener {
                     adapterView, view, i, l ->
 
+                    val selectedSavedMap = savedMapListView.getItemAtPosition(i) as String
+
+                    // Bring up a prompt to confirm the user wants to delete the map
+
                 }
 
 
