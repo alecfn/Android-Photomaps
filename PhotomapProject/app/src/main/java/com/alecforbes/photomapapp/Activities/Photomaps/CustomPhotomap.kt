@@ -243,7 +243,7 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
 
         }
         // Now draw lines between the images
-        customMapFragment.addPhotoTimeline()
+        customMapFragment.addTimelinePolylines()
     }
 
     private fun createIndvView(imageData: ImageData){

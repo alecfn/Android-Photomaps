@@ -30,10 +30,7 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
 
     private lateinit var photomap: GoogleMap
     private lateinit var imageClusterManager: ClusterManager<ImageClusterItem>
-    private lateinit var imageClusterRenderer: ImageClusterRenderer
 
-    private lateinit var lastLoc: Location
-    private var screenSize: Int? = null
 
     // Store uris as a hashmap to check if added already (Value is unused, just the key)
     private var imageUriHashMap = HashMap<String, String>()
@@ -45,6 +42,7 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
 
     // TODO this could be custom views later
     private var imageMarkers = ArrayList<ImageClusterItem>()
+    private var timelinePolys = ArrayList<Polyline>()
 
 
     override fun onActivityCreated(p0: Bundle?) {
@@ -190,18 +188,21 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
      * Add a polyLine drawn between two images on the map. These will be in succession of when the
      * image was taken (based on how the selectedImages list is sorted).
      */
-    fun addPhotoTimeline(){
-        val testLine = PolylineOptions() // fixme testing
+    fun addTimelinePolylines(){
+        val imagePolyLine = PolylineOptions() // fixme testing
 
         imageMarkers.forEach { clusterItem ->
             val markerLoc = clusterItem.position
-            testLine.add(markerLoc)
-            photomap.addPolyline(testLine)
+            imagePolyLine.add(markerLoc)
+            timelinePolys.add(photomap.addPolyline(imagePolyLine))
         }
     }
 
     fun clearPhotoTimeline(){
 
+        timelinePolys.forEach{ polyline ->
+            polyline.remove()
+        }
     }
 
     /**
