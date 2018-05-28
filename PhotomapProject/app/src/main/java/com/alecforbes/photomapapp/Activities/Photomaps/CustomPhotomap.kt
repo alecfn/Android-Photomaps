@@ -94,7 +94,7 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
         when(optionId) {
             R.id.add_files_option -> getDataFromGallery()
             R.id.add_timeline_option -> addImagesToPreview()
-            R.id.remove_timeline_option -> customMapFragment.clearTimelinePolylines()
+            R.id.remove_timeline_option -> clearTimelinePreview()
             R.id.save_photomap_option -> saveMap()
             R.id.clear_map_option -> clearViewsAndData()
             R.id.share_map_option -> shareMap()
@@ -174,6 +174,18 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
         saveDialog.setView(saveInputText)
         saveDialog.show()
 
+    }
+
+    /**
+     * Clear the map timeline preview images and the clear the polylines on the map.
+     */
+    private fun clearTimelinePreview(){
+
+        timelineCardView.invalidate()
+        timelineCardView.visibility = View.GONE
+
+        // Now clear the polylines from the map fragment
+        customMapFragment.clearTimelinePolylines()
     }
 
     private fun shareMap(){
