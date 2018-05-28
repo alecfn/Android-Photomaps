@@ -1,6 +1,7 @@
 package com.alecforbes.photomapapp.Activities.MapFragments
 
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.location.Location
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
@@ -189,10 +190,19 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
      * image was taken (based on how the selectedImages list is sorted).
      */
     fun addTimelinePolylines(){
-        val imagePolyLine = PolylineOptions() // fixme testing
+        val imagePolyLine = PolylineOptions()
+        // Set some style options for the lines joining images
+                .color(Color.BLUE)
+                .startCap(RoundCap())
+                .endCap(RoundCap())
+                .width(10F)
+                .geodesic(true)
+
 
         imageMarkers.forEach { clusterItem ->
             val markerLoc = clusterItem.position
+
+
             imagePolyLine.add(markerLoc)
             timelinePolys.add(photomap.addPolyline(imagePolyLine))
         }
@@ -201,7 +211,7 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
     /**
      * Remove the polylines used on the map to represent a timeline between images.
      */
-    fun clearPhotoTimeline(){
+    fun clearTimelinePolylines(){
 
         timelinePolys.forEach{ polyline ->
             polyline.remove()
