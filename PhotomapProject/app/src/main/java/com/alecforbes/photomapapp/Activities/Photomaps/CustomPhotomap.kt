@@ -1,10 +1,6 @@
 package com.alecforbes.photomapapp.Activities.Photomaps
 
-//import com.google.android.gms.location.FusedLocationProviderClient
-//import com.google.android.gms.location.LocationServices
 import android.content.Intent
-import android.location.Location
-import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
@@ -29,7 +25,6 @@ import kotlinx.android.synthetic.main.timeline_scroll.*
 // FIXME Open keyword means this class can be inherited from, needed?
 open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
 
-    //var selectedData = ArrayList<ImageData>()
     // Store the images as objects with all relevant info
 
     // TODO permission handling
@@ -37,19 +32,11 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
 
     lateinit var fileDataController: FileDataController
     lateinit var customMapFragment: CustomPhotomapFragment
-    private var locationManager: LocationManager? = null
-    private var lastLoc: Location? = null
 
     private var screenSize: Int? = null
 
-    //private val locationListener: LocationListener? = null
-
-    //private val imagePreviewPane = imagePreviewPane
-    // Polling values for GPS update intervals
-
     // Images stored in the preview pane
     private var previewImageUriHashMap = HashMap<String, String>()
-    //private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     private  var databaseHelper = DatabaseHelper(this)
 
@@ -85,8 +72,6 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
         supportFragmentManager.beginTransaction()
                 .add(R.id.photomapConstraintLayout, customMapFragment)
                 .commit()
-
-
 
     }
 
@@ -323,7 +308,6 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
                 customMapFragment.setSelectedData(fileDataController.selectedData)
                 customMapFragment.addImagePreviews()
                 customMapFragment.sortByTimeTaken()
-                //customMapFragment.setMapBounds() //FIXME, needs to be fixed to work with new markers
 
             }
 

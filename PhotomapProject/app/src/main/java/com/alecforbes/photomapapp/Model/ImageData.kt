@@ -11,6 +11,7 @@ import kotlinx.android.parcel.Parcelize
 import kotlinx.android.parcel.RawValue
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.util.*
 
 /**
  * Created by Alec on 4/26/2018.
@@ -26,6 +27,7 @@ data class ImageData(val file: File,
                      var dateTimeTaken: String="",
                      var datetaken: String ="",
                      var timeTaken: String="",
+                     var realTimeTaken: Date?= null, // Calendar time
                      var latLong: LatLng= LatLng(0.0, 0.0),
                      var unixTime: Long = 0L,
                      var realAddress: String? = null,

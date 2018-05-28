@@ -16,6 +16,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.google.maps.android.clustering.ClusterManager
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -168,7 +169,7 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
      * Set the boundaries of the map to include all of the markers added so they all appear on
      * the screen.
      */
-    fun setMapBounds(){
+    private fun setMapBounds(){
 
         // TODO custom views
 
@@ -239,15 +240,17 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
             var unixStamp = 0L
 
             if (imageData.datetaken != "0" && imageData.timeTaken != "0") {
-                val dateComponents = imageData.datetaken.split(":")
-                val timeComponents = imageData.timeTaken.split(":")
 
-                // FIXME: is the hour correct? keeps coming back as 0
-                val cal = Calendar.getInstance()
-                cal.set(dateComponents[0].toInt(), dateComponents[1].toInt(), dateComponents[2].toInt(),
-                        timeComponents[0].toInt(), timeComponents[1].toInt(), timeComponents[2].toInt())
+                // The following format is how exif date data fields are stored, format it
+                val dateFormat = SimpleDateFormat("yyyy:MM:dd hh:mm:ss", Locale.getDefault())
+                val realDate = dateFormat.parse(imageData.dateTimeTaken)
 
-                unixStamp = cal.timeInMillis / 1000
+                imageData.realTimeTaken = realDate
+
+                unixStamp = realDate.time / 1000
+            } else {
+                // If only one of date or time fields is present, the sorting wont be accurate set 0
+                unixStamp = 0
             }
 
             imageData.unixTime = unixStamp
