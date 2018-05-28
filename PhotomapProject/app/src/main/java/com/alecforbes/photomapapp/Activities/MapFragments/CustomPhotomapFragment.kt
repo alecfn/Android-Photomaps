@@ -43,7 +43,7 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
     private var isSavedMap = false // FIXME: probably refactor this stuff
 
     // TODO this could be custom views later
-    private var markers = ArrayList<Marker>()
+    private var imageMarkers = ArrayList<ImageClusterItem>()
 
 
     override fun onActivityCreated(p0: Bundle?) {
@@ -71,7 +71,6 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
         } else {
 
         }
-
 
         //TODO Populate photomap with custom views based on image data passed in
 
@@ -137,6 +136,7 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
 
                 markerOpts.position(imageData.latLong)
 
+
                 // Construct the Bitmap, and set it to an image cluster item
                 val thumbnail = BitmapFactory.decodeByteArray(imageData.getImageThumbnail(), 0, imageData.getImageThumbnail().size)
                 val thumbnailDesc = BitmapDescriptorFactory.fromBitmap(thumbnail)
@@ -149,11 +149,17 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
                 imageClusterManager.addItem(imageClusterItem)
                 imageClusterManager.cluster()
 
+                imageMarkers.add(imageClusterItem)
+
                 imageUriHashMap[imageUri] = ""
             }
 
         }
 
+        // After all the images are added set the camera bounds to be inclusive of all images
+        if(imageMarkers.size > 0) {
+            this.setMapBounds()
+        }
 
 
     }
@@ -168,14 +174,13 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
 
         val latLongBuilder = LatLngBounds.builder()
 
-        markers.forEach{
-            latLongBuilder.include(it.position)
+        imageMarkers.forEach{ clusterItem ->
+            latLongBuilder.include(clusterItem.position)
         }
 
         val mapBounds = latLongBuilder.build()
         val pad = 200 // Map pixel padding
         val cameraUpdate = CameraUpdateFactory.newLatLngBounds(mapBounds, pad)
-
 
         photomap.moveCamera(cameraUpdate)
 
@@ -188,8 +193,8 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
     fun addPhotoTimeline(){
         val testLine = PolylineOptions() // fixme testing
 
-        markers.forEach {
-            val markerLoc = it.position
+        imageMarkers.forEach { clusterItem ->
+            val markerLoc = clusterItem.position
             testLine.add(markerLoc)
             photomap.addPolyline(testLine)
         }
