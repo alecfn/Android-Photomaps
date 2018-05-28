@@ -29,17 +29,16 @@ class ImageClusterRenderer(context: Context?, map: GoogleMap?,
     override fun onBeforeClusterRendered(cluster: Cluster<ImageClusterItem>?, markerOptions: MarkerOptions?) {
         super.onBeforeClusterRendered(cluster, markerOptions)
 
-        // Make the icon image the photo that was selected
-        markerOptions!!.icon
-       // markerOptions!!.icon(this.photomapBitmap)
     }
 
     override fun shouldRenderAsCluster(cluster: Cluster<ImageClusterItem>?): Boolean {
         return cluster!!.size > 1
     }
 
-    fun setImage(photo: BitmapDescriptor){
-        this.photomapBitmap = photo
-    }
+    override fun onBeforeClusterItemRendered(image: ImageClusterItem, markerOptions: MarkerOptions?) {
+        super.onBeforeClusterItemRendered(image, markerOptions)
 
+        // Set the icon to the image BitmapDescriptor
+        markerOptions!!.icon(image.getBitmapDesc())
+    }
 }

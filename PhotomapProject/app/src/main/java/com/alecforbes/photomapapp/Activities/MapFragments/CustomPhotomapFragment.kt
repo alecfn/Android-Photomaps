@@ -127,9 +127,6 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
      */
     fun addImagePreviews(){
 
-
-        //selectedData = arguments.getParcelableArrayList<ImageData>("selectedData")
-
         val markerOpts = MarkerOptions()
 
         selectedImages.forEach { imageData ->
@@ -140,26 +137,17 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
 
                 markerOpts.position(imageData.latLong)
 
+                // Construct the Bitmap, and set it to an image cluster item
                 val thumbnail = BitmapFactory.decodeByteArray(imageData.getImageThumbnail(), 0, imageData.getImageThumbnail().size)
                 val thumbnailDesc = BitmapDescriptorFactory.fromBitmap(thumbnail)
 
-
-                //markerOpts.icon(thumbnailDesc)
-
-
-                val imageClusterItem = ImageClusterItem(imageData.latLong, "some title", "snippet")
+                // Image and snippet values aren't used, but necessary in method constructor
+                val imageClusterItem = ImageClusterItem(imageData.latLong, "", "")
                 imageClusterItem.setBitmapDesc(thumbnailDesc)
-                //imageClusterRenderer.setImage(thumbnailDesc)
-               // imageClusterItem.
 
+                imageClusterItem.setBitmapDesc(thumbnailDesc)
                 imageClusterManager.addItem(imageClusterItem)
-                //imageClusterItem.
-                //imageClusterManager!!.addItem(imageClusterItem)
-
-                //val marker = photomap.addMarker(markerOpts)
-                //marker.isDraggable  // TODO, make movable and edit file data with new loc?
-
-                //markers.add(marker)
+                imageClusterManager.cluster()
 
                 imageUriHashMap[imageUri] = ""
             }
@@ -282,7 +270,9 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
 
     private fun setUpClusterer(){
         imageClusterManager = ClusterManager<ImageClusterItem>(this.context, photomap)
+        imageClusterManager.renderer = ImageClusterRenderer(this.context, photomap, imageClusterManager)
         photomap.setOnCameraIdleListener(imageClusterManager)
+
         photomap.setOnMarkerClickListener(imageClusterManager)
 
         addImagePreviews()

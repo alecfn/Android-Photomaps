@@ -8,7 +8,6 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.alecforbes.photomapapp.Activities.Photomaps.CustomPhotomap
 import com.alecforbes.photomapapp.Controllers.Database.DatabaseHelper
-import com.alecforbes.photomapapp.Controllers.FileDataController
 import com.alecforbes.photomapapp.R
 import kotlinx.android.synthetic.main.activity_saved_maps.*
 
