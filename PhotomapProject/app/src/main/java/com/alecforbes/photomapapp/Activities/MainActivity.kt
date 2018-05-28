@@ -1,13 +1,21 @@
 package com.alecforbes.photomapapp.Activities
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import com.alecforbes.photomapapp.Activities.Photomaps.CustomPhotomap
+import com.alecforbes.photomapapp.Manifest
 import com.alecforbes.photomapapp.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+
+    private val READ_EXTERNAL_REQUEST_CODE = 101
+    private val WRITE_EXTERNAL_REQUEST_CODE = 102
+    private val CAMERA_REQUEST_CODE = 103
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -16,6 +24,7 @@ class MainActivity : AppCompatActivity() {
         title = "Photomaps"
 
         setupButtonListeners()
+        setupPermissions()
 
     }
 
@@ -45,10 +54,43 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun requestPermissions(){
+    /**
+     * Request the relevant needed permissions for creating a photomap at run time.
+     *
+     * There are read/write external storage
+     */
+    private fun setupPermissions(){
         // TODO: just doing this in main for now, may move to more appropriate locations
+        // FIXME: Do I need the camera really?
 
-      //  val gpsPermission = ContextCompat.checkSelfPermission(this, Manifest.permission)
+        val readPermission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE)
+        val writePermission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        val cameraPermission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
+
+        val permissionGranted = PackageManager.PERMISSION_GRANTED
+
+        if (readPermission != permissionGranted){
+            ActivityCompat.requestPermissions(this,
+                    arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),
+                    READ_EXTERNAL_REQUEST_CODE)
+        }
+
+        if (writePermission != permissionGranted){
+            ActivityCompat.requestPermissions(this,
+                    arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                    WRITE_EXTERNAL_REQUEST_CODE)
+        }
+
+        if (cameraPermission != permissionGranted){
+            ActivityCompat.requestPermissions(this,
+                    arrayOf(android.Manifest.permission.CAMERA), CAMERA_REQUEST_CODE)
+        }
+
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
 
     }
 }

@@ -73,7 +73,6 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
 
         }
 
-        //TODO Populate photomap with custom views based on image data passed in
 
     }
 
