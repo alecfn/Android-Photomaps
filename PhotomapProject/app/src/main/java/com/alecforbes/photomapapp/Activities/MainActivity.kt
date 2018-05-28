@@ -88,9 +88,38 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * Handle responses to permission requests, the app needs access to internal files so if
+     * this is not done the user cannot create maps so if not granted ask again.
+     *
+     * However if the user does not give write it just means maps cannot be saved, we can work
+     * without that.
+     */
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
+        val permissionDenied = PackageManager.PERMISSION_DENIED
 
-    }
+        // Handle denials
+        when(requestCode) {
+            READ_EXTERNAL_REQUEST_CODE -> {
+            if ((grantResults.isNotEmpty() && grantResults[0] == permissionDenied)){
+                    // We need read permission to perform basic functions
+                }
+            }
+            WRITE_EXTERNAL_REQUEST_CODE -> {
+                if ((grantResults.isNotEmpty() && grantResults[0] == permissionDenied)){
+                    // Maps can't be saved without write, but that's all
+
+                }
+
+            }
+            CAMERA_REQUEST_CODE -> {
+                if ((grantResults.isNotEmpty() && grantResults[0] == permissionDenied)){
+
+                }
+            }
+        }
+
+        }
 }
