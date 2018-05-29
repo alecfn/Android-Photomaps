@@ -7,6 +7,7 @@ import android.support.constraint.ConstraintLayout
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -159,8 +160,13 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
                 if (fileDataController.imageUris.size > 0) {
                     databaseHelper.addMap(savedMapName, fileDataController.imageUris)
 
+                    // Toast to confirm save
+                    Toast.makeText(this@CustomPhotomap, "Map $savedMapName saved successfully!",
+                            Toast.LENGTH_LONG).show()
+
                 } else {
-                    // todo do something appropriate
+                    Toast.makeText(this@CustomPhotomap, "No new images to save!",
+                            Toast.LENGTH_LONG).show()
                 }
             }
 

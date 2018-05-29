@@ -174,7 +174,6 @@ class DatabaseHelper(val context: Context):
         // Get the ID index for the map, then look for uris with that value
         val GET_ROWID_SQL = "SELECT * FROM $TABLE_SAVEDPHOTOMAPS WHERE mapname='$savedMapName';"
 
-
         val db = this.readableDatabase
 
         val mapTableCursor = db.rawQuery(GET_ROWID_SQL, null)
