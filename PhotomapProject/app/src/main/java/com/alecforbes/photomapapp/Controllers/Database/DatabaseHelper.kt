@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.net.Uri
+import android.util.Log
 import java.io.File
 
 /**
@@ -219,12 +220,33 @@ class DatabaseHelper(val context: Context):
 
         val DROP_MAP_URIS_SQL = "DELETE FROM $TABLE_PHOTOMAPURIS WHERE _id='$savedMapId';"
 
+        // Delete file copies as well used to save the map
+
+        val GET_URI_SQL = "SELECT uris FROM $TABLE_PHOTOMAPURIS WHERE $COLUMN_ASSOCIATED_MAP='$savedMapId';"
         val db = this.readableDatabase
+
+        // Now drop the table entries
+
+        val savedFilesCursor = db.rawQuery(GET_URI_SQL, null)
+
+        if (savedFilesCursor.count > 0){
+            while(savedFilesCursor.moveToNext()) {
+                // Get all the uris in the table and delete the files
+                val fileUri = savedFilesCursor.getString(savedFilesCursor.getColumnIndex("uris"))
+                val savedFile = File(fileUri.toString())
+                savedFile.delete()
+
+
+            }
+        }else{
+            Log.e("No file uris", "No file URIs were found for $savedMapName")
+        }
+
+        savedFilesCursor.close()
+
         db.execSQL(DROP_MAP_SQL)
         db.execSQL(DROP_MAP_URIS_SQL)
         // todo handle errors?
-
-        // Also delete file copies
 
     }
 

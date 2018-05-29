@@ -96,6 +96,9 @@ class SavedMaps : AppCompatActivity() {
 
                             // Calls to database helper to delete the map
                             databaseHelper.deleteMap(selectedSavedMap)
+                            // Update the list view
+                            savedMapAdapter.remove(savedMapAdapter.getItem(i))
+                            savedMapAdapter.notifyDataSetChanged()
 
                         }
 
@@ -105,7 +108,7 @@ class SavedMaps : AppCompatActivity() {
                         }
                     }
 
-                    val deleteDialog = deleteAlert.create()
+                    deleteAlert.create()
                     deleteAlert.show()
 
                     return@setOnItemLongClickListener true
