@@ -3,9 +3,12 @@ package com.alecforbes.photomapapp.Activities
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.EditText
 import com.alecforbes.photomapapp.Activities.Photomaps.CustomPhotomap
 import com.alecforbes.photomapapp.Controllers.Database.DatabaseHelper
 import com.alecforbes.photomapapp.R
@@ -69,7 +72,7 @@ class SavedMaps : AppCompatActivity() {
                         selectedImageUriStrings.add(uri.toString())
                     }
 
-                    // Now create the image data objects fixme dont do this here cant be parceled
+                    // Now store the image URIs in the intent to make the ImageData objects later
                     savedMapIntent.putStringArrayListExtra("SavedImageUris", selectedImageUriStrings)
                     savedMapIntent.putExtra("IsSavedMap", true)
 
@@ -78,15 +81,35 @@ class SavedMaps : AppCompatActivity() {
                 }
                 // Long click listener to delete saved maps
 
-                savedMapListView.onItemLongClickListener = AdapterView.OnItemLongClickListener {
-                    adapterView, view, i, l ->
+                savedMapListView.setOnItemLongClickListener{ adapterView, view, i, l ->
 
                     val selectedSavedMap = savedMapListView.getItemAtPosition(i) as String
 
-                    // Bring up a prompt to confirm the user wants to delete the map
+                    // Confirmation dialog to ask if user definitely wants to delete the map
+                    val deleteAlert = AlertDialog.Builder(this)
 
+                    with(deleteAlert){
+                        deleteAlert.setTitle("Are you sure you want to delete the map $selectedSavedMap?")
+
+                        setPositiveButton("Delete"){
+                            dialog, deleteButton ->
+
+                            // Calls to database helper to delete the map
+                            databaseHelper.deleteMap(selectedSavedMap)
+
+                        }
+
+                        setNegativeButton("Cancel"){
+                            dialog, negButton ->
+                            dialog.dismiss()
+                        }
+                    }
+
+                    val deleteDialog = deleteAlert.create()
+                    deleteAlert.show()
+
+                    return@setOnItemLongClickListener true
                 }
-
 
             }catch (ex: Exception){
                 // todo put in a placeholder or something

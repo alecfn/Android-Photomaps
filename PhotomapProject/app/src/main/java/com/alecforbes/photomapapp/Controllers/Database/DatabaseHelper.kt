@@ -203,8 +203,10 @@ class DatabaseHelper(val context: Context):
 
     }
 
-    fun deleteMap(){
+    fun deleteMap(savedMapName: String){
         // todo
+
+        val DROP_MAP_SQL = ""
     }
 
     private fun checkMapExists(db: SQLiteDatabase, mapName: String): Boolean {
