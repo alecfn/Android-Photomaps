@@ -85,21 +85,19 @@ class DatabaseHelper(val context: Context):
 
         } else {
             // Map already exists, so just add any new URI values
-            val GET_ROWID_SQL = "SELECT _id FROM $TABLE_SAVEDPHOTOMAPS WHERE mapname='$mapName';"
-            val cursor = db.rawQuery(GET_ROWID_SQL, null)
-            if (cursor != null && cursor.moveToFirst()) {
-                val oldMapRowId = cursor.getLong(cursor.getColumnIndexOrThrow("_id"))
+
+            val oldMapRowId = getMapRowId(mapName, db)
 
                 imageUris.forEach {
-                    addURI(db, oldMapRowId, mapName, it)
+                    addURI(db, oldMapRowId!!, mapName, it)
                 }
 
+                // todo handle null id?
+
             }
-            cursor.close()
 
         }
 
-    }
 
 
     /**
@@ -199,14 +197,35 @@ class DatabaseHelper(val context: Context):
 
     }
 
-    fun getURIs(){
+    fun getMapRowId(mapName: String, db: SQLiteDatabase): Long? {
+        val GET_ROWID_SQL = "SELECT _id FROM $TABLE_SAVEDPHOTOMAPS WHERE mapname='$mapName';"
 
+        val cursor = db.rawQuery(GET_ROWID_SQL, null)
+        var mapRowId: Long? = null
+        if (cursor != null && cursor.moveToFirst()) {
+            mapRowId = cursor.getLong(cursor.getColumnIndexOrThrow("_id"))
+            }
+        cursor.close()
+
+        return mapRowId
     }
 
     fun deleteMap(savedMapName: String){
-        // todo
+        // Drop the entry for the map in the maps table, and the entries with URIs in URI table
 
-        val DROP_MAP_SQL = ""
+        val DROP_MAP_SQL = "DELETE FROM $TABLE_SAVEDPHOTOMAPS WHERE mapname='$savedMapName';"
+        // Get the _id of the map in the savedmap table to use to delete uri entries
+        val savedMapId = getMapRowId(savedMapName, db = this.readableDatabase)
+
+        val DROP_MAP_URIS_SQL = "DELETE FROM $TABLE_PHOTOMAPURIS WHERE _id='$savedMapId';"
+
+        val db = this.readableDatabase
+        db.execSQL(DROP_MAP_SQL)
+        db.execSQL(DROP_MAP_URIS_SQL)
+        // todo handle errors?
+
+        // Also delete file copies
+
     }
 
     private fun checkMapExists(db: SQLiteDatabase, mapName: String): Boolean {

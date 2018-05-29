@@ -115,24 +115,7 @@ class SavedMaps : AppCompatActivity() {
                 // todo put in a placeholder or something
             }
 
-
-
-            //val byteData = previewUriStream.readBytes()
-
-            //previewUriStream.close()
-
-            //val previewBitmap = BitmapFactory.decodeByteArray(byteData, 0, byteData.size)
-
-            //savedPreview.setImageBitmap(previewBitmap)
-
-
-
         }
 
-
-
-
     }
-
-
 }

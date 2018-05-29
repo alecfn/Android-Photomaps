@@ -181,7 +181,13 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
         val pad = 200 // Map pixel padding
         val cameraUpdate = CameraUpdateFactory.newLatLngBounds(mapBounds, pad)
 
-        photomap.moveCamera(cameraUpdate)
+        try {
+            photomap.moveCamera(cameraUpdate)
+        }catch (ex: Exception){
+            // fixme, this breaks when a saved map is loaded
+        }
+
+
 
     }
 
