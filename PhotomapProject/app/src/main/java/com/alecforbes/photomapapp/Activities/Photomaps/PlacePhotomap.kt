@@ -35,6 +35,7 @@ class PlacePhotomap : AppCompatActivity() {
 
         // fixme the new instance needs to be fixed for placesmaps now
         val placeMapFragment = CustomPhotomapFragment.newPlaceInstance(includedImages)
+
         //val placeMapFragment = CustomPhotomapFragment.newCustomInstance(includedImages)
 
         placeMapFragment.setSelectedDataFromIntent()

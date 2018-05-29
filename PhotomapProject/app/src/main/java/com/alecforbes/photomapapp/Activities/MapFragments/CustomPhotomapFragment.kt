@@ -1,5 +1,6 @@
 package com.alecforbes.photomapapp.Activities.MapFragments
 
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.location.Location
@@ -44,6 +45,8 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
     // TODO this could be custom views later
     private var imageMarkers = ArrayList<ImageClusterItem>()
     private var timelinePolys = ArrayList<Polyline>()
+
+    private var screenSize: Int? = null // Only needed with places maps to scale bitmaps
 
 
     override fun onActivityCreated(p0: Bundle?) {
@@ -94,6 +97,7 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
             val fragment = CustomPhotomapFragment()
             val args = Bundle()
             args.putParcelableArrayList("selectedData", images)
+
             fragment.arguments = args
             fragment.isPlaceMap = true
             return fragment
@@ -137,11 +141,22 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
 
 
                 // Construct the Bitmap, and set it to an image cluster item
-                val thumbnail = BitmapFactory.decodeByteArray(imageData.getImageThumbnail(), 0, imageData.getImageThumbnail().size)
+                var thumbnail: Bitmap? = null
+                if (!isPlaceMap) {
+                    thumbnail = BitmapFactory.decodeByteArray(imageData.getImageThumbnail(), 0, imageData.getImageThumbnail().size)
+                } else if (isPlaceMap){
+                    // Downloaded place image thumbnail icons need to be generated from the uri
+                    // todo bigger screensizes
+                    val thumbnailData = BitmapFactory.decodeFile(imageUri)
+                    //if (activity.screenSize)
+                    thumbnail = Bitmap.createScaledBitmap(thumbnailData, 250, 250, false)
+                }
+
                 val thumbnailDesc = BitmapDescriptorFactory.fromBitmap(thumbnail)
 
                 // Image and snippet values aren't used, but necessary in method constructor
                 val imageClusterItem = ImageClusterItem(imageData.latLong, "", "")
+
                 imageClusterItem.setBitmapDesc(thumbnailDesc)
 
                 imageClusterItem.setBitmapDesc(thumbnailDesc)
@@ -305,6 +320,10 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
         photomap.setOnMarkerClickListener(imageClusterManager)
 
         addImagePreviews()
+    }
+
+    fun setScreenSize(screenSize: Int){
+        this.screenSize = screenSize
     }
 
 }
