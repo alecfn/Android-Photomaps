@@ -7,7 +7,6 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import com.alecforbes.photomapapp.Activities.Photomaps.CustomPhotomap
-import com.alecforbes.photomapapp.Manifest
 import com.alecforbes.photomapapp.R
 import kotlinx.android.synthetic.main.activity_main.*
 

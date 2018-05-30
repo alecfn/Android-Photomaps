@@ -7,7 +7,6 @@ import android.support.constraint.ConstraintLayout
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +23,7 @@ import kotlinx.android.synthetic.main.individual_image_view.*
 import kotlinx.android.synthetic.main.timeline_scroll.*
 
 // FIXME Open keyword means this class can be inherited from, needed?
-open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
+class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
 
     // Store the images as objects with all relevant info
 
@@ -33,8 +32,6 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
 
     lateinit var fileDataController: FileDataController
     lateinit var customMapFragment: CustomPhotomapFragment
-
-    private var screenSize: Int? = null
 
     // Images stored in the preview pane
     private var previewImageUriHashMap = HashMap<String, String>()
@@ -46,7 +43,7 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
         super.onCreate(savedInstanceState)
         title = "Custom Photomap"
 
-        this.setScreenResolution()
+        setScreenResolution()
         fileDataController = FileDataController(contentResolver, screenSize!!)
 
         setContentView(R.layout.activity_photomap)
@@ -330,20 +327,6 @@ open class CustomPhotomap : AppCompatActivity(), OneMoreFabMenu.OptionsClick {
             }
 
         }
-    }
-
-    /**
-     * Helper function to get the resolution of a screen. If greater than 1080p, the image
-     * thumbnails and timeline photos should be larger.
-     */
-    private fun setScreenResolution(){
-        val displayMetrics = DisplayMetrics()
-
-        windowManager.defaultDisplay.getMetrics(displayMetrics)
-        val screenHeight = displayMetrics.heightPixels
-        val screenWidth = displayMetrics.widthPixels
-
-        screenSize = screenHeight * screenWidth
     }
 
 }

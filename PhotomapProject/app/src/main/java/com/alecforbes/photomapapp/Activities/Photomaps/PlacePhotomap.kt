@@ -11,7 +11,7 @@ import com.alecforbes.photomapapp.R
  * A place photomap inherits methods from the Custom photomap, as some functionality is not
  * available in a place photomap
  */
-class PlacePhotomap : AppCompatActivity() {
+class PlacePhotomap : PhotomapActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +40,10 @@ class PlacePhotomap : AppCompatActivity() {
 
         placeMapFragment.setSelectedDataFromIntent()
 
+        // Create a horizontal scroll view for the place images, similar to the custom map
+
+
+
         // As the map is a fragment, initialise it in a view (but just the constraint as the map fills the view)
         supportFragmentManager.beginTransaction()
                 .add(R.id.placePhotomapConstraint, placeMapFragment)
@@ -47,6 +51,25 @@ class PlacePhotomap : AppCompatActivity() {
 
         //placeMapFragment.addImagePreviews()
         //placeMapFragment.setMapBounds()
+    }
+
+    /**
+     * Create a scroll view for the images on the map, similar to the one used on custom maps.
+     *
+     * This uses the same layout resource as the custom map but populates with firebase images.
+     */
+    private fun createFirebaseImageScrollView(){
+
+    }
+
+    /**
+     * Create individual images when images are clicked on a place map. This is not the same
+     * as what is created on the custom maps, as the information for the images is different.
+     *
+     * This function is always called, unlike in a custom map which has to be added
+     */
+    private fun createIndvFirebaseImageView(){
+
     }
 
 
