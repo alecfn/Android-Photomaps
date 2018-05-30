@@ -5,11 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
-import android.util.DisplayMetrics
-import android.view.Gravity
 import android.view.View
-import android.view.ViewGroup
 import android.widget.*
 import com.alecforbes.photomapapp.Activities.MapFragments.CustomPhotomapFragment
 import com.alecforbes.photomapapp.Controllers.Database.DatabaseHelper
@@ -210,29 +206,13 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
             // Only add the image to the preview if it isn't already on the map
             if (!previewImageUriHashMap.containsKey(imageUri)) {
 
-                val layout = LinearLayout(applicationContext)
+                val customImageButton = defineHorizontalScrollViewButton()
 
-                var PREVIEW_THUMBNAIL_SIZE = 300
-
-                if (screenSize!! > 2073600){  // Greater than 1080p
-                    PREVIEW_THUMBNAIL_SIZE = 500
-                }
-
-                val layoutParams = ViewGroup.LayoutParams(PREVIEW_THUMBNAIL_SIZE, PREVIEW_THUMBNAIL_SIZE)
-                layout.layoutParams = layoutParams
-                layout.gravity = Gravity.CENTER_HORIZONTAL
-
-                // Each image should be a button to tap to bring up a larger preview
-                val imageButton = ImageButton(applicationContext) // todo button listeners
-                imageButton.layoutParams = layoutParams
-                imageButton.adjustViewBounds = true
-                imageButton.scaleType = ImageView.ScaleType.FIT_XY
-
-                imageButton.setImageBitmap(imageData.getImageBitmap()) //fixme not thumbnail bitmap
+                customImageButton.setImageBitmap(imageData.getImageBitmap()) //fixme not thumbnail bitmap
 
                 // Set up the listener for clicking to create a more detailed view
 
-                imageButton.setOnClickListener {
+                customImageButton.setOnClickListener {
 
                     // Get the address of the image from the lat long
                     // TODO maybe store it, and only get if it's not already stored in the imagedata
@@ -252,7 +232,7 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
 
                 }
 
-                imagePreviewPane.addView(imageButton)
+                imagePreviewPane.addView(customImageButton)
                 previewImageUriHashMap[imageUri] = ""
             }
 

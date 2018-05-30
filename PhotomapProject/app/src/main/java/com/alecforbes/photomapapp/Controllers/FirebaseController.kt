@@ -19,7 +19,7 @@ class FirebaseController(content: ContentResolver,
 
     private val firebaseStorage: FirebaseStorage = FirebaseStorage.getInstance()
     private var firebaseFiles = ArrayList<File>()
-    private var includedImages = ArrayList<ImageData>()
+    var includedImages = ArrayList<ImageData>()
 
     private val placesLinksHashmap = PlacesLinksHashmap()
     private val imageDataCreator = ImageDataCreator(content, firebaseFiles, includedImages)

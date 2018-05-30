@@ -1,11 +1,13 @@
 package com.alecforbes.photomapapp.Activities.Photomaps
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import android.view.View
 import com.alecforbes.photomapapp.Activities.MapFragments.CustomPhotomapFragment
 import com.alecforbes.photomapapp.Controllers.FirebaseController
 import com.alecforbes.photomapapp.Model.ImageData
 import com.alecforbes.photomapapp.R
+import kotlinx.android.synthetic.main.activity_place_photomap.*
+import kotlinx.android.synthetic.main.timeline_scroll.*
 
 /**
  * A place photomap inherits methods from the Custom photomap, as some functionality is not
@@ -13,16 +15,20 @@ import com.alecforbes.photomapapp.R
  */
 class PlacePhotomap : PhotomapActivity() {
 
+    lateinit var firebaseController: FirebaseController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_place_photomap)
+
+        setScreenResolution()
 
         val placesIntent = intent
         val selectedLoc = placesIntent.getStringExtra("SelectedLocation")
         title = "$selectedLoc Photomap"
 
         // The URIs for images in a place photomap come from firebase downloads, not an intent
-        val firebaseController = FirebaseController(contentResolver, this)
+        firebaseController = FirebaseController(contentResolver, this)
         firebaseController.retrieveSelectedPlaceImages(selectedLoc)
 
     }
@@ -42,7 +48,7 @@ class PlacePhotomap : PhotomapActivity() {
 
         // Create a horizontal scroll view for the place images, similar to the custom map
 
-
+        createFirebaseImageScrollView()
 
         // As the map is a fragment, initialise it in a view (but just the constraint as the map fills the view)
         supportFragmentManager.beginTransaction()
@@ -59,7 +65,21 @@ class PlacePhotomap : PhotomapActivity() {
      * This uses the same layout resource as the custom map but populates with firebase images.
      */
     private fun createFirebaseImageScrollView(){
+        placeScrollview.visibility = View.VISIBLE
 
+        firebaseController.includedImages.forEach{ imageData ->
+
+            val placeImageButton = defineHorizontalScrollViewButton()
+
+            placeImageButton.setImageBitmap(imageData.getImageBitmap())
+
+            placeImageButton.setOnClickListener {
+
+            }
+
+            imagePreviewPane.addView(placeImageButton)
+
+        }
     }
 
     /**
