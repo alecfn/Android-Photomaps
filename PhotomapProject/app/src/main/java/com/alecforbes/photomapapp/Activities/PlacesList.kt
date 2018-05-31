@@ -28,7 +28,8 @@ class PlacesList : AppCompatActivity() {
 
         val placePhotoMapIntent = Intent(this, PlacePhotomap::class.java)
 
-        var selectedLoc: String? = null
+        // Set all the listeners for each image button
+        var selectedLoc: String?
         newYorkButton.setOnClickListener {
             selectedLoc = "New York"
             placePhotoMapIntent.putExtra("SelectedLocation", selectedLoc)
@@ -43,6 +44,18 @@ class PlacesList : AppCompatActivity() {
 
         sydneyButton.setOnClickListener{
             selectedLoc = "Sydney"
+            placePhotoMapIntent.putExtra("SelectedLocation", selectedLoc)
+            startActivity(placePhotoMapIntent)
+        }
+
+        ausBigButton.setOnClickListener{
+            selectedLoc = "AusBig"
+            placePhotoMapIntent.putExtra("SelectedLocation", selectedLoc)
+            startActivity(placePhotoMapIntent)
+        }
+
+        worldButton.setOnClickListener{
+            selectedLoc = "World"
             placePhotoMapIntent.putExtra("SelectedLocation", selectedLoc)
             startActivity(placePhotoMapIntent)
         }
