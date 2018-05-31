@@ -16,14 +16,13 @@ class PlacesList : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_places_list)
-        title = "Places"
+        title = "World Places"
         setUpPlacesButtons()
 
     }
 
     /**
-     * Set up the options in the list on this screen to be of the available place maps hosted on
-     * the firebase server.
+     * Set up the buttons in the card view (Image buttons) to link to different place maps.
      */
     private fun setUpPlacesButtons(){
 
