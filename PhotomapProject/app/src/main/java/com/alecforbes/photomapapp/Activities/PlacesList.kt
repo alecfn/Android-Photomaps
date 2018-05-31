@@ -12,13 +12,12 @@ import kotlinx.android.synthetic.main.activity_places_list.*
 
 class PlacesList : AppCompatActivity() {
 
-    val availablePlaces = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_places_list)
         title = "Places"
-        setUpPlacesListView()
+        setUpPlacesButtons()
 
     }
 
@@ -26,21 +25,25 @@ class PlacesList : AppCompatActivity() {
      * Set up the options in the list on this screen to be of the available place maps hosted on
      * the firebase server.
      */
-    private fun setUpPlacesListView(){
-        // TODO this is just manually added, could be a better way? Iterate through the sample files on firebase?
+    private fun setUpPlacesButtons(){
 
-        availablePlaces.add("Sydney")
-        availablePlaces.add("New York")
-        availablePlaces.add("London")
+        val placePhotoMapIntent = Intent(this, PlacePhotomap::class.java)
 
-        // TODO do want to add image thumbnail previews so will probably have to be a custom item later
-        val placeListAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, availablePlaces)
-        placesListView.adapter = placeListAdapter
+        var selectedLoc: String? = null
+        newYorkButton.setOnClickListener {
+            selectedLoc = "New York"
+            placePhotoMapIntent.putExtra("SelectedLocation", selectedLoc)
+            startActivity(placePhotoMapIntent)
+        }
 
-        placesListView.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, i, l ->
+        londonButton.setOnClickListener{
+            selectedLoc = "London"
+            placePhotoMapIntent.putExtra("SelectedLocation", selectedLoc)
+            startActivity(placePhotoMapIntent)
+        }
 
-            val selectedLoc = placesListView.getItemAtPosition(i) as String
-            val placePhotoMapIntent = Intent(this, PlacePhotomap::class.java)
+        sydneyButton.setOnClickListener{
+            selectedLoc = "Sydney"
             placePhotoMapIntent.putExtra("SelectedLocation", selectedLoc)
             startActivity(placePhotoMapIntent)
         }

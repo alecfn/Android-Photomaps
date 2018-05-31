@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/placesListConstraint"
@@ -7,16 +7,86 @@
     android:layout_height="match_parent"
     tools:context="com.alecforbes.photomapapp.Activities.PlacesList">
 
-    <LinearLayout
-        android:id="@+id/placesListLayout"
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/placeNestedScoll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <ListView
-            android:id="@+id/placesListView"
+        <android.support.v7.widget.CardView
+            android:id="@+id/placeCardView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:layout_gravity="top|center"
+            android:layout_margin="5dp"
+            android:layout_marginTop="5dp"
+            android:clipToPadding="false"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="6dp">
 
-</android.support.constraint.ConstraintLayout>
+            <LinearLayout
+                android:id="@+id/placeLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/newYorkText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:text="New York"/>
+
+                <ImageButton
+                    android:id="@+id/newYorkButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp"
+                    android:adjustViewBounds="true"
+                    android:padding="0dp"
+                    app:srcCompat="@drawable/newyork"
+                    />
+
+                <TextView
+                    android:id="@+id/londonText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:text="London"/>
+
+                <ImageButton
+                    android:id="@+id/londonButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp"
+                    android:adjustViewBounds="true"
+                    android:padding="0dp"
+                    app:srcCompat="@drawable/london"
+                    />
+
+                <TextView
+                    android:id="@+id/sydneyText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:text="Sydney"/>
+
+                <ImageButton
+                    android:id="@+id/sydneyButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp"
+                    android:adjustViewBounds="true"
+                    android:padding="0dp"
+                    app:srcCompat="@drawable/sydney"
+                    />
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>

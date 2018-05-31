@@ -92,5 +92,11 @@ class PlacePhotomap : PhotomapActivity() {
 
     }
 
+    override fun onResumeFragments() {
+        super.onResumeFragments()
+
+        placeScrollview.bringToFront()
+    }
+
 
 }
