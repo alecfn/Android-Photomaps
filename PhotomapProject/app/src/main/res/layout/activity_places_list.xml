@@ -52,7 +52,13 @@
                     />
 
                 <TextView
-                    android:id="@+id/ausText"
+                    android:id="@+id/worldDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Explore well known landmarks from all over the world!"/>
+
+                <TextView
+                    android:id="@+id/ausBigText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
@@ -60,16 +66,16 @@
                     android:text="Australia Big Things"/>
 
                 <ImageButton
-                    android:id="@+id/ausButton"
+                    android:id="@+id/ausBigButton"
                     android:layout_width="match_parent"
                     android:layout_height="160dp"
                     android:adjustViewBounds="true"
                     android:padding="0dp"
-                    app:srcCompat="@drawable/ausfull"
+                    app:srcCompat="@drawable/banana"
                     />
 
                 <TextView
-                    android:id="@+id/ausDesc"
+                    android:id="@+id/ausBigDesc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Explore Australia's rich culture of having unnecessarily big objects in small rural towns." />
