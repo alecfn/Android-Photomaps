@@ -291,7 +291,7 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
                 imageData.realTimeTaken = realDate
                 unixStamp = realDate.time / 1000
             } else{
-                // If only one of date or time fields is present, the sorting wont be accurate set 0
+                // If there's neither a date of time, just set to 0
                 unixStamp = 0
             }
 
