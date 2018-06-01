@@ -112,17 +112,7 @@ class DatabaseHelper(val context: Context):
     private fun addURI(db: SQLiteDatabase, mapRowId: Long, mapName: String, uri: Uri) {
 
         val savedMapUri = ContentValues()
-
-        // If the URI doesn't exist in the DB, add it otherwise ignore it
-        val GET_URI_SQL = "SELECT uris FROM $TABLE_PHOTOMAPURIS WHERE uris='$uri" + "_" + mapName +
-                "_copy'" + "AND $COLUMN_ASSOCIATED_MAP='$mapName';"
-
-        val cursor = db.rawQuery(GET_URI_SQL, null)
-
-        if (cursor.moveToFirst()){  // If the cursor can move, that uri is already stored
-            cursor.close()
-            return
-        }
+        val savedMapId = getMapRowId(mapName, this.readableDatabase)
 
         // To save the new image copy, get the path and append the mapname a copy to be unique
 
@@ -131,12 +121,23 @@ class DatabaseHelper(val context: Context):
 
         val fileBytes = fileContents.readBytes()
 
+        val newFile = File(context.filesDir, filename) // Application data directory
+        val newUri = Uri.fromFile(newFile) // Need the new uri to check exists as that is stored
 
-        var newUri: Uri? = null
+        // If the URI doesn't exist in the DB, add it otherwise ignore it
+        val GET_URI_SQL = "SELECT uris FROM $TABLE_PHOTOMAPURIS WHERE uris='$newUri' AND $COLUMN_ASSOCIATED_MAP='$savedMapId';"
+
+        val cursor = db.rawQuery(GET_URI_SQL, null)
+
+        if (cursor.moveToFirst()){
+            // If the cursor can move, that uri is already stored so return
+            cursor.close()
+            return
+        }
+
+        // File didn't exist, write it to the data directory
         context.openFileOutput(filename, Context.MODE_PRIVATE).use {
             it.write(fileBytes)
-            val newFile = File(context.filesDir, filename) // Application data directory
-            newUri = Uri.fromFile(newFile)
             it.close()
         }
 
