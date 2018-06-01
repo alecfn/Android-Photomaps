@@ -128,7 +128,6 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
 
         val saveInputBuilder = AlertDialog.Builder(this)
 
-
         // Set up an alert dialog style box for the user to enter a name
         val saveInputText = EditText(this)
         // fixme padding
@@ -151,11 +150,45 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
 
                 // If there's no images added, don't save
                 if (fileDataController.imageUris.size > 0) {
-                    databaseHelper.addMap(savedMapName, fileDataController.imageUris)
+                    // Check if the map exists in the Db, and ask the user if they want to overwrite
+                    val mapExists = databaseHelper.checkMapExists(databaseHelper.readableDatabase, savedMapName)
 
-                    // Toast to confirm save
-                    Toast.makeText(this@CustomPhotomap, "Map $savedMapName saved successfully!",
-                            Toast.LENGTH_LONG).show()
+                    if(mapExists){ // Create a new dialogue asking confirmation
+
+                        val overwriteAlert= AlertDialog.Builder(this@CustomPhotomap)
+
+                        with(overwriteAlert){
+                            overwriteAlert.setTitle("A map with the name $savedMapName" +
+                                    " already exists. Would you like to overwrite it?")
+
+                            setPositiveButton("Overwrite"){
+                                dialog, overwriteButton ->
+                                databaseHelper.updateMap(savedMapName, fileDataController.imageUris)
+
+                                // Toast to confirm overwrite
+                                Toast.makeText(this@CustomPhotomap, "Map $savedMapName successfully updated!",
+                                        Toast.LENGTH_LONG).show()
+                            }
+
+                            setNegativeButton("Cancel"){
+                                dialog, negButton ->
+                                dialog.dismiss()
+                            }
+
+                            val overwriteDialog = overwriteAlert.create()
+                            overwriteDialog.show()
+
+                        }
+
+                    }else {
+
+                        databaseHelper.addMap(savedMapName, fileDataController.imageUris)
+
+
+                        // Toast to confirm save
+                        Toast.makeText(this@CustomPhotomap, "Map $savedMapName saved successfully!",
+                                Toast.LENGTH_LONG).show()
+                    }
 
                 } else {
                     Toast.makeText(this@CustomPhotomap, "No new images to save!",
@@ -174,6 +207,7 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
         saveDialog.show()
 
     }
+
 
     /**
      * Clear the map timeline preview images and the clear the polylines on the map.

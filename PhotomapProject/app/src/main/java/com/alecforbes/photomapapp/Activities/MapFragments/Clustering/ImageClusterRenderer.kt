@@ -1,6 +1,7 @@
 package com.alecforbes.photomapapp.Activities.MapFragments.Clustering
 
 import android.content.Context
+import android.view.LayoutInflater
 import android.widget.ImageView
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.BitmapDescriptor
@@ -9,6 +10,7 @@ import com.google.maps.android.clustering.Cluster
 import com.google.maps.android.clustering.ClusterManager
 import com.google.maps.android.clustering.view.DefaultClusterRenderer
 import com.google.maps.android.ui.IconGenerator
+import kotlinx.android.synthetic.main.multi_image.*
 
 /**
  * Created by Alec on 5/27/2018.
@@ -24,6 +26,10 @@ class ImageClusterRenderer(context: Context?, map: GoogleMap?,
     private lateinit var photomapImage: ImageView
     private lateinit var clusterImageView: ImageView
     private var dimension = 0
+
+    init {
+       // multiImageFrameLayout
+    }
 
 
     override fun onBeforeClusterRendered(cluster: Cluster<ImageClusterItem>?, markerOptions: MarkerOptions?) {

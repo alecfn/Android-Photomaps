@@ -114,7 +114,8 @@ class DatabaseHelper(val context: Context):
         val savedMapUri = ContentValues()
 
         // If the URI doesn't exist in the DB, add it otherwise ignore it
-        val GET_URI_SQL = "SELECT uris FROM $TABLE_PHOTOMAPURIS WHERE uris='$uri' AND $COLUMN_ASSOCIATED_MAP='$mapName';"
+        val GET_URI_SQL = "SELECT uris FROM $TABLE_PHOTOMAPURIS WHERE uris='$uri" + "_" + mapName +
+                "_copy'" + "AND $COLUMN_ASSOCIATED_MAP='$mapName';"
 
         val cursor = db.rawQuery(GET_URI_SQL, null)
 
@@ -197,7 +198,7 @@ class DatabaseHelper(val context: Context):
 
     }
 
-    fun getMapRowId(mapName: String, db: SQLiteDatabase): Long? {
+    private fun getMapRowId(mapName: String, db: SQLiteDatabase): Long? {
         val GET_ROWID_SQL = "SELECT _id FROM $TABLE_SAVEDPHOTOMAPS WHERE mapname='$mapName';"
 
         val cursor = db.rawQuery(GET_ROWID_SQL, null)
@@ -215,7 +216,7 @@ class DatabaseHelper(val context: Context):
 
         val DROP_MAP_SQL = "DELETE FROM $TABLE_SAVEDPHOTOMAPS WHERE mapname='$savedMapName';"
         // Get the _id of the map in the savedmap table to use to delete uri entries
-        val savedMapId = getMapRowId(savedMapName, db = this.readableDatabase)
+        val savedMapId = getMapRowId(savedMapName, this.readableDatabase)
 
         val DROP_MAP_URIS_SQL = "DELETE FROM $TABLE_PHOTOMAPURIS WHERE _id='$savedMapId';"
 
@@ -249,7 +250,20 @@ class DatabaseHelper(val context: Context):
 
     }
 
-    private fun checkMapExists(db: SQLiteDatabase, mapName: String): Boolean {
+    /**
+     * Update a map already in the database with new URI entries.
+     */
+    fun updateMap(savedMapName: String, imageUris: ArrayList<Uri>){
+
+        val oldMapId = getMapRowId(savedMapName, this.readableDatabase)
+        //val UPDATE_ENTRIES_SQL = "INSERT INTO $TABLE_PHOTOMAPURIS VALUES "
+
+        imageUris.forEach {uri ->
+            addURI(this.writableDatabase, oldMapId!!, savedMapName, uri)
+        }
+    }
+
+    fun checkMapExists(db: SQLiteDatabase, mapName: String): Boolean {
         val FIND_MAP_SQL = "SELECT mapname FROM $TABLE_SAVEDPHOTOMAPS WHERE mapname='$mapName';"
 
         val cursor = db.rawQuery(FIND_MAP_SQL, null)
