@@ -277,13 +277,20 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
             if (imageData.datetaken != "0" && imageData.timeTaken != "0") {
 
                 // The following format is how exif date data fields are stored, format it
-                val dateFormat = SimpleDateFormat("yyyy:MM:dd hh:mm:ss", Locale.getDefault())
-                val realDate = dateFormat.parse(imageData.dateTimeTaken)
+                val dateTimeFormat = SimpleDateFormat("yyyy:MM:dd hh:mm:ss", Locale.getDefault())
+                val realDateTime = dateTimeFormat.parse(imageData.dateTimeTaken)
+
+                imageData.realTimeTaken = realDateTime
+
+                unixStamp = realDateTime.time / 1000
+            } else if (imageData.datetaken != "0") {
+                // If there's just a date, we can still get a unix time
+                val dateFormat = SimpleDateFormat("yyyy:MM:dd", Locale.getDefault())
+                val realDate = dateFormat.parse(imageData.datetaken)
 
                 imageData.realTimeTaken = realDate
-
                 unixStamp = realDate.time / 1000
-            } else {
+            } else{
                 // If only one of date or time fields is present, the sorting wont be accurate set 0
                 unixStamp = 0
             }
