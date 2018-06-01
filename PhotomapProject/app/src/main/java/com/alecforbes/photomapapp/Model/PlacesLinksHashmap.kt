@@ -23,9 +23,29 @@ class PlacesLinksHashmap{
                 "PlacesTestData/London/parliament.jpg",
                 "PlacesTestData/London/toweroflondon.jpg")
 
+        val worldLinks = listOf("PlacesTestData/World/brandenburggate.jpg",
+                "PlacesTestData/World/eiffeltower.jpg",
+                "PlacesTestData/World/goldengate.jpg",
+                "PlacesTestData/World/hollywoodsign.jpg",
+                "PlacesTestData/World/liberty.jpg",
+                "PlacesTestData/World/operahouse.jpg",
+                "PlacesTestData/World/pyramids.jpg",
+                "PlacesTestData/World/rushmore.jpg",
+                "PlacesTestData/World/touhontower.jpg")
+
+        val ausBigThingsLinks = listOf("PlacesTestData/AusBigThings/bigbanana.jpg," +
+                "PlacesTestData/AusBigThings/bigkoala.jpg",
+                "PlacesTestData/AusBigThings/biglobster.jpg",
+                "PlacesTestData/AusBigThings/bigpineapple.jpg",
+                "PlacesTestData/AusBigThings/bigram.jpg",
+                "PlacesTestData/AusBigThings/bigstrawberry.jpg")
+
         placesLinksHashmap["Sydney"] = sydneyLinks
         placesLinksHashmap["New York"] = newYorkLinks
         placesLinksHashmap["London"] = londonLinks
+        placesLinksHashmap["World"] = worldLinks
+        placesLinksHashmap["AusBig"] = ausBigThingsLinks
+
     }
 
     fun getPlaceLinks(key: String): List<String>? {
