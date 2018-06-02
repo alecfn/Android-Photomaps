@@ -8,6 +8,7 @@ import android.support.constraint.ConstraintLayout
 import android.util.Log
 import android.view.View
 import com.alecforbes.photomapapp.Activities.MapFragments.Clustering.ImageClusterItem
+import com.alecforbes.photomapapp.Activities.MapFragments.Clustering.ImageClusterManager
 import com.alecforbes.photomapapp.Activities.MapFragments.Clustering.ImageClusterRenderer
 import com.alecforbes.photomapapp.Model.ImageData
 import com.alecforbes.photomapapp.R
@@ -30,7 +31,7 @@ import kotlin.collections.HashMap
 open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, View.OnClickListener, GoogleMap.OnMarkerClickListener {
 
     private lateinit var photomap: GoogleMap
-    private lateinit var imageClusterManager: ClusterManager<ImageClusterItem>
+    private lateinit var imageClusterManager: ImageClusterManager
 
 
     // Store uris as a hashmap to check if added already (Value is unused, just the key)
@@ -319,7 +320,14 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
     }
 
     private fun setUpClusterer(){
-        imageClusterManager = ClusterManager<ImageClusterItem>(this.context, photomap)
+        val cameraIdleListenter = GoogleMap.OnCameraIdleListener {  }
+        imageClusterManager = ImageClusterManager(this.context, photomap, cameraIdleListenter)
+
+        // Set the map type to know how to perform additional rendering
+        if(isPlaceMap){
+            imageClusterManager.isPlaceMap = true
+        }
+
         imageClusterManager.renderer = ImageClusterRenderer(this.context, photomap, imageClusterManager)
         photomap.setOnCameraIdleListener(imageClusterManager)
 
@@ -328,8 +336,8 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
         addImagePreviews()
     }
 
-    fun setScreenSize(screenSize: Int){
-        this.screenSize = screenSize
-    }
+//    fun setScreenSize(screenSize: Int){
+//        this.screenSize = screenSize
+//    }
 
 }

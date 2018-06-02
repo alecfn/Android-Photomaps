@@ -1,6 +1,9 @@
 package com.alecforbes.photomapapp.Activities.MapFragments.Clustering
 
 import android.content.Context
+import android.view.View
+import com.alecforbes.photomapapp.R
+import com.alecforbes.photomapapp.R.id.*
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
 import com.google.maps.android.clustering.ClusterManager
@@ -14,8 +17,20 @@ class ImageClusterManager(context: Context,
                           private var cameraIdleListener: GoogleMap.OnCameraIdleListener?):
         ClusterManager<ImageClusterItem>(context, map){
 
+    var isPlaceMap: Boolean = false // The type of map, place, custom etc. to know how to perform logic
+
     override fun onMarkerClick(marker: Marker?): Boolean {
         marker!!.showInfoWindow()
+        // todo When the marker is clicked once, make the image larger
+
+        // When a place map, information should be displayed when the user taps a marker
+        if(isPlaceMap){
+
+           // indvPlaceViewConstraint
+
+
+        }
+
         return super.onMarkerClick(marker)
     }
 
@@ -25,6 +40,10 @@ class ImageClusterManager(context: Context,
     }
 
     fun setRenderer(){
+
+    }
+
+    private fun resizeMarker(marker: Marker?){
 
     }
 

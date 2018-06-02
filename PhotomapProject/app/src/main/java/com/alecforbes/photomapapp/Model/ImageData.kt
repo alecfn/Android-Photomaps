@@ -37,6 +37,7 @@ data class ImageData(val file: File,
                      private var thumbnailData: ByteArray= byteArrayOf(),
                      private var screenSize: Int? = null): Parcelable, Comparable<ImageData> {
 
+    // FIXME this class is a little all over the place with how things are done, clean up
     init {
         // Set all the exif data we want to get from the exif interface
         setLatLong()
@@ -128,9 +129,9 @@ data class ImageData(val file: File,
                 rotationMatrix.setRotate(-90f)
             }
         }
+        // Set the bitmap to the newly rotated image
         try {
             bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, rotationMatrix, true)
-            //setImageThumbnail() // Reset the thumbnail with the rotated image
         }catch (memoryEx: OutOfMemoryError){
             Log.e("Exif Rotate Memory", "Ran out of memory while rotating bitmaps.")
         }

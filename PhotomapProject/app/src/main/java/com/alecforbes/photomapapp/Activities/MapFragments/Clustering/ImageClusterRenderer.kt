@@ -94,7 +94,7 @@ class ImageClusterRenderer(context: Context?, map: GoogleMap?,
     override fun setOnClusterItemClickListener(listener: ClusterManager.OnClusterItemClickListener<ImageClusterItem>?) {
         super.setOnClusterItemClickListener(listener)
 
-
+       // Toast.makeText(context, "blub", Toast.LENGTH_SHORT).show()
     }
 
 }
