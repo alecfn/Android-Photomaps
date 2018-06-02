@@ -29,7 +29,7 @@ class ImageClusterRenderer(context: Context?, map: GoogleMap?,
     private val clusterIconGenerator = IconGenerator(context)
     private lateinit var photomapBitmap: BitmapDescriptor
     private lateinit var photomapImage: ImageView
-    private lateinit var clusterImageView: ImageView
+    private var clusterImageView: ImageView
     private var dimension = 0
 
     init {
@@ -49,10 +49,13 @@ class ImageClusterRenderer(context: Context?, map: GoogleMap?,
     override fun onBeforeClusterRendered(cluster: Cluster<ImageClusterItem>?, markerOptions: MarkerOptions?) {
         super.onBeforeClusterRendered(cluster, markerOptions)
 
-        val imageClusterDrawables = ArrayList<Drawable>(Math.min(3, cluster!!.size))
+
+        // fixme this would be better run on its own thread
+        // 2 or more images should cluster into a custom display
+        val imageClusterDrawables = ArrayList<Drawable>(Math.min(2, cluster!!.size))
         for(clusterImageItem in cluster.items){
 
-            if (imageClusterDrawables.size == 3){
+            if (imageClusterDrawables.size == 2){
                 break
             }
 
@@ -63,9 +66,11 @@ class ImageClusterRenderer(context: Context?, map: GoogleMap?,
         }
         // Uses MultiDrawable class from Google Map Utils
         val multiImageDrawable = MultiDrawable(imageClusterDrawables)
-
         multiImageDrawable.setBounds(0, 0, dimension, dimension)
+
+        clusterImageView.setImageDrawable(multiImageDrawable)
         val multiIcon = clusterIconGenerator.makeIcon(cluster.size.toString())
+
         markerOptions!!.icon(BitmapDescriptorFactory.fromBitmap(multiIcon))
 
 
