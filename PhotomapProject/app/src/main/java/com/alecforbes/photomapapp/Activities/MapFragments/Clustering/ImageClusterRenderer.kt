@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import com.alecforbes.photomapapp.R
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.BitmapDescriptor
@@ -87,6 +88,12 @@ class ImageClusterRenderer(context: Context?, map: GoogleMap?,
         photomapImage.setImageBitmap(image.getThumbnailBitmap())
         val icon = iconGenerator.makeIcon()
         markerOptions!!.icon(BitmapDescriptorFactory.fromBitmap(icon))
+
+    }
+
+    override fun setOnClusterItemClickListener(listener: ClusterManager.OnClusterItemClickListener<ImageClusterItem>?) {
+        super.setOnClusterItemClickListener(listener)
+
 
     }
 

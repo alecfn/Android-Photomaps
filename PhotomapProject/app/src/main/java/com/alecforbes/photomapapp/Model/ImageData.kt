@@ -2,9 +2,11 @@ package com.alecforbes.photomapapp.Model
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
+import android.graphics.Matrix
 import android.media.ExifInterface
 import android.media.ExifInterface.*
 import android.os.Parcelable
+import android.util.Log
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
@@ -21,7 +23,7 @@ import java.util.*
 @Parcelize
 data class ImageData(val file: File,
                      private var bitmap: Bitmap,
-                     @IgnoredOnParcel private val exifInterface: @RawValue ExifInterface,
+                     @IgnoredOnParcel private val exifInterface: @RawValue ExifInterface, // fixme this is a major problem and keeps causes crashes, probably best to change to the java way
                      var latitude: Float=0F,
                      var longitude: Float=0F,
                      var dateTimeTaken: String="",
@@ -31,22 +33,17 @@ data class ImageData(val file: File,
                      var latLong: LatLng= LatLng(0.0, 0.0),
                      var unixTime: Long = 0L,
                      var realAddress: String? = null,
+                     var imageOrientation: Int? = 0,
                      private var thumbnailData: ByteArray= byteArrayOf(),
                      private var screenSize: Int? = null): Parcelable, Comparable<ImageData> {
 
-    // TODO time taken probably isnt a string
-
-    // TODO any more exifInterface
-
     init {
-        setAllImageData()
-    }
-
-    private fun setAllImageData(){
+        // Set all the exif data we want to get from the exif interface
         setLatLong()
         dateTimeTaken = setDateTimeTaken()
+        setImageOrientation()
+        rotateBitmaps()
         setImageThumbnail()
-
     }
 
     private fun setLatLong(){
@@ -81,6 +78,63 @@ data class ImageData(val file: File,
         //}catch (readEx: Exception){
             // TODO
         //}
+    }
+
+    /**
+     * Images can be taken at different orientations, horizontal, vertical etc. We can use these
+     * to determine how a bitmap should be oriented.
+     */
+    private fun setImageOrientation(){
+        imageOrientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1)
+    }
+
+    /**
+     * If images are rotated, the image thumbnails stored need to also be rotated so they display
+     * correctly on the map later.
+     *
+     * Case statements based on code at:
+     * https://stackoverflow.com/questions/20478765/how-to-get-the-correct-orientation-of-the-image-selected-from-the-default-image
+     */
+    private fun rotateBitmaps(){
+
+        val rotationMatrix = Matrix()
+
+        // Only when images are rotated (not ORIENTATION_NORMAL) should bitmaps be rotated
+        when(imageOrientation){
+            ExifInterface.ORIENTATION_FLIP_HORIZONTAL -> {
+                rotationMatrix.setScale(-1f, 1f)
+            }
+
+            ExifInterface.ORIENTATION_FLIP_VERTICAL -> {
+                rotationMatrix.setRotate(180f)
+                rotationMatrix.postScale(-1f, 1f)
+            }
+            ExifInterface.ORIENTATION_TRANSPOSE -> {
+                rotationMatrix.setRotate(90f)
+                rotationMatrix.setScale(-1f, 1f)
+            }
+            ExifInterface.ORIENTATION_TRANSVERSE -> {
+                rotationMatrix.setRotate(-90f)
+                rotationMatrix.postScale(-1f, 1f)
+            }
+            ExifInterface.ORIENTATION_ROTATE_90 -> {
+                rotationMatrix.setRotate(90f)
+            }
+            ExifInterface.ORIENTATION_ROTATE_180 -> {
+                rotationMatrix.setRotate(180f)
+                rotationMatrix.postScale(-1f, 1f)
+            }
+            ExifInterface.ORIENTATION_ROTATE_270 -> {
+                rotationMatrix.setRotate(-90f)
+            }
+        }
+        try {
+            bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, rotationMatrix, true)
+            //setImageThumbnail() // Reset the thumbnail with the rotated image
+        }catch (memoryEx: OutOfMemoryError){
+            Log.e("Exif Rotate Memory", "Ran out of memory while rotating bitmaps.")
+        }
+
     }
 
     fun getImageBitmap(): Bitmap {
