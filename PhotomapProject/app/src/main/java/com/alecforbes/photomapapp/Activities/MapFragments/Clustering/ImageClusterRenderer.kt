@@ -1,8 +1,8 @@
 package com.alecforbes.photomapapp.Activities.MapFragments.Clustering
 
 import android.content.Context
-import android.graphics.BitmapFactory
-import android.view.LayoutInflater
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -15,7 +15,6 @@ import com.google.maps.android.clustering.Cluster
 import com.google.maps.android.clustering.ClusterManager
 import com.google.maps.android.clustering.view.DefaultClusterRenderer
 import com.google.maps.android.ui.IconGenerator
-import kotlinx.android.synthetic.main.multi_image.*
 
 /**
  * Created by Alec on 5/27/2018.
@@ -25,6 +24,7 @@ class ImageClusterRenderer(context: Context?, map: GoogleMap?,
                            clusterManager: ClusterManager<ImageClusterItem>?) :
         DefaultClusterRenderer<ImageClusterItem>(context, map, clusterManager) {
 
+    private val context = context
     private val iconGenerator = IconGenerator(context)
     private val clusterIconGenerator = IconGenerator(context)
     private lateinit var photomapBitmap: BitmapDescriptor
@@ -40,14 +40,33 @@ class ImageClusterRenderer(context: Context?, map: GoogleMap?,
         photomapImage = ImageView(context)
         dimension = 300 //todo make this thumbnail size
         clusterImageView.layoutParams = ViewGroup.LayoutParams(dimension, dimension)
-        val padding = 10 // todo
-        photomapImage.setPadding(padding,padding,padding,padding)
+        val padding = 10 // 10 Pixel padding
+        photomapImage.setPadding(padding, padding, padding, padding)
         iconGenerator.setContentView(photomapImage)
     }
 
 
     override fun onBeforeClusterRendered(cluster: Cluster<ImageClusterItem>?, markerOptions: MarkerOptions?) {
         super.onBeforeClusterRendered(cluster, markerOptions)
+
+        val imageClusterDrawables = ArrayList<Drawable>(Math.min(3, cluster!!.size))
+        for(clusterImageItem in cluster.items){
+
+            if (imageClusterDrawables.size == 3){
+                break
+            }
+
+            val imageDrawable = BitmapDrawable(context!!.resources, clusterImageItem.getThumbnailBitmap())
+            imageDrawable.setBounds(0, 0, dimension, dimension)
+            imageClusterDrawables.add(imageDrawable)
+
+        }
+        // Uses MultiDrawable class from Google Map Utils
+        val multiImageDrawable = MultiDrawable(imageClusterDrawables)
+
+        multiImageDrawable.setBounds(0, 0, dimension, dimension)
+        val multiIcon = clusterIconGenerator.makeIcon(cluster.size.toString())
+        markerOptions!!.icon(BitmapDescriptorFactory.fromBitmap(multiIcon))
 
 
     }
@@ -59,11 +78,11 @@ class ImageClusterRenderer(context: Context?, map: GoogleMap?,
     override fun onBeforeClusterItemRendered(image: ImageClusterItem, markerOptions: MarkerOptions?) {
         super.onBeforeClusterItemRendered(image, markerOptions)
 
-        // Set the icon to the image BitmapDescriptor
+        // Set the icon to the image Bitmap thumbnail
         photomapImage.setImageBitmap(image.getThumbnailBitmap())
         val icon = iconGenerator.makeIcon()
         markerOptions!!.icon(BitmapDescriptorFactory.fromBitmap(icon))
 
-        //markerOptions!!.icon(image.getBitmapDesc())
     }
+
 }
