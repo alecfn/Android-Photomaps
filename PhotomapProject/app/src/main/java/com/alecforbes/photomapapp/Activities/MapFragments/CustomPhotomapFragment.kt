@@ -156,7 +156,7 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
                 // Image and snippet values aren't used, but necessary in method constructor
                 val imageClusterItem = ImageClusterItem(imageData.latLong, "", "")
 
-                imageClusterItem.setBitmapDesc(thumbnailDesc)
+                imageClusterItem.setThumbnailBitmap(thumbnail!!)
 
                 imageClusterItem.setBitmapDesc(thumbnailDesc)
                 imageClusterManager.addItem(imageClusterItem)
