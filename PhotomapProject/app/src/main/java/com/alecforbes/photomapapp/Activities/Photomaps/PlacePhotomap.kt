@@ -131,7 +131,8 @@ class PlacePhotomap : PhotomapActivity() {
         imageInfoView!!.placeAddressValue.text = clickedImageData!!.realAddress
         imageInfoView!!.placeIndvImageView.setImageBitmap(clickedImageData!!.getImageBitmap())
 
-        // Populate the description with the first paragraph on the landmark from Wikipedia
+        // Populate the description with the first paragraph on the landmark from Wikipedia todo
+
 
 
         // Set button listeners

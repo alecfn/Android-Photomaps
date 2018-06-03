@@ -7,12 +7,17 @@
     android:layout_height="match_parent"
     android:elevation="6dp">
 
-    <android.support.v7.widget.CardView
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         card_view:cardElevation="6dp"
-        card_view:cardUseCompatPadding="true">
+        card_view:cardUseCompatPadding="true"
+        card_view:layout_constraintEnd_toEndOf="parent"
+        card_view:layout_constraintStart_toStartOf="parent"
+        card_view:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -118,8 +123,8 @@
                 android:id="@+id/indvCloseButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/PrimaryFlatButton"
-                android:text="Close" />
+                android:text="Close"
+                android:theme="@style/PrimaryFlatButton" />
 
         </LinearLayout>
 
