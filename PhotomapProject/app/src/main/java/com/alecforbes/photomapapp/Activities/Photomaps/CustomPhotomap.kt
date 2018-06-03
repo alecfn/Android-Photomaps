@@ -221,8 +221,17 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
         customMapFragment.clearTimelinePolylines()
     }
 
+    /**
+     * Launch a share intent when the user clicks 'share map' in the FAB.
+     */
     private fun shareMap(){
-        // TODO
+        val shareIntent = Intent(android.content.Intent.ACTION_SEND)
+        shareIntent.type = "text/plain"
+        val shareBody = "Download Photomaps here: <link to play store> and create your own!"
+        shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Check out my cool new photomap!")
+        shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody)
+
+        startActivity(Intent.createChooser(shareIntent, "Share via:"))
     }
 
 
