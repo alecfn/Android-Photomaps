@@ -6,6 +6,8 @@ import java.io.IOException
 
 /**
  * Created by Alec on 6/3/2018.
+ * This class will retrieve the first paragraph from Wikipedia for a selected Landmark. This is used
+ * to populate the information for each individual image.
  *
  * https://stackoverflow.com/questions/43021074/getting-the-first-paragraph-of-wikipedias-article-using-jsoup
  */

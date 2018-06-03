@@ -29,6 +29,7 @@ class PlacePhotomap : PhotomapActivity() {
 
     var imageInfoView: ViewGroup? = null
     var placeMapFragment: CustomPhotomapFragment? = null
+    var selectedLoc: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,12 +39,12 @@ class PlacePhotomap : PhotomapActivity() {
         setScreenResolution()
 
         val placesIntent = intent
-        val selectedLoc = placesIntent.getStringExtra("SelectedLocation")
+        selectedLoc = placesIntent.getStringExtra("SelectedLocation")
         title = "$selectedLoc Photomap"
 
         // The URIs for images in a place photomap come from firebase downloads, not an intent
         firebaseController = FirebaseController(contentResolver, this)
-        firebaseController.retrieveSelectedPlaceImages(selectedLoc)
+        firebaseController.retrieveSelectedPlaceImages(selectedLoc!!)
 
     }
 
@@ -62,38 +63,11 @@ class PlacePhotomap : PhotomapActivity() {
 
         // Create a horizontal scroll view for the place images, similar to the custom map
 
-        createFirebaseImageScrollView()
-
         // As the map is a fragment, initialise it in a view (but just the constraint as the map fills the view)
         supportFragmentManager.beginTransaction()
                 .add(R.id.placePhotomapConstraint, placeMapFragment)
                 .commit()
 
-        //placeMapFragment.addImagePreviews()
-        //placeMapFragment.setMapBounds()
-    }
-
-    /**
-     * Create a scroll view for the images on the map, similar to the one used on custom maps.
-     *
-     * This uses the same layout resource as the custom map but populates with firebase images.
-     */
-    private fun createFirebaseImageScrollView(){
-        placeScrollview.visibility = View.VISIBLE
-
-        firebaseController.includedImages.forEach{ imageData ->
-
-            val placeImageButton = defineHorizontalScrollViewButton()
-
-            placeImageButton.setImageBitmap(imageData.getImageBitmap())
-
-            placeImageButton.setOnClickListener {
-
-            }
-
-            imagePreviewPane.addView(placeImageButton)
-
-        }
     }
 
     /**
