@@ -88,8 +88,9 @@ class PlacePhotomap : PhotomapActivity() {
      *
      * This function is always called, unlike in a custom map which has to be added
      */
-    private fun createIndvFirebaseImageView(){
+    fun createIndvFirebaseImageView(){
 
+        print("")
     }
 
     override fun onResumeFragments() {

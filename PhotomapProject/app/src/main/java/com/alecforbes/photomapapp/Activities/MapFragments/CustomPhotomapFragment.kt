@@ -17,7 +17,9 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import com.google.maps.android.clustering.ClusterItem
 import com.google.maps.android.clustering.ClusterManager
+import com.google.maps.android.clustering.ClusterManager.OnClusterItemClickListener
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -28,7 +30,7 @@ import kotlin.collections.HashMap
  * Created by Alec on 4/26/2018.
  */
 
-open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, View.OnClickListener, GoogleMap.OnMarkerClickListener {
+open class CustomPhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnClickListener, GoogleMap.OnMarkerClickListener, OnClusterItemClickListener<ImageClusterItem> {
 
     private lateinit var photomap: GoogleMap
     private lateinit var imageClusterManager: ImageClusterManager
@@ -331,9 +333,15 @@ open class CustomPhotomapFragment: SupportMapFragment(), OnMapReadyCallback, Vie
         imageClusterManager.renderer = ImageClusterRenderer(this.context, photomap, imageClusterManager)
         photomap.setOnCameraIdleListener(imageClusterManager)
 
-        photomap.setOnMarkerClickListener(imageClusterManager)
+        photomap.setOnMarkerClickListener(this)
 
         addImagePreviews()
+    }
+
+    override fun onClusterItemClick(imageClusterItem: ImageClusterItem?): Boolean {
+        // todo may not need this anymore as onmarker does it
+        print("")
+        return true
     }
 
 //    fun setScreenSize(screenSize: Int){
