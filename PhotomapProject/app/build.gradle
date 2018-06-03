@@ -48,6 +48,7 @@ dependencies {
     //implementation 'com.google.android.gms:play-services:12.0.1'
     implementation 'com.google.maps.android:android-maps-utils:0.5+' // Map utilities
     implementation 'org.jsoup:jsoup:1.11.1' // JSoup for scraping
+    implementation "org.jetbrains.anko:anko-commons:0.10.4"  // Handy Kotlin library for Android
 }
 
 

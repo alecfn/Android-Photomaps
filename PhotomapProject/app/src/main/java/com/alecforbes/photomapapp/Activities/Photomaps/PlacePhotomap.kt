@@ -19,6 +19,7 @@ import kotlinx.android.synthetic.main.individual_image_view.*
 import kotlinx.android.synthetic.main.timeline_scroll.*
 import kotlinx.android.synthetic.main.place_individual_image_view.*
 import kotlinx.android.synthetic.main.place_individual_image_view.view.*
+import org.jetbrains.anko.doAsyncResult
 
 /**
  * A place photomap inherits methods from the Custom photomap, as some functionality is not
@@ -110,7 +111,8 @@ class PlacePhotomap : PhotomapActivity() {
 
         // Populate the description with the first paragraph on the landmark from Wikipedia todo
 
-        getWikipediaDesc(clickedImageData!!.getAssociatedLinks()!![WIKI_LINK_POS])
+        getWikipediaDesc(clickedImageData!!.getAssociatedLinks()!![WIKI_LINK_POS],
+                imageInfoView!!)
 
         // Set button listeners
         imageInfoView!!.placeCloseButton.setOnClickListener{
@@ -130,24 +132,20 @@ class PlacePhotomap : PhotomapActivity() {
 
     }
 
-    private fun getWikipediaDesc(wikiUrl: String){
+    private fun getWikipediaDesc(wikiUrl: String, imageView: ViewGroup){
         val wikiRetriever = WikipediaParagraph()
-        val descriptionPara = wikiRetriever.getFirstParagraphFromWikipedia(wikiUrl)
+
+        // Anko library allows running asynchronous tasks easily like so
+        var descriptionPara: String? = null
+        doAsyncResult {
+            descriptionPara = wikiRetriever.getFirstParagraphFromWikipedia(wikiUrl)
+            imageInfoView!!.placeDescValue.text = descriptionPara.toString()
+
+        }
 
         // Due to limit screen size, limit the paragraph to be no more than 250 characters
 
-        print("")
         // todo could also add a 'read more' button that opens the wikipage
-    }
-
-    override fun onResumeFragments() {
-        super.onResumeFragments()
-
-        //placeScrollview.bringToFront()
-        //if (imageInfoView != null) {
-            //imageInfoView!!.bringToFront()
-       // }
-
     }
 
 

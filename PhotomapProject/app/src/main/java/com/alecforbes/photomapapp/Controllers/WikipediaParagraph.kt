@@ -1,6 +1,9 @@
 package com.alecforbes.photomapapp.Controllers
 
+import android.os.AsyncTask
 import android.util.Log
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.doAsyncResult
 import org.jsoup.Jsoup
 import java.io.IOException
 
@@ -9,21 +12,27 @@ import java.io.IOException
  * This class will retrieve the first paragraph from Wikipedia for a selected Landmark. This is used
  * to populate the information for each individual image.
  *
+ * Must be an Async task as network connections cannot be run on the main thread.
+ *
  * https://stackoverflow.com/questions/43021074/getting-the-first-paragraph-of-wikipedias-article-using-jsoup
  */
 
-class WikipediaParagraph{
+class WikipediaParagraph {
 
     fun getFirstParagraphFromWikipedia(wikiUrl: String): String? {
 
-        return try {
-            val wikiDocument = Jsoup.connect(wikiUrl).get()
-            val paragraphs = wikiDocument.select("p")
-            val firstPara = paragraphs.first()
-            firstPara.text()
-        }catch (ioEx: IOException){
-            Log.e("Wiki Error", "Failed to get Wikipedia data for $wikiUrl")
-            "Failed to retrieve Wikipedia entry for address"
-        }
+        var firstParaText: String? = null
+
+            firstParaText = try {
+                val wikiDocument = Jsoup.connect(wikiUrl).get()
+                val paragraphs = wikiDocument.select("p")
+                val firstPara = paragraphs.first()
+                firstPara.text()
+
+            } catch (ioEx: IOException) {
+                Log.e("Wiki Error", "Failed to get Wikipedia data for $wikiUrl")
+                "Failed to retrieve Wikipedia entry for address"
+            }
+            return firstParaText
     }
 }
