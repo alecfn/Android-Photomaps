@@ -2,12 +2,18 @@ package com.alecforbes.photomapapp.Activities.Photomaps
 
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import com.alecforbes.photomapapp.Activities.MapFragments.CustomPhotomapFragment
 import com.alecforbes.photomapapp.Controllers.FirebaseController
 import com.alecforbes.photomapapp.Model.ImageData
 import com.alecforbes.photomapapp.R
+import com.google.android.gms.maps.MapFragment
+import com.google.android.gms.maps.model.Marker
+import kotlinx.android.synthetic.main.activity_photomap.*
 import kotlinx.android.synthetic.main.activity_place_photomap.*
 import kotlinx.android.synthetic.main.timeline_scroll.*
+import kotlinx.android.synthetic.main.place_individual_image_view.*
+import kotlinx.android.synthetic.main.place_individual_image_view.view.*
 
 /**
  * A place photomap inherits methods from the Custom photomap, as some functionality is not
@@ -16,6 +22,10 @@ import kotlinx.android.synthetic.main.timeline_scroll.*
 class PlacePhotomap : PhotomapActivity() {
 
     lateinit var firebaseController: FirebaseController
+
+    var imageInfoView: ViewGroup? = null
+    var placeMapFragment: CustomPhotomapFragment? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,11 +50,11 @@ class PlacePhotomap : PhotomapActivity() {
     fun onFirebaseComplete(includedImages: ArrayList<ImageData>){
 
         // fixme the new instance needs to be fixed for placesmaps now
-        val placeMapFragment = CustomPhotomapFragment.newPlaceInstance(includedImages)
+        placeMapFragment = CustomPhotomapFragment.newPlaceInstance(includedImages)
 
         //val placeMapFragment = CustomPhotomapFragment.newCustomInstance(includedImages)
 
-        placeMapFragment.setSelectedDataFromIntent()
+        placeMapFragment!!.setSelectedDataFromIntent()
 
         // Create a horizontal scroll view for the place images, similar to the custom map
 
@@ -86,17 +96,38 @@ class PlacePhotomap : PhotomapActivity() {
      * Create individual images when images are clicked on a place map. This is not the same
      * as what is created on the custom maps, as the information for the images is different.
      *
-     * This function is always called, unlike in a custom map which has to be added
      */
-    fun createIndvFirebaseImageView(){
+    fun createIndvFirebaseImageView(clickedMarker: Marker?){
 
-        print("")
+        val markerLatLong = clickedMarker!!.position
+        // From the lat long of the marker, get the relevant image file to populate the view
+        // todo, could maybe override the marker class and add some kind of id field?
+        var clickedImageData: ImageData
+        firebaseController.includedImages.forEach{ imageData ->
+
+            if (imageData.latLong == markerLatLong){
+                clickedImageData = imageData
+            }
+        }
+
+        // Now create the new view from the image data
+        val fragmentViewGroup = placeMapFragment!!.view as ViewGroup
+        imageInfoView = View.inflate(applicationContext, R.layout.place_individual_image_view, fragmentViewGroup) as ViewGroup
+        imageInfoView!!.placeAddressValue.text = "blub"
+        imageInfoView!!.elevation = 6f
+        imageInfoView!!.visibility = View.VISIBLE
+        onResumeFragments()
+
     }
 
     override fun onResumeFragments() {
         super.onResumeFragments()
 
-        placeScrollview.bringToFront()
+        //placeScrollview.bringToFront()
+        if (imageInfoView != null) {
+            imageInfoView!!.bringToFront()
+        }
+
     }
 
 

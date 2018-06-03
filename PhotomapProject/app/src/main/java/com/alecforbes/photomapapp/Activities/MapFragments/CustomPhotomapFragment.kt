@@ -1,15 +1,19 @@
 package com.alecforbes.photomapapp.Activities.MapFragments
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import com.alecforbes.photomapapp.Activities.MapFragments.Clustering.ImageClusterItem
 import com.alecforbes.photomapapp.Activities.MapFragments.Clustering.ImageClusterManager
 import com.alecforbes.photomapapp.Activities.MapFragments.Clustering.ImageClusterRenderer
+import com.alecforbes.photomapapp.Activities.Photomaps.PlacePhotomap
 import com.alecforbes.photomapapp.Model.ImageData
 import com.alecforbes.photomapapp.R
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -20,10 +24,12 @@ import com.google.android.gms.maps.model.*
 import com.google.maps.android.clustering.ClusterItem
 import com.google.maps.android.clustering.ClusterManager
 import com.google.maps.android.clustering.ClusterManager.OnClusterItemClickListener
+import kotlinx.android.synthetic.main.place_individual_image_view.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
+import kotlinx.android.synthetic.main.place_individual_image_view.*
 
 
 /**
@@ -31,6 +37,7 @@ import kotlin.collections.HashMap
  */
 
 open class CustomPhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnClickListener, GoogleMap.OnMarkerClickListener, OnClusterItemClickListener<ImageClusterItem> {
+
 
     private lateinit var photomap: GoogleMap
     private lateinit var imageClusterManager: ImageClusterManager
@@ -68,6 +75,7 @@ open class CustomPhotomapFragment : SupportMapFragment(), OnMapReadyCallback, Vi
             addImagePreviews()
 
             // fixme bug redrawing when you go back to the select screen and make a new one
+            // fixme this call likes to break alot.. maybe a threading issue?
             setMapBounds()
         } else if (isSavedMap){
             addImagePreviews()
@@ -306,7 +314,15 @@ open class CustomPhotomapFragment : SupportMapFragment(), OnMapReadyCallback, Vi
     }
 
     override fun onMarkerClick(marker: Marker?): Boolean {
-        // tODO
+
+        if (isPlaceMap){
+            val parent = activity as PlacePhotomap
+            parent.createIndvFirebaseImageView(marker)
+
+        }else { // Is a custom map
+        // todo
+        }
+
 
         return true
 
@@ -343,6 +359,7 @@ open class CustomPhotomapFragment : SupportMapFragment(), OnMapReadyCallback, Vi
         print("")
         return true
     }
+
 
 //    fun setScreenSize(screenSize: Int){
 //        this.screenSize = screenSize
