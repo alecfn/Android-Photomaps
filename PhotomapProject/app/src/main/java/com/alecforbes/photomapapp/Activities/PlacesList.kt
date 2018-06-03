@@ -49,13 +49,13 @@ class PlacesList : AppCompatActivity() {
         }
 
         ausBigButton.setOnClickListener{
-            selectedLoc = "AusBig"
+            selectedLoc = "Australia's Big Things"
             placePhotoMapIntent.putExtra("SelectedLocation", selectedLoc)
             startActivity(placePhotoMapIntent)
         }
 
         worldButton.setOnClickListener{
-            selectedLoc = "World"
+            selectedLoc = "World Landmarks"
             placePhotoMapIntent.putExtra("SelectedLocation", selectedLoc)
             startActivity(placePhotoMapIntent)
         }

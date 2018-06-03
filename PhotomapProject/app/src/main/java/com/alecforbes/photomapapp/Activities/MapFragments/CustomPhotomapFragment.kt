@@ -156,7 +156,6 @@ open class CustomPhotomapFragment : SupportMapFragment(), OnMapReadyCallback, Vi
                     thumbnail = BitmapFactory.decodeByteArray(imageData.getImageThumbnail(), 0, imageData.getImageThumbnail().size)
                 } else if (isPlaceMap){
                     // Downloaded place image thumbnail icons need to be generated from the uri
-                    // todo bigger screensizes
                     val thumbnailData = BitmapFactory.decodeFile(imageUri)
                     //if (activity.screenSize)
                     thumbnail = Bitmap.createScaledBitmap(thumbnailData, 250, 250, false)

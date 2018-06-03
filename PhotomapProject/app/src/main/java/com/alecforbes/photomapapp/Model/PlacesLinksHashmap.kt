@@ -47,8 +47,8 @@ class PlacesLinksHashmap{
         placesLinksHashmap["Sydney"] = sydneyLinks
         placesLinksHashmap["New York"] = newYorkLinks
         placesLinksHashmap["London"] = londonLinks
-        placesLinksHashmap["World"] = worldLinks
-        placesLinksHashmap["AusBig"] = ausBigThingsLinks
+        placesLinksHashmap["World Landmarks"] = worldLinks
+        placesLinksHashmap["Australia's Big Things"] = ausBigThingsLinks
 
     }
 
