@@ -16,12 +16,12 @@ package com.alecforbes.photomapapp.Activities.MapFragments.Clustering;
  * limitations under the License.
  */
 
-        import android.graphics.Canvas;
-        import android.graphics.ColorFilter;
-        import android.graphics.PixelFormat;
-        import android.graphics.drawable.Drawable;
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.PixelFormat;
+import android.graphics.drawable.Drawable;
 
-        import java.util.List;
+import java.util.List;
 
 /**
  * Draws up to four other drawables.

@@ -1,9 +1,6 @@
 package com.alecforbes.photomapapp.Controllers
 
-import android.os.AsyncTask
 import android.util.Log
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.doAsyncResult
 import org.jsoup.Jsoup
 import java.io.IOException
 

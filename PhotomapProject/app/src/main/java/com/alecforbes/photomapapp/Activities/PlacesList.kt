@@ -3,8 +3,6 @@ package com.alecforbes.photomapapp.Activities
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import com.alecforbes.photomapapp.Activities.Photomaps.PlacePhotomap
 import com.alecforbes.photomapapp.R
 import kotlinx.android.synthetic.main.activity_places_list.*

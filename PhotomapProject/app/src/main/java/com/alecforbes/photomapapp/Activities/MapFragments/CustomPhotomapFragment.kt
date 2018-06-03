@@ -1,18 +1,16 @@
 package com.alecforbes.photomapapp.Activities.MapFragments
 
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.alecforbes.photomapapp.Activities.MapFragments.Clustering.ImageClusterItem
 import com.alecforbes.photomapapp.Activities.MapFragments.Clustering.ImageClusterManager
 import com.alecforbes.photomapapp.Activities.MapFragments.Clustering.ImageClusterRenderer
+import com.alecforbes.photomapapp.Activities.Photomaps.CustomPhotomap
 import com.alecforbes.photomapapp.Activities.Photomaps.PlacePhotomap
 import com.alecforbes.photomapapp.Model.ImageData
 import com.alecforbes.photomapapp.R
@@ -21,15 +19,11 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
-import com.google.maps.android.clustering.ClusterItem
-import com.google.maps.android.clustering.ClusterManager
 import com.google.maps.android.clustering.ClusterManager.OnClusterItemClickListener
-import kotlinx.android.synthetic.main.place_individual_image_view.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
-import kotlinx.android.synthetic.main.place_individual_image_view.*
 
 
 /**
@@ -54,8 +48,6 @@ open class CustomPhotomapFragment : SupportMapFragment(), OnMapReadyCallback, Vi
     // TODO this could be custom views later
     private var imageMarkers = ArrayList<ImageClusterItem>()
     private var timelinePolys = ArrayList<Polyline>()
-
-    private var screenSize: Int? = null // Only needed with places maps to scale bitmaps
 
 
     override fun onActivityCreated(p0: Bundle?) {
@@ -319,9 +311,10 @@ open class CustomPhotomapFragment : SupportMapFragment(), OnMapReadyCallback, Vi
             parent.createIndvFirebaseImageView(marker)
 
         }else { // Is a custom map
-        // todo
+            val parent = activity as CustomPhotomap
+            // Get the image from the marker LatLong passed
+            parent.getImageDataFromMarker(marker)
         }
-
 
         return true
 
@@ -355,13 +348,7 @@ open class CustomPhotomapFragment : SupportMapFragment(), OnMapReadyCallback, Vi
 
     override fun onClusterItemClick(imageClusterItem: ImageClusterItem?): Boolean {
         // todo may not need this anymore as onmarker does it
-        print("")
         return true
     }
-
-
-//    fun setScreenSize(screenSize: Int){
-//        this.screenSize = screenSize
-//    }
 
 }

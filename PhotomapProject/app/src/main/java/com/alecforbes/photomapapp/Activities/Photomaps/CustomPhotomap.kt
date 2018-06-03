@@ -1,12 +1,12 @@
 package com.alecforbes.photomapapp.Activities.Photomaps
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v7.app.AlertDialog
 import android.view.View
-import android.widget.*
+import android.widget.EditText
+import android.widget.Toast
 import com.alecforbes.photomapapp.Activities.MapFragments.CustomPhotomapFragment
 import com.alecforbes.photomapapp.Controllers.Database.DatabaseHelper
 import com.alecforbes.photomapapp.Controllers.FileDataController
@@ -14,11 +14,11 @@ import com.alecforbes.photomapapp.Controllers.ImageGeocoder
 import com.alecforbes.photomapapp.Model.ImageData
 import com.alecforbes.photomapapp.R
 import com.dekoservidoni.omfm.OneMoreFabMenu
+import com.google.android.gms.maps.model.Marker
 import kotlinx.android.synthetic.main.activity_photomap.*
 import kotlinx.android.synthetic.main.individual_image_view.*
 import kotlinx.android.synthetic.main.timeline_scroll.*
 
-// FIXME Open keyword means this class can be inherited from, needed?
 class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
 
     // Store the images as objects with all relevant info
@@ -251,16 +251,7 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
                     // Get the address of the image from the lat long
                     // TODO maybe store it, and only get if it's not already stored in the imagedata
 
-                    // Only get the address data if is not already collected
-                    if (imageData.realAddress == null){
-                        val lat = imageData.latitude.toDouble()
-                        val long = imageData.longitude.toDouble()
-                        val imageGeocoder = ImageGeocoder(lat, long, applicationContext)
-                        val imageAddress = imageGeocoder.getAddressFromLocation()
-                        imageData.realAddress = imageAddress
-                    }
-
-                    imageAddressValue.text = imageData.realAddress
+                    setImageAddress(imageData)
 
                     createIndvView(imageData)
 
@@ -273,6 +264,20 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
         }
         // Now draw lines between the images
         customMapFragment.addTimelinePolylines()
+    }
+
+    private fun setImageAddress(imageData: ImageData){
+
+        // Only get the address data if is not already collected
+        if (imageData.realAddress == null){
+            val lat = imageData.latitude.toDouble()
+            val long = imageData.longitude.toDouble()
+            val imageGeocoder = ImageGeocoder(lat, long, applicationContext)
+            val imageAddress = imageGeocoder.getAddressFromLocation()
+            imageData.realAddress = imageAddress
+        }
+
+        imageAddressValue.text = imageData.realAddress
     }
 
     private fun createIndvView(imageData: ImageData){
@@ -316,6 +321,29 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
 
         photomapIndvImageView.visibility = View.VISIBLE
         photomapIndvImageView.bringToFront()
+    }
+
+    /**
+     * When the user clicks a marker, pass that in and get the corresponding ImageData from the
+     * lat long values. Similar to what is done in a place map, but uses filedatacontroller instead
+     * of firebase.
+     */
+    fun getImageDataFromMarker(clickedMarker: Marker?){
+
+        val markerLatLong = clickedMarker!!.position
+
+        // fixme, a little repetition?
+        var clickedImageData: ImageData? = null
+        fileDataController.selectedData.forEach { imageData ->
+            if (imageData.latLong == markerLatLong){
+                clickedImageData = imageData
+            }
+        }
+
+        // Now create the individual image view from the found data
+
+        setImageAddress(clickedImageData!!)
+        createIndvView(clickedImageData!!)
     }
 
 

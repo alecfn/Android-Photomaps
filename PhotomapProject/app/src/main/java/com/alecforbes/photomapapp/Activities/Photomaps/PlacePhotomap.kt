@@ -1,7 +1,5 @@
 package com.alecforbes.photomapapp.Activities.Photomaps
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -11,13 +9,8 @@ import com.alecforbes.photomapapp.Controllers.ImageGeocoder
 import com.alecforbes.photomapapp.Controllers.WikipediaParagraph
 import com.alecforbes.photomapapp.Model.ImageData
 import com.alecforbes.photomapapp.R
-import com.google.android.gms.maps.MapFragment
 import com.google.android.gms.maps.model.Marker
-import kotlinx.android.synthetic.main.activity_photomap.*
-import kotlinx.android.synthetic.main.activity_place_photomap.*
 import kotlinx.android.synthetic.main.individual_image_view.*
-import kotlinx.android.synthetic.main.timeline_scroll.*
-import kotlinx.android.synthetic.main.place_individual_image_view.*
 import kotlinx.android.synthetic.main.place_individual_image_view.view.*
 import org.jetbrains.anko.doAsyncResult
 
@@ -111,8 +104,7 @@ class PlacePhotomap : PhotomapActivity() {
 
         // Populate the description with the first paragraph on the landmark from Wikipedia todo
 
-        getWikipediaDesc(clickedImageData!!.getAssociatedLinks()!![WIKI_LINK_POS],
-                imageInfoView!!)
+        getWikipediaDesc(clickedImageData!!.getAssociatedLinks()!![WIKI_LINK_POS])
 
         // Set button listeners
         imageInfoView!!.placeCloseButton.setOnClickListener{
@@ -128,11 +120,10 @@ class PlacePhotomap : PhotomapActivity() {
         imageInfoView!!.elevation = 6f
         imageInfoView!!.bringToFront()
         imageInfoView!!.visibility = View.VISIBLE
-        //onResumeFragments()
 
     }
 
-    private fun getWikipediaDesc(wikiUrl: String, imageView: ViewGroup){
+    private fun getWikipediaDesc(wikiUrl: String){
         val wikiRetriever = WikipediaParagraph()
 
         // Anko library allows running asynchronous tasks easily like so

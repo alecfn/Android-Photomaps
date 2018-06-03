@@ -1,9 +1,6 @@
 package com.alecforbes.photomapapp.Activities.MapFragments.Clustering
 
 import android.content.Context
-import android.view.View
-import com.alecforbes.photomapapp.R
-import com.alecforbes.photomapapp.R.id.*
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
 import com.google.maps.android.clustering.ClusterManager
