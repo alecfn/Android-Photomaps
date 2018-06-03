@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.alecforbes.photomapapp.Activities.MapFragments.CustomPhotomapFragment
 import com.alecforbes.photomapapp.Controllers.FirebaseController
 import com.alecforbes.photomapapp.Controllers.ImageGeocoder
+import com.alecforbes.photomapapp.Controllers.WikipediaParagraph
 import com.alecforbes.photomapapp.Model.ImageData
 import com.alecforbes.photomapapp.R
 import com.google.android.gms.maps.MapFragment
@@ -30,6 +31,8 @@ class PlacePhotomap : PhotomapActivity() {
     var imageInfoView: ViewGroup? = null
     var placeMapFragment: CustomPhotomapFragment? = null
     var selectedLoc: String? = null
+
+    val WIKI_LINK_POS = 1
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -107,7 +110,7 @@ class PlacePhotomap : PhotomapActivity() {
 
         // Populate the description with the first paragraph on the landmark from Wikipedia todo
 
-
+        getWikipediaDesc(clickedImageData!!.getAssociatedLinks()!![WIKI_LINK_POS])
 
         // Set button listeners
         imageInfoView!!.placeCloseButton.setOnClickListener{
@@ -125,6 +128,16 @@ class PlacePhotomap : PhotomapActivity() {
         imageInfoView!!.visibility = View.VISIBLE
         //onResumeFragments()
 
+    }
+
+    private fun getWikipediaDesc(wikiUrl: String){
+        val wikiRetriever = WikipediaParagraph()
+        val descriptionPara = wikiRetriever.getFirstParagraphFromWikipedia(wikiUrl)
+
+        // Due to limit screen size, limit the paragraph to be no more than 250 characters
+
+        print("")
+        // todo could also add a 'read more' button that opens the wikipage
     }
 
     override fun onResumeFragments() {

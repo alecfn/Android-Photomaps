@@ -47,8 +47,10 @@ class FirebaseController(content: ContentResolver,
 
 
             }.addOnCompleteListener {
-                // Update the map as every firebase operation completes, and updated the map
+                // Update the map as every firebase operation completes, and update the map
                 includedImages = imageDataCreator.createIncludedImageData()
+                // Set the last inserted image links to be the firebase and wikipedia references
+                includedImages.last().setAssociatedLinks(linksList)
                 associatedPlaceMap.onFirebaseComplete(includedImages)
             }
 

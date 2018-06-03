@@ -12,7 +12,7 @@ import java.io.IOException
  * https://stackoverflow.com/questions/43021074/getting-the-first-paragraph-of-wikipedias-article-using-jsoup
  */
 
-class WikipediaParagraph(){
+class WikipediaParagraph{
 
     fun getFirstParagraphFromWikipedia(wikiUrl: String): String? {
 

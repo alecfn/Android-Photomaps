@@ -14,7 +14,6 @@ class  ImageDataCreator( private val content: ContentResolver,
                          private val files: ArrayList<File>,
                          private val includedImages: ArrayList<ImageData>){
 
-
     /**
      * Place map Image data objects need to be created differently from a CustomPhotomap, as they
      * are not selected via intents
@@ -22,17 +21,36 @@ class  ImageDataCreator( private val content: ContentResolver,
 
     fun createIncludedImageData(): ArrayList<ImageData> {
 
-        files.forEach {
+        files.forEach { file ->
 
-            val stream = content.openInputStream(Uri.fromFile(it))
+            val stream = content.openInputStream(Uri.fromFile(file))
             val exif = ExifInterface(stream)
-            val file = File(it.path)
+            val newFile = File(file.path)
 
-            val bitmap = BitmapFactory.decodeStream(content.openInputStream(Uri.fromFile(it)))
+            val fileExists = checkFileExists(newFile.absolutePath)
 
-            val selectedImage = ImageData(file, bitmap, exif)
-            includedImages.add(selectedImage)
+            if (!fileExists) {
+                val bitmap = BitmapFactory.decodeStream(content.openInputStream(Uri.fromFile(newFile)))
+
+                val selectedImage = ImageData(newFile, bitmap, exif)
+                includedImages.add(selectedImage)
+            }
         }
         return includedImages
     }
+
+    /**
+     * Due to firebase being asynchronous, multiple copies may be created. Check that the file is
+     * not already in the list.
+     */
+    private fun checkFileExists(filePath: String): Boolean {
+
+            includedImages.forEach { imageData ->
+                if(filePath == imageData.file.absolutePath){
+                    return true
+                }
+            }
+        return false
+    }
+
 }

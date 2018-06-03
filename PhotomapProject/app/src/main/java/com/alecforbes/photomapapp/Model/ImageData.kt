@@ -37,6 +37,8 @@ data class ImageData(val file: File,
                      private var thumbnailData: ByteArray= byteArrayOf(),
                      private var screenSize: Int? = null): Parcelable, Comparable<ImageData> {
 
+    @IgnoredOnParcel private var associatedLinks: List<String>? = null // Only used by place images
+
     // FIXME this class is a little all over the place with how things are done, clean up
     init {
         // Set all the exif data we want to get from the exif interface
@@ -163,8 +165,17 @@ data class ImageData(val file: File,
         }
     }
 
+    // Some fields need getters due to JVM requirements
     fun getImageThumbnail(): ByteArray {
         return thumbnailData
+    }
+
+    fun setAssociatedLinks(links: List<String>){
+        associatedLinks = links
+    }
+
+    fun getAssociatedLinks(): List<String>? {
+        return associatedLinks
     }
 
     /**
