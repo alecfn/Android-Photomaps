@@ -1,16 +1,20 @@
 package com.alecforbes.photomapapp.Activities.Photomaps
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import com.alecforbes.photomapapp.Activities.MapFragments.CustomPhotomapFragment
 import com.alecforbes.photomapapp.Controllers.FirebaseController
+import com.alecforbes.photomapapp.Controllers.ImageGeocoder
 import com.alecforbes.photomapapp.Model.ImageData
 import com.alecforbes.photomapapp.R
 import com.google.android.gms.maps.MapFragment
 import com.google.android.gms.maps.model.Marker
 import kotlinx.android.synthetic.main.activity_photomap.*
 import kotlinx.android.synthetic.main.activity_place_photomap.*
+import kotlinx.android.synthetic.main.individual_image_view.*
 import kotlinx.android.synthetic.main.timeline_scroll.*
 import kotlinx.android.synthetic.main.place_individual_image_view.*
 import kotlinx.android.synthetic.main.place_individual_image_view.view.*
@@ -102,7 +106,7 @@ class PlacePhotomap : PhotomapActivity() {
         val markerLatLong = clickedMarker!!.position
         // From the lat long of the marker, get the relevant image file to populate the view
         // todo, could maybe override the marker class and add some kind of id field?
-        var clickedImageData: ImageData
+        var clickedImageData: ImageData? = null
         firebaseController.includedImages.forEach{ imageData ->
 
             if (imageData.latLong == markerLatLong){
@@ -110,13 +114,41 @@ class PlacePhotomap : PhotomapActivity() {
             }
         }
 
+        // fixme threading would be good here
         // Now create the new view from the image data
         val fragmentViewGroup = placeMapFragment!!.view as ViewGroup
         imageInfoView = View.inflate(applicationContext, R.layout.place_individual_image_view, fragmentViewGroup) as ViewGroup
-        imageInfoView!!.placeAddressValue.text = "blub"
+
+        // Populate the address field with the geocoder as on a custom map
+        // fixme needs to be own thread, very slow
+        if (clickedImageData!!.realAddress == null) {
+            // Only call the Geocoder if address hasn't been found before
+            val imageGeocoder = ImageGeocoder(clickedImageData!!.latitude.toDouble(), clickedImageData!!.longitude.toDouble(), applicationContext)
+            val imageAddress = imageGeocoder.getAddressFromLocation()
+            clickedImageData!!.realAddress = imageAddress
+        }
+
+        imageInfoView!!.placeAddressValue.text = clickedImageData!!.realAddress
+        imageInfoView!!.placeIndvImageView.setImageBitmap(clickedImageData!!.getImageBitmap())
+
+        // Populate the description with the first paragraph on the landmark from Wikipedia
+
+
+        // Set button listeners
+        imageInfoView!!.placeCloseButton.setOnClickListener{
+            imageInfoView!!.visibility = View.GONE
+            imageInfoView!!.invalidate()
+            imageInfoView!!.removeAllViews()
+        }
+
+        viewInMapsButton.setOnClickListener {
+            startMapsFromAddress(clickedImageData!!.realAddress!!)
+        }
+
         imageInfoView!!.elevation = 6f
+        imageInfoView!!.bringToFront()
         imageInfoView!!.visibility = View.VISIBLE
-        onResumeFragments()
+        //onResumeFragments()
 
     }
 
@@ -124,9 +156,9 @@ class PlacePhotomap : PhotomapActivity() {
         super.onResumeFragments()
 
         //placeScrollview.bringToFront()
-        if (imageInfoView != null) {
-            imageInfoView!!.bringToFront()
-        }
+        //if (imageInfoView != null) {
+            //imageInfoView!!.bringToFront()
+       // }
 
     }
 

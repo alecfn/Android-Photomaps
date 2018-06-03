@@ -306,11 +306,7 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
 
         // Set the view in maps button to take the user to the Google Maps app from the listed addr
         viewInMapsButton.setOnClickListener {
-            val mapsIntent = Intent(android.content.Intent.ACTION_VIEW, Uri.parse(imageData.realAddress)) // fixme
-            mapsIntent.setClassName("com.google.android.apps.maps",
-                    "com.google.android.maps.MapsActivity")
-
-            startActivity(mapsIntent)
+            startMapsFromAddress(imageData.realAddress!!)
         }
 
         indvCloseButton.setOnClickListener {

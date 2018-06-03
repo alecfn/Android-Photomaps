@@ -1,5 +1,7 @@
 package com.alecforbes.photomapapp.Activities.Photomaps
 
+import android.content.Intent
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.util.DisplayMetrics
 import android.view.Gravity
@@ -62,6 +64,14 @@ open class PhotomapActivity: AppCompatActivity(){
 
         return imageButton
 
+    }
+
+    fun startMapsFromAddress(realAddress: String){
+        val mapsIntent = Intent(Intent.ACTION_VIEW, Uri.parse(realAddress)) // fixme
+        mapsIntent.setClassName("com.google.android.apps.maps",
+                "com.google.android.maps.MapsActivity")
+
+        startActivity(mapsIntent)
     }
 
 }
