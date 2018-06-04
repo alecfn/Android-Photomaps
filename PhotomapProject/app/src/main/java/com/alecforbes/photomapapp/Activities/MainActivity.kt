@@ -14,7 +14,6 @@ class MainActivity : AppCompatActivity() {
 
     private val READ_EXTERNAL_REQUEST_CODE = 101
     private val WRITE_EXTERNAL_REQUEST_CODE = 102
-    private val CAMERA_REQUEST_CODE = 103
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -102,14 +101,9 @@ class MainActivity : AppCompatActivity() {
             WRITE_EXTERNAL_REQUEST_CODE -> {
                 if ((grantResults.isNotEmpty() && grantResults[0] == permissionDenied)){
                     // Maps can't be saved without write, but that's all
-
+                    //todo
                 }
 
-            }
-            CAMERA_REQUEST_CODE -> {
-                if ((grantResults.isNotEmpty() && grantResults[0] == permissionDenied)){
-
-                }
             }
         }
 

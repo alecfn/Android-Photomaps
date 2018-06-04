@@ -249,6 +249,7 @@ open class PhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnC
     fun clearMap(){
         photomap.clear()
         imageUriHashMap.clear() // Also clear the hashmap, or no new data can be added
+        imageMarkers.clear() // Clear the image markers stored
     }
 
     /**
