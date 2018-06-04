@@ -23,7 +23,7 @@ import java.util.*
 @Parcelize
 data class ImageData(val file: File,
                      private var bitmap: Bitmap,
-                     @IgnoredOnParcel private val exifInterface: @RawValue ExifInterface, // fixme this is a major problem and keeps causes crashes, probably best to change to the java way
+                     @IgnoredOnParcel private var exifInterface: @RawValue ExifInterface?, // fixme this is a major problem and keeps causes crashes, probably best to change to the java way
                      var latitude: Float=0F,
                      var longitude: Float=0F,
                      var dateTimeTaken: String="",
@@ -47,12 +47,14 @@ data class ImageData(val file: File,
         setImageOrientation()
         rotateBitmaps()
         setImageThumbnail()
+        // Nullify the exif interface, it wont parcel and will crash, and we don't need it after
+        exifInterface = null
     }
 
     private fun setLatLong(){
 
         val latLongArr = FloatArray(2)
-        exifInterface.getLatLong(latLongArr)
+        exifInterface!!.getLatLong(latLongArr)
 
         latitude = latLongArr[0]
         longitude = latLongArr[1]
@@ -69,7 +71,7 @@ data class ImageData(val file: File,
         //try {
 
             tagsList.forEach {
-                val dateStamp = exifInterface.getAttribute(it)
+                val dateStamp = exifInterface!!.getAttribute(it)
 
                 if (dateStamp != null){
                     return dateStamp
@@ -88,7 +90,7 @@ data class ImageData(val file: File,
      * to determine how a bitmap should be oriented.
      */
     private fun setImageOrientation(){
-        imageOrientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1)
+        imageOrientation = exifInterface!!.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1)
     }
 
     /**
