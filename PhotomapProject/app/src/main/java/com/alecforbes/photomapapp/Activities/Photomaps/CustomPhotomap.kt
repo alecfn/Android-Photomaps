@@ -18,6 +18,7 @@ import com.google.android.gms.maps.model.Marker
 import kotlinx.android.synthetic.main.activity_photomap.*
 import kotlinx.android.synthetic.main.individual_image_view.*
 import kotlinx.android.synthetic.main.timeline_scroll.*
+import org.jetbrains.anko.doAsync
 
 class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
 
@@ -84,13 +85,19 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
      */
     override fun onOptionClick(optionId: Int?) {
 
-        // Use Kotlin lambdas to set up FAB click responses
+        // Use Kotlin lambdas to set up FAB click responses, do what we can off the main thread
         when(optionId) {
             R.id.add_files_option -> getDataFromGallery()
             R.id.add_timeline_option -> addImagesToPreview()
-            R.id.remove_timeline_option -> clearTimelinePreview()
+            R.id.remove_timeline_option ->
+                doAsync {
+                    clearTimelinePreview()
+                }
             R.id.save_photomap_option -> saveMap()
-            R.id.clear_map_option -> clearViewsAndData()
+            R.id.clear_map_option ->
+                doAsync {
+                    clearViewsAndData()
+                }
             R.id.share_map_option -> shareMap()
         }
     }
