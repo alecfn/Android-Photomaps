@@ -3,7 +3,7 @@ package com.alecforbes.photomapapp.Activities.Photomaps
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import com.alecforbes.photomapapp.Activities.MapFragments.CustomPhotomapFragment
+import com.alecforbes.photomapapp.Activities.MapFragments.PhotomapFragment
 import com.alecforbes.photomapapp.Controllers.FirebaseController
 import com.alecforbes.photomapapp.Controllers.ImageGeocoder
 import com.alecforbes.photomapapp.Controllers.WikipediaParagraph
@@ -23,7 +23,7 @@ class PlacePhotomap : PhotomapActivity() {
     lateinit var firebaseController: FirebaseController
 
     var imageInfoView: ViewGroup? = null
-    var placeMapFragment: CustomPhotomapFragment? = null
+    var placeMapFragment: PhotomapFragment? = null
     var selectedLoc: String? = null
 
     val WIKI_LINK_POS = 1
@@ -52,9 +52,9 @@ class PlacePhotomap : PhotomapActivity() {
     fun onFirebaseComplete(includedImages: ArrayList<ImageData>){
 
         // fixme the new instance needs to be fixed for placesmaps now
-        placeMapFragment = CustomPhotomapFragment.newPlaceInstance(includedImages)
+        placeMapFragment = PhotomapFragment.newPlaceInstance(includedImages)
 
-        //val placeMapFragment = CustomPhotomapFragment.newCustomInstance(includedImages)
+        //val placeMapFragment = PhotomapFragment.newCustomInstance(includedImages)
 
         placeMapFragment!!.setSelectedDataFromIntent()
 

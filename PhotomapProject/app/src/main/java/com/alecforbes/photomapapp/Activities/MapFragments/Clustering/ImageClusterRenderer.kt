@@ -5,14 +5,12 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import android.support.annotation.Dimension
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.alecforbes.photomapapp.R
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.maps.android.clustering.Cluster

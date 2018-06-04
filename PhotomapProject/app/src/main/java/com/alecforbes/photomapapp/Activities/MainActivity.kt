@@ -60,11 +60,9 @@ class MainActivity : AppCompatActivity() {
      */
     private fun setupPermissions(){
         // TODO: just doing this in main for now, may move to more appropriate locations
-        // FIXME: Do I need the camera really?
 
         val readPermission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE)
         val writePermission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        val cameraPermission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
 
         val permissionGranted = PackageManager.PERMISSION_GRANTED
 
@@ -78,11 +76,6 @@ class MainActivity : AppCompatActivity() {
             ActivityCompat.requestPermissions(this,
                     arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE),
                     WRITE_EXTERNAL_REQUEST_CODE)
-        }
-
-        if (cameraPermission != permissionGranted){
-            ActivityCompat.requestPermissions(this,
-                    arrayOf(android.Manifest.permission.CAMERA), CAMERA_REQUEST_CODE)
         }
 
     }

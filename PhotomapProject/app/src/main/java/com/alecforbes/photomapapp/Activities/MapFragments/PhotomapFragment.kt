@@ -31,7 +31,7 @@ import kotlin.collections.HashMap
  * Created by Alec on 4/26/2018.
  */
 
-open class CustomPhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnClickListener, GoogleMap.OnMarkerClickListener, OnClusterItemClickListener<ImageClusterItem> {
+open class PhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnClickListener, GoogleMap.OnMarkerClickListener, OnClusterItemClickListener<ImageClusterItem> {
 
 
     private lateinit var photomap: GoogleMap
@@ -91,13 +91,13 @@ open class CustomPhotomapFragment : SupportMapFragment(), OnMapReadyCallback, Vi
      * Define placemap objects
      */
     companion object {
-        fun newCustomInstance(): CustomPhotomapFragment {
-            val fragment = CustomPhotomapFragment()
+        fun newCustomInstance(): PhotomapFragment {
+            val fragment = PhotomapFragment()
             return fragment
         }
 
-        fun newPlaceInstance(images: ArrayList<ImageData>): CustomPhotomapFragment{
-            val fragment = CustomPhotomapFragment()
+        fun newPlaceInstance(images: ArrayList<ImageData>): PhotomapFragment{
+            val fragment = PhotomapFragment()
             val args = Bundle()
             args.putParcelableArrayList("selectedData", images)
 
@@ -106,8 +106,8 @@ open class CustomPhotomapFragment : SupportMapFragment(), OnMapReadyCallback, Vi
             return fragment
         }
 
-        fun newSavedInstance(savedImages: ArrayList<ImageData>): CustomPhotomapFragment{
-            val fragment = CustomPhotomapFragment()
+        fun newSavedInstance(savedImages: ArrayList<ImageData>): PhotomapFragment{
+            val fragment = PhotomapFragment()
             val args = Bundle()
             args.putParcelableArrayList("savedData", savedImages)
             fragment.arguments = args

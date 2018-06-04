@@ -7,7 +7,7 @@ import android.support.v7.app.AlertDialog
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
-import com.alecforbes.photomapapp.Activities.MapFragments.CustomPhotomapFragment
+import com.alecforbes.photomapapp.Activities.MapFragments.PhotomapFragment
 import com.alecforbes.photomapapp.Controllers.Database.DatabaseHelper
 import com.alecforbes.photomapapp.Controllers.FileDataController
 import com.alecforbes.photomapapp.Controllers.ImageGeocoder
@@ -18,7 +18,6 @@ import com.google.android.gms.maps.model.Marker
 import kotlinx.android.synthetic.main.activity_photomap.*
 import kotlinx.android.synthetic.main.individual_image_view.*
 import kotlinx.android.synthetic.main.timeline_scroll.*
-import org.jetbrains.anko.doAsync
 
 class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
 
@@ -28,7 +27,7 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
     private val PICK_DATA = 1
 
     lateinit var fileDataController: FileDataController
-    lateinit var customMapFragment: CustomPhotomapFragment
+    lateinit var mapFragment: PhotomapFragment
 
     // Images stored in the preview pane
     private var previewImageUriHashMap = HashMap<String, String>()
@@ -56,16 +55,16 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
             // Image data cannot be parceled, so that is built here (Kotlin parcelize issue)
             val savedImageUris = intent.getStringArrayListExtra("SavedImageUris")
             fileDataController.getSelectedImageUrisFromArray(savedImageUris)
-            customMapFragment = CustomPhotomapFragment.newSavedInstance(fileDataController.selectedData)
-            customMapFragment.setSelectedData(fileDataController.selectedData)
+            mapFragment = PhotomapFragment.newSavedInstance(fileDataController.selectedData)
+            mapFragment.setSelectedData(fileDataController.selectedData)
 
         } else {
-            customMapFragment = CustomPhotomapFragment.newCustomInstance()
+            mapFragment = PhotomapFragment.newCustomInstance()
         }
 
         // As the map is a fragment, initialise it in a view (but just the constraint as the map fills the view)
         supportFragmentManager.beginTransaction()
-                .add(R.id.photomapConstraintLayout, customMapFragment)
+                .add(R.id.photomapConstraintLayout, mapFragment)
                 .commit()
 
     }
@@ -115,7 +114,7 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
         timelineCardView.visibility = View.GONE
         mapLayout.removeView(imagePreviewPane)
         mapLayout.removeView(findViewById(R.id.customTimeline))
-        customMapFragment.clearMap() // Also clear drawables on the map fragment
+        mapFragment.clearMap() // Also clear drawables on the map fragment
         fileDataController.selectedData.clear()
         fileDataController.imageUris.clear()
         //mapLayout.removeView(imagePreviewPane)
@@ -219,7 +218,7 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
         timelineCardView.visibility = View.GONE
 
         // Now clear the polylines from the map fragment
-        customMapFragment.clearTimelinePolylines()
+        mapFragment.clearTimelinePolylines()
     }
 
     /**
@@ -273,7 +272,7 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
 
         }
         // Now draw lines between the images
-        customMapFragment.addTimelinePolylines()
+        mapFragment.addTimelinePolylines()
     }
 
     private fun setImageAddress(imageData: ImageData){
@@ -368,9 +367,9 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
             if (data != null) {
 
                 fileDataController.getSelectedImageUrisFromIntent(data)
-                customMapFragment.setSelectedData(fileDataController.selectedData)
-                customMapFragment.addImagePreviews()
-                customMapFragment.sortByTimeTaken()
+                mapFragment.setSelectedData(fileDataController.selectedData)
+                mapFragment.addImagePreviews()
+                mapFragment.sortByTimeTaken()
 
             }
 
