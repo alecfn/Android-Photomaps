@@ -57,23 +57,28 @@ class FileDataController (private val contentResolver: ContentResolver,
      */
     fun getSelectedImageUrisFromIntent(fileData: Intent){
 
+
         if (fileData.clipData != null) {
 
             // Get the number of images selected from the gallery application
             val numberImages = fileData.clipData!!.itemCount
 
             // Get all of the image ClipData objects to add to an array to send in an intent
-            for (i in 0..(numberImages - 1)){
+            for (i in 0..(numberImages - 1)) {
                 val uri = fileData.clipData.getItemAt(i).uri
 
-                newImageUris.add(uri)
+                if(!checkFileExistsInMap(uri)) {
+                    newImageUris.add(uri)
+                }
             }
 
         } else {
 
             // If the user only selects one image, clipData is unused and will be null
             val uri = fileData.data
-            newImageUris.add(uri)
+            if(!checkFileExistsInMap(uri)) {
+                newImageUris.add(uri)
+            }
 
         }
 
@@ -93,6 +98,20 @@ class FileDataController (private val contentResolver: ContentResolver,
 
         createImageData()
 
+    }
+
+    /**
+     * When getting data from an intent, make sure that the new data does not already exist using
+     * the URI
+     */
+    private fun checkFileExistsInMap(newuri: Uri): Boolean {
+        imageUris.forEach {
+            if(imageUris.contains(newuri)){
+                return true
+            }
+
+        }
+        return false
     }
 
 }
