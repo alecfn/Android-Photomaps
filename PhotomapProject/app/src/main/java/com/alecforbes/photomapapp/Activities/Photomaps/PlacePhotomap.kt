@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import com.alecforbes.photomapapp.Activities.MapFragments.PhotomapFragment
 import com.alecforbes.photomapapp.Controllers.FirebaseController
 import com.alecforbes.photomapapp.Controllers.ImageGeocoder
-import com.alecforbes.photomapapp.Controllers.WikipediaParagraph
+import com.alecforbes.photomapapp.Controllers.WikipediaRetriever
 import com.alecforbes.photomapapp.Model.ImageData
 import com.alecforbes.photomapapp.R
 import com.google.android.gms.maps.model.Marker
@@ -75,8 +75,8 @@ class PlacePhotomap : PhotomapActivity() {
     fun createIndvFirebaseImageView(clickedMarker: Marker?){
 
         val markerLatLong = clickedMarker!!.position
+
         // From the lat long of the marker, get the relevant image file to populate the view
-        // todo, could maybe override the marker class and add some kind of id field?
         var clickedImageData: ImageData? = null
         firebaseController.includedImages.forEach{ imageData ->
 
@@ -111,6 +111,7 @@ class PlacePhotomap : PhotomapActivity() {
             imageInfoView!!.visibility = View.GONE
             imageInfoView!!.invalidate()
             imageInfoView!!.removeAllViews()
+            print("")
         }
 
         viewInMapsButton.setOnClickListener {
@@ -124,7 +125,7 @@ class PlacePhotomap : PhotomapActivity() {
     }
 
     private fun getWikipediaDesc(wikiUrl: String){
-        val wikiRetriever = WikipediaParagraph()
+        val wikiRetriever = WikipediaRetriever()
 
         // Anko library allows running asynchronous tasks easily like so
         var descriptionPara: String? = null

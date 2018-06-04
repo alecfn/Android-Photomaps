@@ -1,6 +1,7 @@
 package com.alecforbes.photomapapp.Activities.Photomaps
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v7.app.AlertDialog
@@ -250,22 +251,19 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
             if (!previewImageUriHashMap.containsKey(imageUri)) {
 
                 val customImageButton = defineHorizontalScrollViewButton()
-
-                customImageButton.setImageBitmap(imageData.getImageBitmap()) //fixme not thumbnail bitmap
+                customImageButton.setImageBitmap(
+                        BitmapFactory.decodeByteArray(imageData.getImageThumbnail(), 0,
+                                imageData.getImageThumbnail().size))
 
                 // Set up the listener for clicking to create a more detailed view
 
                 customImageButton.setOnClickListener {
 
                     // Get the address of the image from the lat long
-                    // TODO maybe store it, and only get if it's not already stored in the imagedata
-
                     setImageAddress(imageData)
-
                     createIndvView(imageData)
 
                 }
-
                 imagePreviewPane.addView(customImageButton)
                 previewImageUriHashMap[imageUri] = ""
             }
