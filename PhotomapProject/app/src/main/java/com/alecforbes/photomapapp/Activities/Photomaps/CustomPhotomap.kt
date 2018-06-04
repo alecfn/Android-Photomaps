@@ -89,15 +89,9 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
         when(optionId) {
             R.id.add_files_option -> getDataFromGallery()
             R.id.add_timeline_option -> addImagesToPreview()
-            R.id.remove_timeline_option ->
-                doAsync {
-                    clearTimelinePreview()
-                }
+            R.id.remove_timeline_option -> clearTimelinePreview()
             R.id.save_photomap_option -> saveMap()
-            R.id.clear_map_option ->
-                doAsync {
-                    clearViewsAndData()
-                }
+            R.id.clear_map_option -> clearViewsAndData()
             R.id.share_map_option -> shareMap()
         }
     }
