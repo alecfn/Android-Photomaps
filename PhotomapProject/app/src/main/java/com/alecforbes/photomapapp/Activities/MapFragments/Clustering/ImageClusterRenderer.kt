@@ -2,6 +2,7 @@ package com.alecforbes.photomapapp.Activities.MapFragments.Clustering
 
 import android.content.Context
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.support.annotation.Dimension
@@ -43,6 +44,8 @@ class ImageClusterRenderer(private val context: Context?, map: GoogleMap?,
         val multiImage = View.inflate(context, R.layout.multi_image, null)
         clusterIconGenerator.setContentView(multiImage)
         clusterImageView = multiImage.findViewById(R.id.clusterImage)
+        clusterImageView.maxHeight = dimension
+        clusterImageView.maxWidth = dimension
         clusterNumberText = multiImage.findViewById(R.id.clusterNumberText)
 
         // Definitions for a single image
@@ -68,7 +71,7 @@ class ImageClusterRenderer(private val context: Context?, map: GoogleMap?,
             }
 
             val imageDrawable = BitmapDrawable(context!!.resources, clusterImageItem.getThumbnailBitmap())
-            imageDrawable.setBounds(0, 0, dimension/2, dimension/2)
+            imageDrawable.setBounds(0, 0, dimension, dimension)
             imageClusterDrawables.add(imageDrawable)
 
         }
@@ -77,9 +80,11 @@ class ImageClusterRenderer(private val context: Context?, map: GoogleMap?,
         multiImageDrawable.setBounds(0, 0, dimension, dimension)
 
         clusterImageView.setImageDrawable(multiImageDrawable)
+        // Set options for text view showing number of images in cluster
         clusterNumberText.text = cluster.size.toString()
-        clusterNumberText.textSize = 20f
-        clusterNumberText.setTextColor(Color.parseColor("#ff0000"))  // Red
+        clusterNumberText.textSize = 30f
+        clusterNumberText.setTypeface(clusterNumberText.typeface, Typeface.BOLD)
+        clusterNumberText.setTextColor(Color.parseColor("#ffffff"))  //
         val multiIcon = clusterIconGenerator.makeIcon(cluster.size.toString())
 
         markerOptions!!.icon(BitmapDescriptorFactory.fromBitmap(multiIcon))
