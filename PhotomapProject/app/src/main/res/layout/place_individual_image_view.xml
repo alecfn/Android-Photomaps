@@ -8,9 +8,9 @@
     <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         card_view:cardElevation="6dp"
         card_view:cardUseCompatPadding="true"
         card_view:layout_constraintEnd_toEndOf="parent"
@@ -25,7 +25,7 @@
             <ImageView
                 android:id="@+id/placeIndvImageView"
                 android:layout_width="match_parent"
-                android:layout_height="189dp"
+                android:layout_height="190dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
@@ -43,6 +43,7 @@
                 android:layout_marginTop="8dp"
                 android:text="@string/address"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/indvImageView" />
 
@@ -62,6 +63,7 @@
                 android:id="@+id/placeDescTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/description"
@@ -72,31 +74,29 @@
             <android.support.v4.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:fillViewport="true">
+                android:fillViewport="true"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/placeDescValue"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/loading"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/imageTimeTakenTitle"
-                        app:layout_constraintTop_toBottomOf="@+id/imageAddressValue" />
+                <TextView
+                    android:id="@+id/placeDescValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/loading" />
+
                 </LinearLayout>
+
             </android.support.v4.widget.NestedScrollView>
 
             <Button
                 android:id="@+id/placeViewInMapsButton"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
@@ -109,7 +109,10 @@
             <Button
                 android:id="@+id/placeCloseButton"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:text="@string/close"
                 android:theme="@style/PrimaryFlatButton" />
         </LinearLayout>

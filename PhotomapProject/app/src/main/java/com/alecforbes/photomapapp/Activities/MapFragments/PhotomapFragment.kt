@@ -94,7 +94,6 @@ open class PhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnC
             val fragment = PhotomapFragment()
             val args = Bundle()
             args.putParcelableArrayList("selectedData", images)
-
             fragment.arguments = args
             fragment.isPlaceMap = true
             return fragment
@@ -106,7 +105,6 @@ open class PhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnC
             args.putParcelableArrayList("savedData", savedImages)
             fragment.arguments = args
             fragment.isSavedMap = true
-
             return fragment
         }
     }
@@ -197,8 +195,6 @@ open class PhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnC
         }catch (ex: Exception){
             // fixme, this breaks when a saved map is loaded
         }
-
-
 
     }
 

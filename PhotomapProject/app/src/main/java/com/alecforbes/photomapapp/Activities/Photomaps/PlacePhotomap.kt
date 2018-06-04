@@ -127,8 +127,9 @@ class PlacePhotomap : PhotomapActivity() {
         doAsyncResult {
             descriptionPara = wikiRetriever.getFirstParagraphFromWikipedia(wikiUrl)
             imageInfoView!!.placeDescValue.text = descriptionPara.toString()
-
+            imageInfoView!!.placeDescValue.invalidate()  // Redraw
         }
+
 
         // Due to limit screen size, limit the paragraph to be no more than 250 characters
 
