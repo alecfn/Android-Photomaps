@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
+import java.net.URLEncoder
 
 /**
  * Created by Alec on 5/30/2018.
@@ -67,7 +68,7 @@ open class PhotomapActivity: AppCompatActivity(){
     }
 
     fun startMapsFromAddress(realAddress: String){
-        val mapsIntent = Intent(Intent.ACTION_VIEW, Uri.parse(realAddress)) // fixme
+        val mapsIntent = Intent(Intent.ACTION_VIEW, Uri.parse(String.format("geo:0,0?q=%s",URLEncoder.encode(realAddress)))) // fixme
         mapsIntent.setClassName("com.google.android.apps.maps",
                 "com.google.android.maps.MapsActivity")
 

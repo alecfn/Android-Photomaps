@@ -118,7 +118,6 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
         mapFragment.clearMap() // Also clear drawables on the map fragment
         fileDataController.selectedData.clear()
         fileDataController.imageUris.clear()
-        //mapLayout.removeView(imagePreviewPane)
         previewImageUriHashMap.clear() // Clear uri hashmap so old images can be added again
     }
 
@@ -145,7 +144,7 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
 
 
             setPositiveButton("Save"){
-                dialog, posButton ->
+                dialog, _ -> // Unused variables for buttons can be called _
                 val savedMapName = saveInputText.text.toString()
                 dialog.dismiss()
 
@@ -163,7 +162,7 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
                                     " already exists. Would you like to overwrite it?")
 
                             setPositiveButton("Overwrite"){
-                                dialog, overwriteButton ->
+                                _, _ ->
                                 databaseHelper.updateMap(savedMapName, fileDataController.imageUris)
 
                                 // Toast to confirm overwrite
@@ -172,7 +171,7 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
                             }
 
                             setNegativeButton("Cancel"){
-                                dialog, negButton ->
+                                dialog, _ ->
                                 dialog.dismiss()
                             }
 

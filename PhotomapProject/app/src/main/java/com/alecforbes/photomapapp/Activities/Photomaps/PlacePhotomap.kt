@@ -10,6 +10,7 @@ import com.alecforbes.photomapapp.Controllers.WikipediaRetriever
 import com.alecforbes.photomapapp.Model.ImageData
 import com.alecforbes.photomapapp.R
 import com.google.android.gms.maps.model.Marker
+import kotlinx.android.synthetic.main.activity_place_photomap.*
 import kotlinx.android.synthetic.main.individual_image_view.*
 import kotlinx.android.synthetic.main.place_individual_image_view.view.*
 import org.jetbrains.anko.doAsyncResult
@@ -32,6 +33,7 @@ class PlacePhotomap : PhotomapActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_place_photomap)
+        downloadProgressBar.visibility = View.VISIBLE
 
         setScreenResolution()
 
@@ -51,13 +53,9 @@ class PlacePhotomap : PhotomapActivity() {
      */
     fun onFirebaseComplete(includedImages: ArrayList<ImageData>){
 
-        // fixme the new instance needs to be fixed for placesmaps now
         placeMapFragment = PhotomapFragment.newPlaceInstance(includedImages)
 
-        //val placeMapFragment = PhotomapFragment.newCustomInstance(includedImages)
-
         placeMapFragment!!.setSelectedDataFromIntent()
-
         // Create a horizontal scroll view for the place images, similar to the custom map
 
         // As the map is a fragment, initialise it in a view (but just the constraint as the map fills the view)
@@ -110,11 +108,9 @@ class PlacePhotomap : PhotomapActivity() {
         imageInfoView!!.placeCloseButton.setOnClickListener{
             imageInfoView!!.visibility = View.GONE
             imageInfoView!!.invalidate()
-            imageInfoView!!.removeAllViews()
-            print("")
         }
 
-        viewInMapsButton.setOnClickListener {
+        imageInfoView!!.placeViewInMapsButton.setOnClickListener {
             startMapsFromAddress(clickedImageData!!.realAddress!!)
         }
 
