@@ -60,13 +60,12 @@ class ImageClusterRenderer(private val context: Context?, map: GoogleMap?,
     override fun onBeforeClusterRendered(cluster: Cluster<ImageClusterItem>?, markerOptions: MarkerOptions?) {
         super.onBeforeClusterRendered(cluster, markerOptions)
 
-
         // fixme this would be better run on its own thread
-        // 2 or more images should cluster into a custom display
-        val imageClusterDrawables = ArrayList<Drawable>(Math.min(2, cluster!!.size))
+        // 4 or less images should be displayed on the multidrawable, but no more
+        val imageClusterDrawables = ArrayList<Drawable>(Math.min(4, cluster!!.size))
         for(clusterImageItem in cluster.items){
 
-            if (imageClusterDrawables.size == 2){
+            if (imageClusterDrawables.size == 4){
                 break
             }
 
