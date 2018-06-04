@@ -62,20 +62,14 @@ open class PhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnC
         photomap = map as GoogleMap
         setUpClusterer()
 
-
-        // todo i think place probably should just be moved to it's own class FIX ME
         if (isPlaceMap) {
             addImagePreviews()
 
-            // fixme bug redrawing when you go back to the select screen and make a new one
-            // fixme this call likes to break alot.. maybe a threading issue?
-            setMapBounds()
+            if(imageMarkers.size > 0){
+                setMapBounds()
+            }
         } else if (isSavedMap){
             addImagePreviews()
-
-
-        } else {
-
         }
 
 
@@ -356,7 +350,6 @@ open class PhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnC
     }
 
     override fun onClusterItemClick(imageClusterItem: ImageClusterItem?): Boolean {
-        // todo may not need this anymore as onmarker does it
         return true
     }
 
