@@ -61,12 +61,19 @@ open class PhotomapActivity: AppCompatActivity(){
         val imageButton = ImageButton(applicationContext)
         imageButton.layoutParams = layoutParams
         imageButton.adjustViewBounds = true
+        imageButton.setPadding(0,0,0,0)
         imageButton.scaleType = ImageView.ScaleType.FIT_XY
 
         return imageButton
 
     }
 
+    /**
+     * Send the address of the image to the Google Maps application.
+     *
+     * With reference to:
+     * https://stackoverflow.com/questions/9987551/how-to-open-google-maps-using-address
+     */
     fun startMapsFromAddress(realAddress: String){
         val mapsIntent = Intent(Intent.ACTION_VIEW, Uri.parse(String.format("geo:0,0?q=%s",URLEncoder.encode(realAddress)))) // fixme
         mapsIntent.setClassName("com.google.android.apps.maps",
