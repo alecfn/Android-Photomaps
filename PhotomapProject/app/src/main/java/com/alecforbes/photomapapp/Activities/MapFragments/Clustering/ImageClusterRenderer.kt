@@ -1,11 +1,14 @@
 package com.alecforbes.photomapapp.Activities.MapFragments.Clustering
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.support.annotation.Dimension
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import com.alecforbes.photomapapp.R
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.BitmapDescriptor
@@ -18,29 +21,34 @@ import com.google.maps.android.ui.IconGenerator
 
 /**
  * Created by Alec on 5/27/2018.
+ *
+ * Based on the Gooogle MapUtils clustering example:
+ * https://github.com/googlemaps/android-maps-utils/
  */
 
-class ImageClusterRenderer(context: Context?, map: GoogleMap?,
-                           clusterManager: ClusterManager<ImageClusterItem>?) :
+class ImageClusterRenderer(private val context: Context?, map: GoogleMap?,
+                           clusterManager: ClusterManager<ImageClusterItem>?,
+                           private var dimension: Int) :
         DefaultClusterRenderer<ImageClusterItem>(context, map, clusterManager) {
 
-    private val context = context
     private val iconGenerator = IconGenerator(context)
     private val clusterIconGenerator = IconGenerator(context)
-    private lateinit var photomapBitmap: BitmapDescriptor
-    private lateinit var photomapImage: ImageView
+    private var photomapImage: ImageView
     private var clusterImageView: ImageView
-    private var dimension = 0
+    private var clusterNumberText: TextView
 
     init {
-        val multiImage = View.inflate(context, R.layout.multi_image, null)
-        iconGenerator.setContentView(multiImage)
-        clusterImageView = multiImage.findViewById(R.id.clusterImage)
 
+        // Definitions for an image cluster
+        val multiImage = View.inflate(context, R.layout.multi_image, null)
+        clusterIconGenerator.setContentView(multiImage)
+        clusterImageView = multiImage.findViewById(R.id.clusterImage)
+        clusterNumberText = multiImage.findViewById(R.id.clusterNumberText)
+
+        // Definitions for a single image
         photomapImage = ImageView(context)
-        dimension = 300 //todo make this thumbnail size
-        clusterImageView.layoutParams = ViewGroup.LayoutParams(dimension, dimension)
-        val padding = 10 // 10 Pixel padding
+        photomapImage.layoutParams = ViewGroup.LayoutParams(dimension, dimension)
+        val padding = 10 // Pixel padding
         photomapImage.setPadding(padding, padding, padding, padding)
         iconGenerator.setContentView(photomapImage)
     }
@@ -60,7 +68,7 @@ class ImageClusterRenderer(context: Context?, map: GoogleMap?,
             }
 
             val imageDrawable = BitmapDrawable(context!!.resources, clusterImageItem.getThumbnailBitmap())
-            imageDrawable.setBounds(0, 0, dimension, dimension)
+            imageDrawable.setBounds(0, 0, dimension/2, dimension/2)
             imageClusterDrawables.add(imageDrawable)
 
         }
@@ -69,10 +77,12 @@ class ImageClusterRenderer(context: Context?, map: GoogleMap?,
         multiImageDrawable.setBounds(0, 0, dimension, dimension)
 
         clusterImageView.setImageDrawable(multiImageDrawable)
+        clusterNumberText.text = cluster.size.toString()
+        clusterNumberText.textSize = 20f
+        clusterNumberText.setTextColor(Color.parseColor("#ff0000"))  // Red
         val multiIcon = clusterIconGenerator.makeIcon(cluster.size.toString())
 
         markerOptions!!.icon(BitmapDescriptorFactory.fromBitmap(multiIcon))
-
 
     }
 

@@ -11,6 +11,7 @@ import com.alecforbes.photomapapp.Activities.MapFragments.Clustering.ImageCluste
 import com.alecforbes.photomapapp.Activities.MapFragments.Clustering.ImageClusterManager
 import com.alecforbes.photomapapp.Activities.MapFragments.Clustering.ImageClusterRenderer
 import com.alecforbes.photomapapp.Activities.Photomaps.CustomPhotomap
+import com.alecforbes.photomapapp.Activities.Photomaps.PhotomapActivity
 import com.alecforbes.photomapapp.Activities.Photomaps.PlacePhotomap
 import com.alecforbes.photomapapp.Model.ImageData
 import com.alecforbes.photomapapp.R
@@ -334,11 +335,18 @@ open class CustomPhotomapFragment : SupportMapFragment(), OnMapReadyCallback, Vi
         imageClusterManager = ImageClusterManager(this.context, photomap, cameraIdleListenter)
 
         // Set the map type to know how to perform additional rendering
+        val parent: PhotomapActivity?
+        // Get the parent activity to give the cluster the thumbnail size
         if(isPlaceMap){
             imageClusterManager.isPlaceMap = true
+            parent = activity as PlacePhotomap
+        } else {
+            parent = activity as CustomPhotomap
         }
 
-        imageClusterManager.renderer = ImageClusterRenderer(this.context, photomap, imageClusterManager)
+        val imageClusterRenderer = ImageClusterRenderer(this.context, photomap, imageClusterManager,
+                parent.THUMBNAIL_SIZE)
+        imageClusterManager.renderer = imageClusterRenderer
         photomap.setOnCameraIdleListener(imageClusterManager)
 
         photomap.setOnMarkerClickListener(this)
