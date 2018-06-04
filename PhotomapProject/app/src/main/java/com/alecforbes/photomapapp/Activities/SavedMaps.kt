@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.alecforbes.photomapapp.Activities.Photomaps.CustomPhotomap
@@ -24,6 +25,12 @@ class SavedMaps : AppCompatActivity() {
         title = "Your Saved Photomaps"
 
         getSavedMapsFromDB()
+
+        // If there's no maps yet, show a text view in the centre of the screen and return
+        if(savedMaps.size == 0){
+            noMapsText.visibility = View.VISIBLE
+            return
+        }
 
         populateSavedView()
     }

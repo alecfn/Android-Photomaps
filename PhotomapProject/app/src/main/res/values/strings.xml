@@ -16,4 +16,12 @@
     <string name="button_create">Create</string>
     <string name="custom_photomap_title">Custom Photomaps</string>
     <string name="save_photomap">Save Photomap</string>
+    <string name="view_in_maps">View In Maps</string>
+    <string name="close">Close</string>
+    <string name="date_taken">Date Taken:</string>
+    <string name="time_taken">Time Taken:</string>
+    <string name="address">Address:</string>
+    <string name="loading">Loading...</string>
+    <string name="description">Description:</string>
+    <string name="get_creating">There are saved maps yet, get creating! Your saved maps will appear here.</string>
 </resources>

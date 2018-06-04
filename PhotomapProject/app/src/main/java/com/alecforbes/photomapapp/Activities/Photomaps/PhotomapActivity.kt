@@ -21,7 +21,7 @@ open class PhotomapActivity: AppCompatActivity(){
 
     var screenSize: Int? = null
     var THUMBNAIL_SIZE = 300
-    val PIXELS_1080 = 2073600
+    private val PIXELS_1080 = 2073600
 
     /**
      * Helper function to get the resolution of a screen. If greater than 1080p, the image
@@ -61,7 +61,7 @@ open class PhotomapActivity: AppCompatActivity(){
         val imageButton = ImageButton(applicationContext)
         imageButton.layoutParams = layoutParams
         imageButton.adjustViewBounds = true
-        imageButton.setPadding(0,0,0,0)
+        imageButton.setPadding(0,0,0,0) // Pad to edges of image button
         imageButton.scaleType = ImageView.ScaleType.FIT_XY
 
         return imageButton

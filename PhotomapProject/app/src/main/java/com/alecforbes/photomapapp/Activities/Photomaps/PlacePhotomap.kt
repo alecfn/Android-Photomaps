@@ -33,7 +33,6 @@ class PlacePhotomap : PhotomapActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_place_photomap)
-        downloadProgressBar.visibility = View.VISIBLE
 
         setScreenResolution()
 
