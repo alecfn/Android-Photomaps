@@ -365,8 +365,8 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
 
                 fileDataController.getSelectedImageUrisFromIntent(data)
                 mapFragment.setSelectedData(fileDataController.selectedData)
-                mapFragment.addImagePreviews()
                 mapFragment.sortByTimeTaken()
+                mapFragment.addImagePreviews()
 
             }
 

@@ -127,7 +127,7 @@ class PlacePhotomap : PhotomapActivity() {
         doAsyncResult {
             descriptionPara = wikiRetriever.getFirstParagraphFromWikipedia(wikiUrl)
             imageInfoView!!.placeDescValue.text = descriptionPara.toString()
-            imageInfoView!!.placeDescValue.invalidate()  // Redraw
+
         }
 
 

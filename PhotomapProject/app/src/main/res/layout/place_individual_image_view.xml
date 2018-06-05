@@ -78,7 +78,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:height="80dp"
+                android:height="90dp"
                 android:text="@string/loading" />
 
             <Button
