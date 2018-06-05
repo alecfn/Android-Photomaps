@@ -62,16 +62,18 @@ open class PhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnC
         photomap = map as GoogleMap
         setUpClusterer()
 
-        if (isPlaceMap) {
+        if (isPlaceMap || isSavedMap) {
+            // We already have images if it's not a new map, so add them here
             addImagePreviews()
-
-            if(imageMarkers.size > 0){
-                setMapBounds()
+            if(isSavedMap){
+                // Nullify the arguments in a saved map, so bitmaps don't overflow the parcel size
+                arguments = null
             }
-        } else if (isSavedMap){
-            addImagePreviews()
         }
 
+        if(imageMarkers.size > 0){
+            setMapBounds()
+        }
 
     }
 
