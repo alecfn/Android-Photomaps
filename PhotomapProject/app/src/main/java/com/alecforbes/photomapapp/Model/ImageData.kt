@@ -189,7 +189,7 @@ data class ImageData(val file: File,
         val compareTime = other.unixTime.toInt()
         // return this.unixTime.toInt() - compareTime  // Oldest to newest taken photo
 
-         return compareTime - this.unixTime.toInt() // Newest to oldest
+        return compareTime - this.unixTime.toInt() // Newest to oldest
 
     }
 
