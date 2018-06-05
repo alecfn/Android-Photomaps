@@ -72,10 +72,9 @@ open class PhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnC
         if (isPlaceMap || isSavedMap) {
             // We already have images if it's not a new map, so add them here
             addImagePreviews()
-            if(isSavedMap){
-                // Nullify the arguments in a saved map, so bitmaps don't overflow the parcel size
-                arguments = null
-            }
+            // Nullify the arguments in a saved or place map, so bitmaps don't overflow the parcel size
+            arguments = null
+
         }
 
         if(imageMarkers.size > 0){
@@ -194,7 +193,7 @@ open class PhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnC
         }
 
         val mapBounds = latLongBuilder.build()
-        val pad = 200 // Map pixel padding
+        val pad = 250 // Map pixel padding on edges
         val cameraUpdate = CameraUpdateFactory.newLatLngBounds(mapBounds, pad)
 
         try {

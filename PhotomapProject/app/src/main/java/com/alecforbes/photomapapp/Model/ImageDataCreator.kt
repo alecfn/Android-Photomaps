@@ -36,6 +36,7 @@ class  ImageDataCreator( private val content: ContentResolver,
                 val bitmap = BitmapFactory.decodeStream(content.openInputStream(Uri.fromFile(newFile)))
 
                 val selectedImage = ImageData(newFile, bitmap, exif)
+
                 includedImages.add(selectedImage)
             }
         }

@@ -23,7 +23,7 @@ import java.util.*
 @Parcelize
 data class ImageData(val file: File,
                      private var bitmap: Bitmap,
-                     @IgnoredOnParcel private var exifInterface: @RawValue ExifInterface?, // fixme this is a major problem and keeps causes crashes, probably best to change to the java way
+                     @IgnoredOnParcel private var exifInterface: @RawValue ExifInterface?,
                      var latitude: Float=0F,
                      var longitude: Float=0F,
                      var dateTimeTaken: String="",
