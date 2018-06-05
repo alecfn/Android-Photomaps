@@ -68,21 +68,17 @@ data class ImageData(val file: File,
         // Number of potential date stamps stored in an image, so try to get the best first
         val tagsList = listOf(TAG_GPS_DATESTAMP, TAG_DATETIME, TAG_DATETIME_DIGITIZED)
 
-        //try {
 
-            tagsList.forEach {
-                val dateStamp = exifInterface!!.getAttribute(it)
+        tagsList.forEach {
+            val dateStamp = exifInterface!!.getAttribute(it)
 
-                if (dateStamp != null){
-                    return dateStamp
-                }
-
+            if (dateStamp != null){
+                return dateStamp
             }
+
+        }
         return "0 0" // If we never got a datetime, just return 0
 
-        //}catch (readEx: Exception){
-            // TODO
-        //}
     }
 
     /**

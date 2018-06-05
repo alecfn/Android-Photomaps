@@ -7,6 +7,10 @@ import com.google.maps.android.clustering.ClusterManager
 
 /**
  * Created by Alec on 5/27/2018.
+ * The cluster manager defines the behaviour and listening classes for the image clustering.
+ *
+ * Based on the Gooogle MapUtils clustering example:
+ * https://github.com/googlemaps/android-maps-utils/
  */
 
 class ImageClusterManager(context: Context,
@@ -14,7 +18,8 @@ class ImageClusterManager(context: Context,
                           private var cameraIdleListener: GoogleMap.OnCameraIdleListener?):
         ClusterManager<ImageClusterItem>(context, map){
 
-    var isPlaceMap: Boolean = false // The type of map, place, custom etc. to know how to perform logic
+    var isPlaceMap: Boolean = false
+    // The type of map, place, custom etc. to know how to perform logic
 
     override fun onMarkerClick(marker: Marker?): Boolean {
         marker!!.showInfoWindow()

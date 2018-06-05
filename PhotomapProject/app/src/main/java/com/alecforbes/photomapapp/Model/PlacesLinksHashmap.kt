@@ -3,7 +3,8 @@ package com.alecforbes.photomapapp.Model
 /**
  * Created by Alec on 4/28/2018.
  * This class is hashmap of each content link of a file stored in Firebase. The key is the location
- * that will be clicked in the places list.
+ * that will be clicked in the places list. It also stores the link to the relevant Wikipedia
+ * page to use as it's reference to get the description. This is stored as a Hashmap of Lists.
  *
  * Adding a new image set is simple, after being added to fire base, define the links here, then
  * pass the name of the hashmap key to access the links to the place map activity.

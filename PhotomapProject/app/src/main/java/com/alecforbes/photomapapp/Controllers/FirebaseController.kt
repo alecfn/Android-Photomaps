@@ -12,7 +12,8 @@ import java.io.File
  * Created by Alec on 4/28/2018.
  *
  * This class communicates with the firebase db and downloads images for an associated PlaceMap
- * object
+ * object. Links for each are stored in the PlacesLinksHashmap class, and the firebase instance
+ * is stored in this class.
  */
 class FirebaseController(content: ContentResolver,
                          private val associatedPlaceMap: PlacePhotomap){

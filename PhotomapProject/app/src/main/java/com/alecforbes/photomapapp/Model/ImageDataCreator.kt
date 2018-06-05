@@ -8,6 +8,9 @@ import java.io.File
 
 /**
  * Created by Alec on 5/5/2018.
+ * This class creates the ImageData objects which are used by the application. The necessary
+ * parameters are created in this class based on the supplied files, as we do not want all of the
+ * necessary data structure parcelable as they are in the ImageData class.
  */
 
 class  ImageDataCreator( private val content: ContentResolver,

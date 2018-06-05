@@ -7,10 +7,11 @@ import android.media.ExifInterface
 import android.net.Uri
 import com.alecforbes.photomapapp.Model.ImageData
 import java.io.File
-import java.util.regex.Pattern
 
 /**
  * Created by Alec on 5/8/2018.
+ * This class handles all retrieval of data from the device. The retrieved data is then stored
+ * as ImageData objects which stop all the relevant data that is useful to the application.
  */
 
 class FileDataController (private val contentResolver: ContentResolver,

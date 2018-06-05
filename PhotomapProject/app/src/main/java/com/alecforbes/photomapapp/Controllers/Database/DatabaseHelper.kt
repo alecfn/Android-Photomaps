@@ -10,15 +10,15 @@ import java.io.File
 
 /**
  * Created by Alec on 4/26/2018.
+ * This database helper class handles all SQL queries and persistence functions to the database
+ * of saved photomaps.
+ *
+ * Image URIs are stored in a table with an associated map in another table, the ID of which
+ * acts as the primary key.
  */
 
 class DatabaseHelper(val context: Context):
                          SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION){
-
-    // todo, this should be simple enough, save the image date in sqlite either raw in rows, or as the objects themselves (preferrably)
-    // todo, check if already exists, raise dialog if the data is to be overwritten etc.
-
-    // todo michaels advice: probably just save the image URI in the SQlite database, then if the uri is missing, just say it was skipped when populating
 
     /**
      * Stored photomaps are characterised as a database containing a table with just the saved name
@@ -92,8 +92,6 @@ class DatabaseHelper(val context: Context):
                 imageUris.forEach {
                     addURI(db, oldMapRowId!!, mapName, it)
                 }
-
-                // todo handle null id?
 
             }
 
@@ -247,7 +245,6 @@ class DatabaseHelper(val context: Context):
 
         db.execSQL(DROP_MAP_SQL)
         db.execSQL(DROP_MAP_URIS_SQL)
-        // todo handle errors?
 
     }
 

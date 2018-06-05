@@ -9,8 +9,9 @@ import java.io.IOException
  * This class will retrieve the first paragraph from Wikipedia for a selected Landmark. This is used
  * to populate the information for each individual image.
  *
- * Must be an Async task as network connections cannot be run on the main thread.
+ * Must be an Async task as network connections cannot be run on the main thread, using Anko.
  *
+ * Based on the follow example:
  * https://stackoverflow.com/questions/43021074/getting-the-first-paragraph-of-wikipedias-article-using-jsoup
  */
 

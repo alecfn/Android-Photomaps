@@ -21,6 +21,10 @@ import com.google.maps.android.ui.IconGenerator
 /**
  * Created by Alec on 5/27/2018.
  *
+ * The image cluster renderer is able to take closely placed markers and combine them into combined
+ * single markers instead of just separately placed. Also uses the Multidrawable class provided by
+ * Google map utils to create a custom combined image of up to four closely places images.
+ *
  * Based on the Gooogle MapUtils clustering example:
  * https://github.com/googlemaps/android-maps-utils/
  */

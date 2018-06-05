@@ -14,7 +14,8 @@ import java.net.URLEncoder
 /**
  * Created by Alec on 5/30/2018.
  * Superclass (denoted by the 'open' modifier in Kotlin) for common methods in both custom and
- * place photomap activities. These classes inherit from this class.
+ * place photomap activities. These classes inherit from this class. Mainly defines helper functions
+ * for getting things like the size of the screen.
  */
 
 open class PhotomapActivity: AppCompatActivity(){

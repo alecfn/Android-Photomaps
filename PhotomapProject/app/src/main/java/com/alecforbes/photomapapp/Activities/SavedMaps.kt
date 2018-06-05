@@ -63,9 +63,8 @@ class SavedMaps : AppCompatActivity() {
                 savedMapListView.adapter = savedMapAdapter
 
                 savedMapListView.onItemClickListener = AdapterView.OnItemClickListener {
-                    adapterView, view, i, l ->
+                    _, _, i, _ ->
 
-                    // todo make this look pretty, maybe colour and different layout
                     val selectedSavedMap = savedMapListView.getItemAtPosition(i) as String
                     val savedMapIntent = Intent(this, CustomPhotomap::class.java)
                     savedMapIntent.putExtra("SavedMapName", selectedSavedMap)
@@ -86,7 +85,7 @@ class SavedMaps : AppCompatActivity() {
                 }
                 // Long click listener to delete saved maps
 
-                savedMapListView.setOnItemLongClickListener{ adapterView, view, i, l ->
+                savedMapListView.setOnItemLongClickListener{ _, _, i, _ ->
 
                     val selectedSavedMap = savedMapListView.getItemAtPosition(i) as String
 
@@ -97,7 +96,7 @@ class SavedMaps : AppCompatActivity() {
                         deleteAlert.setTitle("Are you sure you want to delete the map $selectedSavedMap?")
 
                         setPositiveButton("Delete"){
-                            dialog, deleteButton ->
+                            _, _ ->
 
                             // Calls to database helper to delete the map
                             databaseHelper.deleteMap(selectedSavedMap)
@@ -108,7 +107,7 @@ class SavedMaps : AppCompatActivity() {
                         }
 
                         setNegativeButton("Cancel"){
-                            dialog, negButton ->
+                            dialog, _ ->
                             dialog.dismiss()
                         }
                     }

@@ -10,7 +10,12 @@ import java.util.*
 
 /**
  * Created by Alec on 4/26/2018.
- * This class performs geocoding on supplied coordinates and returns the results
+ * This class performs geocoding on supplied coordinates and returns the results. It is supplied
+ * a latitude and longitude coordinate set which it can then get the address for.
+ *
+ * Based on Google example https://developer.android.com/reference/android/location/Geocoder
+ * and following Stack Overflow:
+ * https://stackoverflow.com/questions/15711499/get-latitude-and-longitude-with-geocoder-and-android-google-maps-api-v2
  */
 class ImageGeocoder(private val lat: Double, private val long: Double, private val context: Context) {
 

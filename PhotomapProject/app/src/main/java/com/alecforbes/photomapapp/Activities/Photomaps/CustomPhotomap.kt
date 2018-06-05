@@ -20,6 +20,11 @@ import kotlinx.android.synthetic.main.activity_photomap.*
 import kotlinx.android.synthetic.main.individual_image_view.*
 import kotlinx.android.synthetic.main.timeline_scroll.*
 
+/**
+ * This class defines the behaviour of a custom photomap created by the user. A relevant custom
+ * map instance of a photomap fragment is created in this class and populated from the selections
+ * a user makes. The FAB defines much of the interaction that a user can perform in this activity.
+ */
 class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
 
     // Store the images as objects with all relevant info

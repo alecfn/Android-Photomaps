@@ -29,6 +29,13 @@ import kotlin.collections.HashMap
 
 /**
  * Created by Alec on 4/26/2018.
+ *
+ * This class defines a Map fragment activity that can be used in a number of ways. Kotlin allows
+ * the definition of different companion objects within a class, which is done here. This allows
+ * each map type, a new custom map, a saved map or a place map to be defined differently while
+ * all the shared functionality of a map fragment being defined within the same class.
+ *
+ * Note: This is essentially inheritance, but the different class initialisations are made here.
  */
 
 open class PhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnClickListener, GoogleMap.OnMarkerClickListener, OnClusterItemClickListener<ImageClusterItem> {
@@ -45,9 +52,8 @@ open class PhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnC
     private var selectedImages = ArrayList<ImageData>()
 
     private var isPlaceMap = false
-    private var isSavedMap = false // FIXME: probably refactor this stuff
+    private var isSavedMap = false
 
-    // TODO this could be custom views later
     private var imageMarkers = ArrayList<ImageClusterItem>()
     private var timelinePolys = ArrayList<Polyline>()
 

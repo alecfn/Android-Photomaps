@@ -7,7 +7,11 @@ import com.alecforbes.photomapapp.Activities.Photomaps.PlacePhotomap
 import com.alecforbes.photomapapp.R
 import kotlinx.android.synthetic.main.activity_places_list.*
 
-
+/**
+ * This class defines the activity for the places list, which is made up of card views. Mainly this
+ * class sets up listeners to pass the appropriate place name that is used as a key to access
+ * the links relevant to the place map.
+ */
 class PlacesList : AppCompatActivity() {
 
 

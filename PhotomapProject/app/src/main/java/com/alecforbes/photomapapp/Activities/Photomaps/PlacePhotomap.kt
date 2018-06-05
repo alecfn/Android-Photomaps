@@ -10,14 +10,13 @@ import com.alecforbes.photomapapp.Controllers.WikipediaRetriever
 import com.alecforbes.photomapapp.Model.ImageData
 import com.alecforbes.photomapapp.R
 import com.google.android.gms.maps.model.Marker
-import kotlinx.android.synthetic.main.activity_place_photomap.*
-import kotlinx.android.synthetic.main.individual_image_view.*
 import kotlinx.android.synthetic.main.place_individual_image_view.view.*
 import org.jetbrains.anko.doAsyncResult
 
 /**
- * A place photomap inherits methods from the Custom photomap, as some functionality is not
- * available in a place photomap
+ * This class defines a place map activity, and creates the relevant Photomap fragment instance.
+ * It also generates the card views with individual information about each image on a place map
+ * when a market is clicked.
  */
 class PlacePhotomap : PhotomapActivity() {
 

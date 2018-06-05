@@ -5,11 +5,16 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import com.alecforbes.photomapapp.Activities.Photomaps.CustomPhotomap
 import com.alecforbes.photomapapp.R
 import kotlinx.android.synthetic.main.activity_main.*
 
+/**
+ * The main activity for the program. Provides navigation to the custom photomap screen, place
+ * screen and saved maps. Also handles initial permission requests.
+ */
 class MainActivity : AppCompatActivity() {
 
     private val READ_EXTERNAL_REQUEST_CODE = 101
@@ -100,8 +105,21 @@ class MainActivity : AppCompatActivity() {
             }
             WRITE_EXTERNAL_REQUEST_CODE -> {
                 if ((grantResults.isNotEmpty() && grantResults[0] == permissionDenied)){
-                    // Maps can't be saved without write, but that's all
-                    //todo
+                    // Maps can't be saved without write, but that's all, let the user know
+                    val noWriteDialog = AlertDialog.Builder(this)
+
+                    with(noWriteDialog){
+                        noWriteDialog.setTitle("Without write permission, maps will not be able " +
+                                "to be saved, but you can still create them.")
+
+                        setPositiveButton("Ok"){
+                            _, _ ->
+                            // Do nothing, just accept
+                        }
+                    }
+
+                    noWriteDialog.create()
+                    noWriteDialog.show()
                 }
 
             }
