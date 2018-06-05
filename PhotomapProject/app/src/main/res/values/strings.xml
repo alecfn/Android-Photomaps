@@ -21,7 +21,17 @@
     <string name="date_taken">Date Taken:</string>
     <string name="time_taken">Time Taken:</string>
     <string name="address">Address:</string>
-    <string name="loading">Loading...</string>
+    <string name="loading">Loading…</string>
     <string name="description">Description:</string>
     <string name="get_creating">There are saved maps yet, get creating! Your saved maps will appear here.</string>
+    <string name="londondesc">Explore London landmarks like the Tower of London, the London Eye and Westminster Parliament house.</string>
+    <string name="sydneyDesc">Explore Sydney landmarks like the Opera House, Harbour bridge and the State Parliament</string>
+    <string name="sydney">Sydney</string>
+    <string name="london">London</string>
+    <string name="newyorkDesc">Explore landmarks from New York, like the Empire State building, Statue of Liberty and One World Trade Centre.</string>
+    <string name="newYork">New York</string>
+    <string name="australiaDesc">Explore Australia\'s rich culture of having unnecessarily big objects in small rural towns.</string>
+    <string name="ausBig">Australia Big Things</string>
+    <string name="worldDesc">Explore well known landmarks from all over the world!</string>
+    <string name="world">The World</string>
 </resources>

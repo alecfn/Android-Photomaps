@@ -43,7 +43,11 @@
                         android:id="@+id/worldText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="The World"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/world"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -52,6 +56,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="160dp"
                         android:adjustViewBounds="true"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
                         android:padding="0dp"
                         app:srcCompat="@drawable/world" />
 
@@ -59,7 +67,11 @@
                         android:id="@+id/worldDesc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Explore well known landmarks from all over the world!" />
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/worldDesc" />
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>
@@ -84,7 +96,11 @@
                         android:id="@+id/ausBigText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Australia Big Things"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/ausBig"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -93,6 +109,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="160dp"
                         android:adjustViewBounds="true"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
                         android:padding="0dp"
                         app:srcCompat="@drawable/banana" />
 
@@ -100,7 +120,11 @@
                         android:id="@+id/ausBigDesc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Explore Australia's rich culture of having unnecessarily big objects in small rural towns." />
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/australiaDesc" />
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>
@@ -125,7 +149,11 @@
                         android:id="@+id/newYorkText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="New York"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/newYork"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -134,6 +162,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="160dp"
                         android:adjustViewBounds="true"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
                         android:padding="0dp"
                         app:srcCompat="@drawable/newyork" />
 
@@ -141,7 +173,11 @@
                         android:id="@+id/newyorkDesc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Explore landmarks from New York, like the Empire State building, Statue of Liberty and One World Trade Centre." />
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/newyorkDesc" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
@@ -165,7 +201,11 @@
                         android:id="@+id/londonText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="London"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/london"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -174,6 +214,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="160dp"
                         android:adjustViewBounds="true"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
                         android:padding="0dp"
                         app:srcCompat="@drawable/london" />
 
@@ -181,7 +225,11 @@
                         android:id="@+id/londonDesc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Explore London landmarks like the Tower of London, the London Eye and Westminster Parliament house." />
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/londondesc" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
@@ -202,26 +250,39 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/sydneyDesc"
+                        android:id="@+id/sydneyText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Explore Sydney landmarks like the Opera House, Harbour bridge and the State Parliament" />
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/sydney"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
                     <ImageButton
                         android:id="@+id/sydneyButton"
                         android:layout_width="match_parent"
                         android:layout_height="160dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
                         android:adjustViewBounds="true"
                         android:padding="0dp"
                         app:srcCompat="@drawable/sydney" />
 
                     <TextView
-                        android:id="@+id/sydneyText"
+                        android:id="@+id/sydneyDesc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Sydney"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/sydneyDesc" />
+
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
