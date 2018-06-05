@@ -36,6 +36,7 @@ open class PhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnC
 
     private lateinit var photomap: GoogleMap
     private lateinit var imageClusterManager: ImageClusterManager
+    private var imageClusterRenderer: ImageClusterRenderer? = null
 
 
     // Store uris as a hashmap to check if added already (Value is unused, just the key)
@@ -180,8 +181,6 @@ open class PhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnC
      */
     private fun setMapBounds(){
 
-        // TODO custom views
-
         val latLongBuilder = LatLngBounds.builder()
 
         imageMarkers.forEach{ clusterItem ->
@@ -195,7 +194,9 @@ open class PhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnC
         try {
             photomap.moveCamera(cameraUpdate)
         }catch (ex: Exception){
-            // fixme, this breaks when a saved map is loaded
+            // This get called before markers are on the map so nothing will be set
+            Log.e("Failed Set Bounds", "Failed to set the bounds, probably no markers in" +
+                    "the list?")
         }
 
     }
@@ -242,6 +243,8 @@ open class PhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnC
         photomap.clear()
         imageUriHashMap.clear() // Also clear the hashmap, or no new data can be added
         imageMarkers.clear() // Clear the image markers stored
+        selectedImages.clear()
+        imageClusterRenderer = null // Nullify the renderer to remove images from the clusterer
     }
 
     /**
@@ -323,7 +326,7 @@ open class PhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnC
         displayedImageView.visibility = View.GONE
     }
 
-    private fun setUpClusterer(){
+    fun setUpClusterer(){
         val cameraIdleListenter = GoogleMap.OnCameraIdleListener {  }
         imageClusterManager = ImageClusterManager(this.context, photomap, cameraIdleListenter)
 
@@ -337,7 +340,7 @@ open class PhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnC
             parent = activity as CustomPhotomap
         }
 
-        val imageClusterRenderer = ImageClusterRenderer(this.context, photomap, imageClusterManager,
+        imageClusterRenderer = ImageClusterRenderer(this.context, photomap, imageClusterManager,
                 parent.THUMBNAIL_SIZE)
         imageClusterManager.renderer = imageClusterRenderer
         photomap.setOnCameraIdleListener(imageClusterManager)

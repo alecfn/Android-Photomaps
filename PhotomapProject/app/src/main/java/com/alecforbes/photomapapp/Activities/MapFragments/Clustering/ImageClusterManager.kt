@@ -18,16 +18,6 @@ class ImageClusterManager(context: Context,
 
     override fun onMarkerClick(marker: Marker?): Boolean {
         marker!!.showInfoWindow()
-        // todo When the marker is clicked once, make the image larger
-
-        // When a place map, information should be displayed when the user taps a marker
-        if(isPlaceMap){
-
-           // indvPlaceViewConstraint
-
-
-        }
-
         return super.onMarkerClick(marker)
     }
 
@@ -35,18 +25,5 @@ class ImageClusterManager(context: Context,
         super.onCameraIdle()
         cameraIdleListener?.onCameraIdle()
     }
-
-    fun setRenderer(){
-
-    }
-
-    private fun resizeMarker(marker: Marker?){
-
-    }
-
-   // override fun getMarkerCollection(): MarkerManager.Collection? {
-
-       // return
-   // }
 
 }

@@ -119,6 +119,7 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
         fileDataController.selectedData.clear()
         fileDataController.imageUris.clear()
         previewImageUriHashMap.clear() // Clear uri hashmap so old images can be added again
+        mapFragment.setUpClusterer() // Re initialise the clusterer so there are no leftover images
     }
 
     /**
@@ -130,7 +131,6 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
 
         // Set up an alert dialog style box for the user to enter a name
         val saveInputText = EditText(this)
-        // fixme padding
 
         // Toast alert to tell user to add images
         if (fileDataController.imageUris.size == 0) {
@@ -197,7 +197,7 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
             }
 
             setNegativeButton("Cancel"){
-                dialog, negButton ->
+                dialog, _ ->
                 dialog.dismiss()
             }
         }
