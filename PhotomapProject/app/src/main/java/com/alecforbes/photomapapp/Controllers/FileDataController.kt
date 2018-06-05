@@ -7,6 +7,7 @@ import android.media.ExifInterface
 import android.net.Uri
 import com.alecforbes.photomapapp.Model.ImageData
 import java.io.File
+import java.util.regex.Pattern
 
 /**
  * Created by Alec on 5/8/2018.
@@ -105,12 +106,30 @@ class FileDataController (private val contentResolver: ContentResolver,
      * the URI
      */
     private fun checkFileExistsInMap(newuri: Uri): Boolean {
-        imageUris.forEach {
-            if(imageUris.contains(newuri)){
-                return true
-            }
 
+        // For saved maps, file uris will be different because the files are saved in data
+        // This is more of a work around due to the problems with saving, it's not ideal
+
+        // Use a regex to see if new uris have the same image names to get around saved map problem
+        val imageNameRegex = "(image%[0-9]*[A-Z]*[0-9]*)".toRegex()
+        val imageName = imageNameRegex.find(newuri.toString())?.groups?.get(0)?.value
+
+        // Saved images will be appended by "_copy"
+        val copyRegex = "($imageName.*_copy)".toRegex()
+
+        if (imageName != null){
+            imageUris.forEach { storedUri ->
+                if(copyRegex.containsMatchIn(storedUri.toString())){
+                    return true
+                }
+            }
         }
+
+        // Non saved maps can just be checked with a contains
+        if(imageUris.contains(newuri) ){
+            return true
+        }
+
         return false
     }
 
