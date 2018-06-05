@@ -42,6 +42,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:textSize="15sp"
                 android:text="@string/address"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -54,6 +55,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:textSize="15sp"
                 android:text="addressValue"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageAddressTitle"
@@ -66,6 +68,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:textSize="15sp"
                 android:text="@string/time_taken"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -78,6 +81,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:textSize="15sp"
                 android:text="timeValue"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageTimeTakenTitle"
@@ -92,6 +96,7 @@
                 android:layout_marginTop="8dp"
                 android:text="@string/date_taken"
                 android:textStyle="bold"
+                android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageTimeTakenTitle" />
 
@@ -102,6 +107,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:textSize="15sp"
                 android:text="dateValue"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/dateTakenTitle"
@@ -114,6 +120,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:textSize="15sp"
                 android:text="@string/view_in_maps"
                 android:theme="@style/PrimaryFlatButton"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -127,6 +134,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:textSize="15sp"
                 android:text="@string/close"
                 android:theme="@style/PrimaryFlatButton" />
 
