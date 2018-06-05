@@ -211,12 +211,13 @@ class DatabaseHelper(val context: Context):
     }
 
     fun deleteMap(savedMapName: String){
+
+
+        // Get the _id of the map in the savedmap table to use to delete uri entries
+        val savedMapId = getMapRowId(savedMapName, this.readableDatabase)
         // Drop the entry for the map in the maps table, and the entries with URIs in URI table
 
         val DROP_MAP_SQL = "DELETE FROM $TABLE_SAVEDPHOTOMAPS WHERE mapname='$savedMapName';"
-        // Get the _id of the map in the savedmap table to use to delete uri entries
-        val savedMapId = getMapRowId(savedMapName, this.readableDatabase)
-
         val DROP_MAP_URIS_SQL = "DELETE FROM $TABLE_PHOTOMAPURIS WHERE _id='$savedMapId';"
 
         // Delete file copies as well used to save the map

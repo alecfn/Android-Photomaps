@@ -118,13 +118,13 @@ class FileDataController (private val contentResolver: ContentResolver,
         // Saved images will be appended by "_copy"
         val copyRegex = "($imageName.*_copy)".toRegex()
 
-        if (imageName != null){
+        //if (imageName != null){
             imageUris.forEach { storedUri ->
                 if(copyRegex.containsMatchIn(storedUri.toString())){
                     return true
                 }
             }
-        }
+        //}
 
         // Non saved maps can just be checked with a contains
         if(imageUris.contains(newuri) ){
