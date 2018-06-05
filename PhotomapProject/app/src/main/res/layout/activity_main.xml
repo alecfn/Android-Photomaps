@@ -72,7 +72,7 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
                         android:text="@string/create_a_custom_photomap"
-                        android:textSize="14sp" />
+                        android:textSize="15sp" />
 
                     <Button
                         android:id="@+id/createPhotomapButton"
@@ -137,7 +137,7 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
                         android:text="@string/places_photomaps"
-                        android:textSize="14sp" />
+                        android:textSize="15sp" />
 
                     <Button
                         android:id="@+id/createPlacesButton"
@@ -203,7 +203,7 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
                         android:text="@string/saved_photomaps"
-                        android:textSize="16sp" />
+                        android:textSize="15sp" />
 
                     <Button
                         android:id="@+id/savedPhotomapButton"

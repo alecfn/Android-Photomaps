@@ -71,7 +71,8 @@
                         android:layout_marginEnd="8dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
-                        android:text="@string/worldDesc" />
+                        android:text="@string/worldDesc"
+                        android:textSize="15sp"/>
 
                     <Button
                         android:id="@+id/worldButton"
@@ -135,7 +136,8 @@
                         android:layout_marginEnd="8dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
-                        android:text="@string/australiaDesc" />
+                        android:text="@string/australiaDesc"
+                        android:textSize="15sp"/>
 
                     <Button
                         android:id="@+id/ausBigButton"
@@ -199,7 +201,8 @@
                         android:layout_marginEnd="8dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
-                        android:text="@string/newyorkDesc" />
+                        android:text="@string/newyorkDesc"
+                        android:textSize="15sp"/>
 
                     <Button
                         android:id="@+id/newYorkButton"
@@ -263,7 +266,8 @@
                         android:layout_marginEnd="8dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
-                        android:text="@string/londondesc" />
+                        android:text="@string/londondesc"
+                        android:textSize="15sp"/>
 
                     <Button
                         android:id="@+id/londonButton"
@@ -327,7 +331,8 @@
                         android:layout_marginEnd="8dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
-                        android:text="@string/sydneyDesc" />
+                        android:text="@string/sydneyDesc"
+                        android:textSize="15sp"/>
 
                     <Button
                         android:id="@+id/sydneyButton"
