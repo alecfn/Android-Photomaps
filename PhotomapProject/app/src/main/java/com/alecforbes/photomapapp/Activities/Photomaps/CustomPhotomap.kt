@@ -28,14 +28,12 @@ import kotlinx.android.synthetic.main.timeline_scroll.*
 class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
 
     // Store the images as objects with all relevant info
-
-    // TODO permission handling
-    private val PICK_DATA = 1
+    private val pickData = 1
 
     lateinit var fileDataController: FileDataController
     lateinit var mapFragment: PhotomapFragment
 
-    // Images stored in the preview pane
+    // Images stored in the timeline/preview pane
     private var previewImageUriHashMap = HashMap<String, String>()
 
     private  var databaseHelper = DatabaseHelper(this)
@@ -75,6 +73,9 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
 
     }
 
+    /**
+     * Ensure some graphics are always on the front of the object.
+     */
     override fun onResumeFragments() {
         super.onResumeFragments()
 
@@ -84,9 +85,8 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
 
     }
 
-
     /**
-     * Set up the Floating Action Button (FAB) for interactions with the map
+     * Set up the Floating Action Button (FAB) for interactions with the map.
      */
     override fun onOptionClick(optionId: Int?) {
 
@@ -101,6 +101,10 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
         }
     }
 
+    /**
+     * Get data from the gallery/documents application that the user has selected to use to populate
+     * the map with image data.
+     */
     private fun getDataFromGallery(){
 
         val customSelectIntent = Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
@@ -109,11 +113,15 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
         customSelectIntent.action = Intent.ACTION_GET_CONTENT
 
         if (customSelectIntent.resolveActivity(packageManager) != null){
-            startActivityForResult(Intent.createChooser(customSelectIntent, "Select photos for photomap"), PICK_DATA)
+            startActivityForResult(Intent.createChooser(customSelectIntent, "Select photos for photomap"), pickData)
         }
 
     }
 
+    /**
+     * When a user clicks 'Clear Photomap', clear all of the views, data structures and all relevant
+     * information to building a photomap. This essentially resets the state of the map.
+     */
     private fun clearViewsAndData(){
         val mapLayout = findViewById<ConstraintLayout>(R.id.photomapConstraintLayout)
         imagePreviewPane.removeAllViews()
@@ -215,7 +223,8 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
 
 
     /**
-     * Clear the map timeline preview images and the clear the polylines on the map.
+     * Clear the map timeline preview images and the clear the polylines on the map, the components
+     * which make up the timeline feature (but only those elements)
      */
     private fun clearTimelinePreview(){
 
@@ -241,7 +250,9 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
 
 
     /**
-     * Add images that exist on the map to the preview pane at the top of the screen
+     * Add images that exist on the map to the preview pane at the top of the screen as a horizontal
+     * scrollview of images that can be tapped for an individual view, just as images on the map can
+     * be.
      */
     private fun addImagesToPreview(){
 
@@ -277,6 +288,10 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
         mapFragment.addTimelinePolylines()
     }
 
+    /**
+     * Set the image address attribute using an ImageGeocoder object. This address is a real street
+     * address and is displayed when an image in the map is tapped.
+     */
     private fun setImageAddress(imageData: ImageData){
 
         // Only get the address data if is not already collected
@@ -291,12 +306,15 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
         imageAddressValue.text = imageData.realAddress
     }
 
+    /**
+     * Creates a card view with the relevant information collected for that image. Will be displayed
+     * when an image is clicked on the map or in the horizontal scroll view of the timeline.
+     */
     private fun createIndvView(imageData: ImageData){
 
         // Fill the included Image View with the data of the image clicked in timeline
         indvImageView.setImageBitmap(imageData.getImageBitmap())
 
-        // FIXME this logic is a bit weird, could just get this earlier and assign
         if (imageData.timeTaken != "0" || imageData.datetaken != "0") { // 0 0 is returned when no timestamp was found
 
             // Split the date time into the time and data values
@@ -359,12 +377,13 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
 
 
     /**
-     * This function will handle the selected images a user adds to a photomap
+     * This function will handle the selected images a user adds to a photomap and call the relevant
+     * functions to display image data on the map.
      */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == PICK_DATA){
+        if (requestCode == pickData){
 
             if (data != null) {
 

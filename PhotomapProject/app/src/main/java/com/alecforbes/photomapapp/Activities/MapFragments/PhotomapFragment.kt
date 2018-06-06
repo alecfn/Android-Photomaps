@@ -38,7 +38,8 @@ import kotlin.collections.HashMap
  * Note: This is essentially inheritance, but the different class initialisations are made here.
  */
 
-open class PhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnClickListener, GoogleMap.OnMarkerClickListener, OnClusterItemClickListener<ImageClusterItem> {
+open class PhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnClickListener,
+        GoogleMap.OnMarkerClickListener, OnClusterItemClickListener<ImageClusterItem> {
 
 
     private lateinit var photomap: GoogleMap

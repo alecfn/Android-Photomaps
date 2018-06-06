@@ -40,6 +40,10 @@ class ImageClusterRenderer(private val context: Context?, map: GoogleMap?,
     private var clusterImageView: ImageView
     private var clusterNumberText: TextView
 
+    /**
+     * Initialise all the relevant information when this class is created which are needed to create
+     * clusters and markers on the map.
+     */
     init {
 
         // Definitions for an image cluster
@@ -58,11 +62,14 @@ class ImageClusterRenderer(private val context: Context?, map: GoogleMap?,
         iconGenerator.setContentView(photomapImage)
     }
 
-
+    /**
+     * Before the cluster is rendered, we need to define custom behaviour. In this case, take all of
+     * the images in a close vicinity (cluster) and generate a new image view which is a combination
+     * of up to 4 of these images.
+     */
     override fun onBeforeClusterRendered(cluster: Cluster<ImageClusterItem>?, markerOptions: MarkerOptions?) {
         super.onBeforeClusterRendered(cluster, markerOptions)
 
-        // fixme this would be better run on its own thread
         // 4 or less images should be displayed on the multidrawable, but no more
         val imageClusterDrawables = ArrayList<Drawable>(Math.min(4, cluster!!.size))
         for(clusterImageItem in cluster.items){
@@ -92,10 +99,17 @@ class ImageClusterRenderer(private val context: Context?, map: GoogleMap?,
 
     }
 
+    /**
+     * Two or more images in close proximity should become a cluster.
+     */
     override fun shouldRenderAsCluster(cluster: Cluster<ImageClusterItem>?): Boolean {
         return cluster!!.size > 1
     }
 
+    /**
+     * Sets a the image of single image on the map, which is not yet a cluster. In this case the
+     * icon is just the bitmap of the one image.
+     */
     override fun onBeforeClusterItemRendered(image: ImageClusterItem, markerOptions: MarkerOptions?) {
         super.onBeforeClusterItemRendered(image, markerOptions)
 
@@ -104,10 +118,6 @@ class ImageClusterRenderer(private val context: Context?, map: GoogleMap?,
         val icon = iconGenerator.makeIcon()
         markerOptions!!.icon(BitmapDescriptorFactory.fromBitmap(icon))
 
-    }
-
-    fun clearClusters(){
-        print("")
     }
 
 }

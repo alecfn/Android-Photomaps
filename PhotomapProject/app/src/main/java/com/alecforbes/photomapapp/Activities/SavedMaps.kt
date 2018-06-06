@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -13,6 +14,11 @@ import com.alecforbes.photomapapp.Controllers.Database.DatabaseHelper
 import com.alecforbes.photomapapp.R
 import kotlinx.android.synthetic.main.activity_saved_maps.*
 
+/**
+ * This activity defines the list of saved maps based on the entries contained in the database.
+ * If no entries are present, a text view will be displayed letting the user know there are no
+ * entries.
+ */
 class SavedMaps : AppCompatActivity() {
 
     private var databaseHelper = DatabaseHelper(this)
@@ -37,7 +43,7 @@ class SavedMaps : AppCompatActivity() {
 
     /**
      * Get the URIs stored in the database for the selected map and rebuild the ImageData to make
-     * the maps again
+     * the maps again from the stored data.
      */
     private fun getSavedMapsFromDB(){
         val savedMapNames = databaseHelper.getSavedMaps()
@@ -51,7 +57,9 @@ class SavedMaps : AppCompatActivity() {
     }
 
     /**
-     * Get all the map names saved in the database and the first image to use as a preview
+     * Get all the map names saved in the database and add to a simple list adapter. When the user
+     * long clicks an item in the list, bring up a dialog asking for confirmation that they wish
+     * to delete the map.
      */
     private fun populateSavedView(){
 
@@ -119,7 +127,8 @@ class SavedMaps : AppCompatActivity() {
                 }
 
             }catch (ex: Exception){
-                // todo put in a placeholder or something
+                // This should not be reached, but just in case handle exceptions
+                Log.e("Error Loading Maps", "Saved maps were not correctly loaded.")
             }
 
         }

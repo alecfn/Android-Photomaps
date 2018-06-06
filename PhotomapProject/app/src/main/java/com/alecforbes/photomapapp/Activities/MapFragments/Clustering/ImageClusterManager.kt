@@ -21,11 +21,18 @@ class ImageClusterManager(context: Context,
     var isPlaceMap: Boolean = false
     // The type of map, place, custom etc. to know how to perform logic
 
+    /**
+     * Handle when the user clicks on a marker in a cluster.
+     */
     override fun onMarkerClick(marker: Marker?): Boolean {
         marker!!.showInfoWindow()
         return super.onMarkerClick(marker)
     }
 
+    /**
+     * Set the camera listener to know how to move the clusters in relation to user navigation in
+     * the map.
+     */
     override fun onCameraIdle() {
         super.onCameraIdle()
         cameraIdleListener?.onCameraIdle()

@@ -38,8 +38,6 @@ class FileDataController (private val contentResolver: ContentResolver,
             val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(uri))
             // You can't reuse an InputStream in Android, so it has to be declared again
 
-            // TODO any more creation stuff should be done here
-
             val selectedImage = ImageData(file, bitmap, exif, screenSize = screenSize)
             imageUris.add(uri)
             selectedData.add(selectedImage)
@@ -84,12 +82,13 @@ class FileDataController (private val contentResolver: ContentResolver,
 
         }
 
+        // Create the image data objects from the URI
         createImageData()
 
     }
 
     /**
-     * When creating a map again from saved data, the URI data comes from an ArrayList
+     * When creating a map again from saved data, the URI data comes from an ArrayList.
      */
     fun getSelectedImageUrisFromArray(fileData: ArrayList<String>){
 
@@ -98,13 +97,14 @@ class FileDataController (private val contentResolver: ContentResolver,
             newImageUris.add(Uri.parse(it))
         }
 
+        // Now from the new URIs, create the ImageData objects
         createImageData()
 
     }
 
     /**
      * When getting data from an intent, make sure that the new data does not already exist using
-     * the URI
+     * the URI.
      */
     private fun checkFileExistsInMap(newuri: Uri): Boolean {
 

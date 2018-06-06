@@ -17,8 +17,8 @@ import kotlinx.android.synthetic.main.activity_main.*
  */
 class MainActivity : AppCompatActivity() {
 
-    private val READ_EXTERNAL_REQUEST_CODE = 101
-    private val WRITE_EXTERNAL_REQUEST_CODE = 102
+    private val readExternalRequestCode = 101
+    private val writeExternalRequestCode = 102
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -73,13 +73,13 @@ class MainActivity : AppCompatActivity() {
         if (readPermission != permissionGranted){
             ActivityCompat.requestPermissions(this,
                     arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),
-                    READ_EXTERNAL_REQUEST_CODE)
+                    readExternalRequestCode)
         }
 
         if (writePermission != permissionGranted){
             ActivityCompat.requestPermissions(this,
                     arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                    WRITE_EXTERNAL_REQUEST_CODE)
+                    writeExternalRequestCode)
         }
 
     }
@@ -98,12 +98,12 @@ class MainActivity : AppCompatActivity() {
 
         // Handle denials
         when(requestCode) {
-            READ_EXTERNAL_REQUEST_CODE -> {
+            readExternalRequestCode -> {
             if ((grantResults.isNotEmpty() && grantResults[0] == permissionDenied)){
                     // We need read permission to perform basic functions
                 }
             }
-            WRITE_EXTERNAL_REQUEST_CODE -> {
+            writeExternalRequestCode -> {
                 if ((grantResults.isNotEmpty() && grantResults[0] == permissionDenied)){
                     // Maps can't be saved without write, but that's all, let the user know
                     val noWriteDialog = AlertDialog.Builder(this)

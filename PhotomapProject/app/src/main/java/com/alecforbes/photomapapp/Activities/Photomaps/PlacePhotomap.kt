@@ -26,7 +26,7 @@ class PlacePhotomap : PhotomapActivity() {
     var placeMapFragment: PhotomapFragment? = null
     var selectedLoc: String? = null
 
-    val WIKI_LINK_POS = 1
+    val wikiLinkPos = 1 // Position of Wikipedia link in the associatedLinks list of ImageData
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,13 +81,11 @@ class PlacePhotomap : PhotomapActivity() {
             }
         }
 
-        // fixme threading would be good here
         // Now create the new view from the image data
         val fragmentViewGroup = placeMapFragment!!.view as ViewGroup
         imageInfoView = View.inflate(applicationContext, R.layout.place_individual_image_view, fragmentViewGroup) as ViewGroup
 
         // Populate the address field with the geocoder as on a custom map
-        // fixme needs to be own thread, very slow
         if (clickedImageData!!.realAddress == null) {
             // Only call the Geocoder if address hasn't been found before
             val imageGeocoder = ImageGeocoder(clickedImageData!!.latitude.toDouble(), clickedImageData!!.longitude.toDouble(), applicationContext)
@@ -100,7 +98,7 @@ class PlacePhotomap : PhotomapActivity() {
 
         // Populate the description with the first paragraph on the landmark from Wikipedia todo
 
-        getWikipediaDesc(clickedImageData!!.getAssociatedLinks()!![WIKI_LINK_POS])
+        getWikipediaDesc(clickedImageData!!.getAssociatedLinks()!![wikiLinkPos])
 
         // Set button listeners
         imageInfoView!!.placeCloseButton.setOnClickListener{
@@ -118,6 +116,10 @@ class PlacePhotomap : PhotomapActivity() {
 
     }
 
+    /**
+     * Call the WikipediaRetriever object and get the first paragraph in the webpage to use
+     * as a description of a place landmark.
+     */
     private fun getWikipediaDesc(wikiUrl: String){
         val wikiRetriever = WikipediaRetriever()
 
@@ -128,9 +130,6 @@ class PlacePhotomap : PhotomapActivity() {
             imageInfoView!!.placeDescValue.text = descriptionPara.toString()
 
         }
-
-
-        // Due to limit screen size, limit the paragraph to be no more than 250 characters
 
         // todo could also add a 'read more' button that opens the wikipage
     }

@@ -53,6 +53,9 @@ class PlacesLinksHashmap{
 
     }
 
+    /**
+     * Return the hashmap of links requested based on the name of the place.
+     */
     fun getPlaceLinks(key: String): List<List<String>>? {
         return placesLinksHashmap[key]
     }

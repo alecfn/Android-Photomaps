@@ -25,7 +25,7 @@ class FirebaseController(content: ContentResolver,
     private val placesLinksHashmap = PlacesLinksHashmap()
     private val imageDataCreator = ImageDataCreator(content, firebaseFiles, includedImages)
 
-    private val IMAGE_LINK_POS = 0 // Position of firebase image link in list
+    private val imagelinkpos = 0 // Position of firebase image link in list
 
     /**
      * Get the images from firebase for the selected location and return the array of URIs
@@ -40,7 +40,7 @@ class FirebaseController(content: ContentResolver,
         val selectedMapLinks = placesLinksHashmap.getPlaceLinks(placeName)
 
         selectedMapLinks!!.forEach { linksList ->
-            val storagePathRef = storageRef.child(linksList[IMAGE_LINK_POS])
+            val storagePathRef = storageRef.child(linksList[imagelinkpos])
             val tempFile = File.createTempFile("images", "jpg")
 
             storagePathRef.getFile(tempFile).addOnSuccessListener {

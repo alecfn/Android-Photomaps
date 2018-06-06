@@ -17,6 +17,13 @@ import java.util.*
 
 /**
  * Created by Alec on 4/26/2018.
+ * This ImageData class contains all of the information relevant to the generation of data in a map.
+ * Most information is pulled from the ExifInterface, which retrieves data from the image tags.
+ * Other information relevant to the generation of images is stored in instances of this class.
+ *
+ *
+ * Exif tags to access reference from Google:
+ * https://developer.android.com/reference/android/support/media/ExifInterface
  */
 
 @SuppressLint("ParcelCreator") // Known unnecessary warning with Kotlin when using Parcelize
@@ -40,6 +47,9 @@ data class ImageData(val file: File,
     @IgnoredOnParcel private var associatedLinks: List<String>? = null // Only used by place images
 
     // FIXME this class is a little all over the place with how things are done, clean up
+    /**
+     * Initialise all the relevant data in this class when the class is created.
+     */
     init {
         // Set all the exif data we want to get from the exif interface
         setLatLong()
@@ -51,6 +61,9 @@ data class ImageData(val file: File,
         exifInterface = null
     }
 
+    /**
+     * Set the latitude and longitude of the object by retrieving from the exif tag.
+     */
     private fun setLatLong(){
 
         val latLongArr = FloatArray(2)
@@ -63,6 +76,11 @@ data class ImageData(val file: File,
 
     }
 
+    /**
+     * Images contain multiple possible fields which may contain a datatime value. Try to get the
+     * best one first, if it can't be retrieved, try the next and set the data. If none are set,
+     * just set the value to 0 0.
+     */
     private fun setDateTimeTaken(): String {
 
         // Number of potential date stamps stored in an image, so try to get the best first
@@ -133,19 +151,27 @@ data class ImageData(val file: File,
         try {
             bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, rotationMatrix, true)
         }catch (memoryEx: OutOfMemoryError){
+            // Memory errors can occur here (but shouldn't), just in case, log memory errors
             Log.e("Exif Rotate Memory", "Ran out of memory while rotating bitmaps.")
         }
 
     }
 
+    /**
+     * Return the full bitmap of the image (not a scaled thumbnail)
+     */
     fun getImageBitmap(): Bitmap {
         return bitmap
     }
 
+    /**
+     * Create a scaled image bitmap of a size which makes sense based on the screen resolution of
+     * the device. Note: Not intended to scale for less than 1080p (as most screens in Android
+     * are at least this size).
+     */
     private fun setImageThumbnail(){
 
         try {
-
 
             var THUMBNAIL_SIZE = 250 // Controls the size of displayed thumbnails on map fragments
 
@@ -159,11 +185,15 @@ data class ImageData(val file: File,
             thumbnail.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
             thumbnailData = outputStream.toByteArray()
         } catch (e: Exception){
-
+            // If failed to create a scaled bitmap, only log the error as it should not occur
+            Log.e("Failed to create Thumbnail", "Failed to create a thumbnail from the" +
+                    "supplied image. Perhaps the image is too large?")
         }
     }
 
-    // Some fields need getters due to JVM requirements
+    /**
+     * Some fields need getters due to JVM requirements, so getters for those are set here.
+     */
     fun getImageThumbnail(): ByteArray {
         return thumbnailData
     }

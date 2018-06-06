@@ -19,8 +19,12 @@ import java.util.*
  */
 class ImageGeocoder(private val lat: Double, private val long: Double, private val context: Context) {
 
-    private val MAX_RESULTS = 1 // We only need one result
+    private val maxresults = 1 // We only need one result for the location
 
+    /**
+     * Retrieve the address from the supplied latitude and longitude values. The API can return
+     * multiple results, but we only need one.
+     */
     fun getAddressFromLocation(): String {
 
         val geocoder = Geocoder(context, Locale.getDefault())
@@ -31,7 +35,7 @@ class ImageGeocoder(private val lat: Double, private val long: Double, private v
         var error = ""
         try {
 
-            addresses = geocoder.getFromLocation(lat, long, MAX_RESULTS)
+            addresses = geocoder.getFromLocation(lat, long, maxresults)
         } catch (ioEx: IOException) {
             error = "ImageGeocoder service unavailable"
             Log.e(TAG, error, ioEx)

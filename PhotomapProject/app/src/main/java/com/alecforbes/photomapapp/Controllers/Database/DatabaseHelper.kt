@@ -23,6 +23,9 @@ class DatabaseHelper(val context: Context):
     /**
      * Stored photomaps are characterised as a database containing a table with just the saved name
      * of the photomap, and a link (foreign key) to another table containing the list of URIs used.
+     *
+     * The following companion objects define relevant constants such as column and table names,
+     * and SQL statements.
      */
     companion object {
         private const val DATABASE_VERSION = 1
@@ -51,6 +54,9 @@ class DatabaseHelper(val context: Context):
     }
 
 
+    /**
+     * Supporting functions necessary for initialisation of SQLite database in Android.
+     */
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         db.execSQL(SQL_DELETE_URI_ENTRIES)
         db.execSQL(SQL_DELETE_PHOTOMAP_ENTRIES)
@@ -70,6 +76,9 @@ class DatabaseHelper(val context: Context):
         }
     }
 
+    /**
+     * Add a map to the maps table when the user clicks save.
+     */
     fun addMap(mapName: String, imageUris: ArrayList<Uri>){
         val db = writableDatabase
         val photomapValues = ContentValues()
@@ -147,14 +156,17 @@ class DatabaseHelper(val context: Context):
 
     }
 
+    /**
+     * Get all the saved maps in the database instance.
+     */
     fun getSavedMaps(): ArrayList<String> {
 
         val savedMaps = ArrayList<String>()
 
-        val SELECT_ALL_MAPS = "SELECT * FROM $TABLE_SAVEDPHOTOMAPS"
+        val selectAllMapsSQL = "SELECT * FROM $TABLE_SAVEDPHOTOMAPS"
 
         val db = this.readableDatabase
-        val cursor = db.rawQuery(SELECT_ALL_MAPS, null)
+        val cursor = db.rawQuery(selectAllMapsSQL, null)
 
         while(cursor.moveToNext()){
             val mapName = cursor.getString(cursor.getColumnIndex(COLUMN_MAPNAME))
@@ -167,16 +179,19 @@ class DatabaseHelper(val context: Context):
 
     }
 
+    /**
+     * Get the URIs saved in the URI table where the map id the one identifying the map.
+     */
     fun getSavedMapUris(savedMapName: String): ArrayList<Uri>{
 
         val savedUris = ArrayList<Uri>()
 
         // Get the ID index for the map, then look for uris with that value
-        val GET_ROWID_SQL = "SELECT * FROM $TABLE_SAVEDPHOTOMAPS WHERE mapname='$savedMapName';"
+        val getRowIdSQL = "SELECT * FROM $TABLE_SAVEDPHOTOMAPS WHERE $COLUMN_MAPNAME='$savedMapName';"
 
         val db = this.readableDatabase
 
-        val mapTableCursor = db.rawQuery(GET_ROWID_SQL, null)
+        val mapTableCursor = db.rawQuery(getRowIdSQL, null)
 
         mapTableCursor.moveToFirst()
         val associatedMapId = mapTableCursor.getLong(mapTableCursor.getColumnIndexOrThrow("_id"))
@@ -197,10 +212,14 @@ class DatabaseHelper(val context: Context):
 
     }
 
+    /**
+     * Get the row ID used to identify a map. This is used to identify the map that a URI is saved
+     * in, and is unique to that map. It is quite useful to have, so this function retrieves it.
+     */
     private fun getMapRowId(mapName: String, db: SQLiteDatabase): Long? {
-        val GET_ROWID_SQL = "SELECT _id FROM $TABLE_SAVEDPHOTOMAPS WHERE mapname='$mapName';"
+        val getRowIDSQL = "SELECT _id FROM $TABLE_SAVEDPHOTOMAPS WHERE mapname='$mapName';"
 
-        val cursor = db.rawQuery(GET_ROWID_SQL, null)
+        val cursor = db.rawQuery(getRowIDSQL, null)
         var mapRowId: Long? = null
         if (cursor != null && cursor.moveToFirst()) {
             mapRowId = cursor.getLong(cursor.getColumnIndexOrThrow("_id"))
@@ -210,6 +229,9 @@ class DatabaseHelper(val context: Context):
         return mapRowId
     }
 
+    /**
+     * Delete an entry from both the Map table and the URI table when the user clicks delete.
+     */
     fun deleteMap(savedMapName: String){
 
 
@@ -217,17 +239,17 @@ class DatabaseHelper(val context: Context):
         val savedMapId = getMapRowId(savedMapName, this.readableDatabase)
         // Drop the entry for the map in the maps table, and the entries with URIs in URI table
 
-        val DROP_MAP_SQL = "DELETE FROM $TABLE_SAVEDPHOTOMAPS WHERE mapname='$savedMapName';"
-        val DROP_MAP_URIS_SQL = "DELETE FROM $TABLE_PHOTOMAPURIS WHERE _id='$savedMapId';"
+        val dropMapSQL = "DELETE FROM $TABLE_SAVEDPHOTOMAPS WHERE mapname='$savedMapName';"
+        val dropMapUrisSQL = "DELETE FROM $TABLE_PHOTOMAPURIS WHERE _id='$savedMapId';"
 
         // Delete file copies as well used to save the map
 
-        val GET_URI_SQL = "SELECT uris FROM $TABLE_PHOTOMAPURIS WHERE $COLUMN_ASSOCIATED_MAP='$savedMapId';"
+        val getUriSQL = "SELECT uris FROM $TABLE_PHOTOMAPURIS WHERE $COLUMN_ASSOCIATED_MAP='$savedMapId';"
         val db = this.readableDatabase
 
         // Now drop the table entries
 
-        val savedFilesCursor = db.rawQuery(GET_URI_SQL, null)
+        val savedFilesCursor = db.rawQuery(getUriSQL, null)
 
         if (savedFilesCursor.count > 0){
             while(savedFilesCursor.moveToNext()) {
@@ -244,8 +266,8 @@ class DatabaseHelper(val context: Context):
 
         savedFilesCursor.close()
 
-        db.execSQL(DROP_MAP_SQL)
-        db.execSQL(DROP_MAP_URIS_SQL)
+        db.execSQL(dropMapSQL)
+        db.execSQL(dropMapUrisSQL)
 
     }
 
@@ -255,17 +277,19 @@ class DatabaseHelper(val context: Context):
     fun updateMap(savedMapName: String, imageUris: ArrayList<Uri>){
 
         val oldMapId = getMapRowId(savedMapName, this.readableDatabase)
-        //val UPDATE_ENTRIES_SQL = "INSERT INTO $TABLE_PHOTOMAPURIS VALUES "
 
         imageUris.forEach {uri ->
             addURI(this.writableDatabase, oldMapId!!, savedMapName, uri)
         }
     }
 
+    /**
+     * Supporting function to find if a map already exists, so they can be overwritten.
+     */
     fun checkMapExists(db: SQLiteDatabase, mapName: String): Boolean {
-        val FIND_MAP_SQL = "SELECT mapname FROM $TABLE_SAVEDPHOTOMAPS WHERE mapname='$mapName';"
+        val findMapUri = "SELECT mapname FROM $TABLE_SAVEDPHOTOMAPS WHERE mapname='$mapName';"
 
-        val cursor = db.rawQuery(FIND_MAP_SQL, null)
+        val cursor = db.rawQuery(findMapUri, null)
 
         if (cursor.count > 0) {
             cursor.close()

@@ -17,9 +17,14 @@ import java.io.IOException
 
 class WikipediaRetriever {
 
+    /**
+     * Just get the first paragraph from Wikipedia for the supplied link, this is used to describe
+     * images on a place map. Note, this paragraph may not always be the description, though in
+     * most cases should be.
+     */
     fun getFirstParagraphFromWikipedia(wikiUrl: String): String? {
 
-        var firstParaText: String? = null
+        var firstParaText: String?
 
             firstParaText = try {
                 val wikiDocument = Jsoup.connect(wikiUrl).get()
@@ -28,6 +33,7 @@ class WikipediaRetriever {
                 firstPara.text()
 
             } catch (ioEx: IOException) {
+                // Just log a failure, the app can continue regardless.
                 Log.e("Wiki Error", "Failed to get Wikipedia data for $wikiUrl")
                 "Failed to retrieve Wikipedia entry for address"
             }
