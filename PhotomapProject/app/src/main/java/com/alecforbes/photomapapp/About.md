@@ -6,6 +6,8 @@ libraries for Android used in this application. Any tutorials followed
 for code implementation are referenced in the class header comments (such as StackOverflow etc.) 
 where that code was implemented.
 
+Known issues with the application are also listed at the bottom of this page.
+
 # Third Party Libraries and Licenses:
 
 ## Development Libraries: 
