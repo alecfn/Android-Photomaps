@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import com.alecforbes.photomapapp.Activities.MapFragments.Clustering.ImageClusterItem
 import com.alecforbes.photomapapp.Activities.MapFragments.Clustering.ImageClusterManager
 import com.alecforbes.photomapapp.Activities.MapFragments.Clustering.ImageClusterRenderer
@@ -167,6 +168,13 @@ open class PhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnC
                 imageClusterManager.cluster()
 
                 imageMarkers.add(imageClusterItem)
+
+                // If coordinates are undefined, let the user know
+                if (imageData.latitude == 0f || imageData.longitude == 0f){
+                    Toast.makeText(context, "Some selected images had an undefined location." +
+                            " These images will appear at the default location on the map.",
+                            Toast.LENGTH_LONG).show()
+                }
 
                 imageUriHashMap[imageUri] = ""
             }

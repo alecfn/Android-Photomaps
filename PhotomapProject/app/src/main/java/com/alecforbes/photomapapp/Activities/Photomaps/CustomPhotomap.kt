@@ -448,7 +448,7 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
     }
 
     /**
-     * Destroy the fragment when the user exists
+     * Destroy the fragment when the user exits
      */
     override fun onDestroy() {
         supportFragmentManager.beginTransaction().remove(mapFragment).commitAllowingStateLoss()
