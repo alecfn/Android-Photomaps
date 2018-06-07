@@ -262,6 +262,12 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
         }
         shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, fileDataController.imageUris)
         shareIntent.type = "image/*"
+
+        // Add some text to the share intent
+        val shareBody = "Download Photomaps here: <link to play store> and create your own!"
+        shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Check out my cool new photomap!")
+        shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody)
+
         shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         startActivity(Intent.createChooser(shareIntent, "Share via:"))
     }
