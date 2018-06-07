@@ -57,7 +57,7 @@ class FirebaseController(content: ContentResolver,
                     associatedPlaceMap.onFirebaseComplete(includedImages)
                 }catch(exIllegal: IllegalStateException){
                     // If going quickly between place views this may fail, so handle the exception
-                    Log.e("Firebase illegal state", "Illegal state while downloading images.")
+                    Log.w("Firebase illegal state", "Illegal state while downloading images.")
                 }
             }
 

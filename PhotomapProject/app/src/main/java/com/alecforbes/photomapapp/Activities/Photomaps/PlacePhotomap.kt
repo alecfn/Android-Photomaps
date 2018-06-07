@@ -97,6 +97,7 @@ class PlacePhotomap : PhotomapActivity() {
 
         // Set read more listener to open relevant Wikipedia page
         imageInfoView!!.readMoreButton.setOnClickListener{
+            // https://stackoverflow.com/questions/3004515/sending-an-intent-to-browser-to-open-specific-url
             val wikiUrl = clickedImageData!!.getAssociatedLinks()!![wikiLinkPos]
             val wikiIntent = Intent(Intent.ACTION_VIEW)
             wikiIntent.data = Uri.parse(wikiUrl)
@@ -134,7 +135,7 @@ class PlacePhotomap : PhotomapActivity() {
         val wikiRetriever = WikipediaRetriever()
 
         // Anko library allows running asynchronous tasks easily like so
-        var descriptionPara: String? = null
+        var descriptionPara: String?
         doAsyncResult {
             descriptionPara = wikiRetriever.getFirstParagraphFromWikipedia(wikiUrl)
 

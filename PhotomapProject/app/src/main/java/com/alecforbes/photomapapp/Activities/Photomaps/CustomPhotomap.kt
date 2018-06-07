@@ -92,7 +92,7 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
 
         // Use Kotlin lambdas to set up FAB click responses, do what we can off the main thread
         when(optionId) {
-            R.id.add_files_option -> getDataFromGallery()
+            R.id.add_files_option -> getDataFromSelectedApp()
             R.id.add_timeline_option -> addImagesToPreview()
             R.id.remove_timeline_option -> clearTimelinePreview()
             R.id.save_photomap_option -> saveMap()
@@ -104,16 +104,23 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
     /**
      * Get data from the gallery/documents application that the user has selected to use to populate
      * the map with image data.
+     *
+     * Based on:
+     * https://stackoverflow.com/questions/5309190/android-pick-images-from-gallery (Best answer)
      */
-    private fun getDataFromGallery(){
+    private fun getDataFromSelectedApp(){
+
+        val getIntent = Intent(Intent.ACTION_GET_CONTENT)
+        getIntent.type = "image/*"
 
         val customSelectIntent = Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         customSelectIntent.type = "image/*"
-        customSelectIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-        customSelectIntent.action = Intent.ACTION_GET_CONTENT
+
+        val chooseIntent = Intent.createChooser(getIntent, "Select images for Photomap")
+        chooseIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, customSelectIntent)
 
         if (customSelectIntent.resolveActivity(packageManager) != null){
-            startActivityForResult(Intent.createChooser(customSelectIntent, "Select photos for photomap"), pickData)
+            startActivityForResult(chooseIntent, pickData)
         }
 
     }
