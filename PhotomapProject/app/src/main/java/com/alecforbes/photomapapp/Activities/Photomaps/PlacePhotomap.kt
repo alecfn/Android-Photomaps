@@ -148,5 +148,9 @@ class PlacePhotomap : PhotomapActivity() {
 
     }
 
+    override fun onDestroy() {
+        supportFragmentManager.beginTransaction().remove(placeMapFragment).commitAllowingStateLoss()
+        super.onDestroy()
+    }
 
 }

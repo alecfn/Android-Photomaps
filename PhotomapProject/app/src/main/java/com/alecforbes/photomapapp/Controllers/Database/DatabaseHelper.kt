@@ -142,11 +142,11 @@ class DatabaseHelper(val context: Context):
             val fileIdRegex = "(\\d+_)".toRegex()
             val fileId = fileIdRegex.find(selectedFilename.toString())?.groups?.get(0)?.value
 
+            // If there's a file with that id already stored, don't add to the database
             if(filename.contains(fileId!!)){
                 uriCursor.close()
                 return
             }
-
 
         }
         uriCursor.close()
@@ -170,7 +170,6 @@ class DatabaseHelper(val context: Context):
 
         savedMapUri.put("savedmap", mapRowId)
         savedMapUri.put("uris", newUri.toString())
-
 
         db.insert(TABLE_PHOTOMAPURIS, null, savedMapUri)
 

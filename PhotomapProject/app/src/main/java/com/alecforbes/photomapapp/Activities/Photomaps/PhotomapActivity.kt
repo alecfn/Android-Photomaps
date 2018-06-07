@@ -22,7 +22,7 @@ open class PhotomapActivity: AppCompatActivity(){
 
     var screenSize: Int? = null
     var THUMBNAIL_SIZE = 300
-    private val PIXELS_1080 = 2073600
+    private val pixels1080 = 2073600
 
     /**
      * Helper function to get the resolution of a screen. If greater than 1080p, the image
@@ -39,7 +39,7 @@ open class PhotomapActivity: AppCompatActivity(){
 
         // If the screen is greater than 1080p, increase the default thumbnail size to 500
 
-        if (screenSize!! > PIXELS_1080){  // Greater than 1080p
+        if (screenSize!! > pixels1080){  // Greater than 1080p
             THUMBNAIL_SIZE = 500 // 500, usually screens larger than 1080 are UHD
         }
 
@@ -81,6 +81,11 @@ open class PhotomapActivity: AppCompatActivity(){
                 "com.google.android.maps.MapsActivity")
 
         startActivity(mapsIntent)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        this.finish()
     }
 
 }

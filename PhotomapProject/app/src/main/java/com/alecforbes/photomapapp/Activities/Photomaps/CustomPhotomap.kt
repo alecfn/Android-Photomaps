@@ -401,4 +401,9 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
         }
     }
 
+    override fun onDestroy() {
+        supportFragmentManager.beginTransaction().remove(mapFragment).commitAllowingStateLoss()
+        super.onDestroy()
+    }
+
 }
