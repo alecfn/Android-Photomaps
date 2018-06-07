@@ -46,7 +46,6 @@ data class ImageData(val file: File,
 
     @IgnoredOnParcel private var associatedLinks: List<String>? = null // Only used by place images
 
-    // FIXME this class is a little all over the place with how things are done, clean up
     /**
      * Initialise all the relevant data in this class when the class is created.
      */

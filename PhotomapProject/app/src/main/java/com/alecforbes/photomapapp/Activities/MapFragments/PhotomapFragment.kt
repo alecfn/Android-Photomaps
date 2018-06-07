@@ -85,7 +85,6 @@ open class PhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnC
 
     }
 
-    //todo fix descriptions n such
 
     /**
      * Define the necessary objects for the map fragment when the instance is created. This does not
@@ -333,7 +332,6 @@ open class PhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnC
 
     override fun onClick(view: View?) {
 
-        // fixme not being called?
         val displayedImageView = parentFragment.activity.findViewById<ConstraintLayout>(R.id.indvImageViewConstraint)
 
         displayedImageView.invalidate()
