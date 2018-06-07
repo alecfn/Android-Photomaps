@@ -239,13 +239,13 @@ class DatabaseHelper(val context: Context):
         val savedMapId = getMapRowId(savedMapName, this.readableDatabase)
         // Drop the entry for the map in the maps table, and the entries with URIs in URI table
 
-        val dropMapSQL = "DELETE FROM $TABLE_SAVEDPHOTOMAPS WHERE mapname='$savedMapName';"
-        val dropMapUrisSQL = "DELETE FROM $TABLE_PHOTOMAPURIS WHERE _id='$savedMapId';"
+        val dropMapSQL = "DELETE FROM $TABLE_SAVEDPHOTOMAPS WHERE $COLUMN_MAPNAME='$savedMapName';"
+        val dropMapUrisSQL = "DELETE FROM $TABLE_PHOTOMAPURIS WHERE $COLUMN_ASSOCIATED_MAP='$savedMapId';"
 
         // Delete file copies as well used to save the map
 
         val getUriSQL = "SELECT uris FROM $TABLE_PHOTOMAPURIS WHERE $COLUMN_ASSOCIATED_MAP='$savedMapId';"
-        val db = this.readableDatabase
+        val db = this.writableDatabase
 
         // Now drop the table entries
 
@@ -258,7 +258,6 @@ class DatabaseHelper(val context: Context):
                 val savedFile = File(fileUri.toString())
                 savedFile.delete()
 
-
             }
         }else{
             Log.e("No file uris", "No file URIs were found for $savedMapName")
@@ -266,8 +265,8 @@ class DatabaseHelper(val context: Context):
 
         savedFilesCursor.close()
 
-        db.execSQL(dropMapSQL)
         db.execSQL(dropMapUrisSQL)
+        db.execSQL(dropMapSQL)
 
     }
 
