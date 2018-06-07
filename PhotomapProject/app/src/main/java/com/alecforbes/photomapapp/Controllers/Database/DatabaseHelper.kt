@@ -123,7 +123,7 @@ class DatabaseHelper(val context: Context):
 
         // To save the new image copy, get the path and append the mapname a copy to be unique
 
-        val filename = File(uri.path).name + "_" + mapName + "_copy" //fixme check exists
+        val filename = File(uri.path).name + "_" + mapName + "_copy"
         val fileContents = context.contentResolver.openInputStream(uri)
 
         val fileBytes = fileContents.readBytes()
@@ -131,10 +131,30 @@ class DatabaseHelper(val context: Context):
         val newFile = File(context.filesDir, filename) // Application data directory
         val newUri = Uri.fromFile(newFile) // Need the new uri to check exists as that is stored
 
-        // If the URI doesn't exist in the DB, add it otherwise ignore it
-        val GET_URI_SQL = "SELECT uris FROM $TABLE_PHOTOMAPURIS WHERE uris='$newUri' AND $COLUMN_ASSOCIATED_MAP='$savedMapId';"
+        val getAllUriSQL = "SELECT uris FROM $TABLE_PHOTOMAPURIS WHERE $COLUMN_ASSOCIATED_MAP='$savedMapId';"
+        val uriCursor = db.rawQuery(getAllUriSQL, null)
 
-        val cursor = db.rawQuery(GET_URI_SQL, null)
+        // Because android security saving workaround, check if a copy of that file has already
+        // been stored. If so, don't add it or there will be duplicates when the map is reloaded
+        while(uriCursor.moveToNext()){
+            val selectedFilename = uriCursor.getString(uriCursor.getColumnIndex(COLUMN_URI))
+            // Each file will have a unique number string, even if it's a copy
+            val fileIdRegex = "(\\d+_)".toRegex()
+            val fileId = fileIdRegex.find(selectedFilename.toString())?.groups?.get(0)?.value
+
+            if(filename.contains(fileId!!)){
+                uriCursor.close()
+                return
+            }
+
+
+        }
+        uriCursor.close()
+
+        // If the URI doesn't exist in the DB, add it otherwise ignore it
+        val getUriSQL = "SELECT uris FROM $TABLE_PHOTOMAPURIS WHERE $COLUMN_URI='$newUri' AND $COLUMN_ASSOCIATED_MAP='$savedMapId';"
+
+        val cursor = db.rawQuery(getUriSQL, null)
 
         if (cursor.moveToFirst()){
             // If the cursor can move, that uri is already stored so return
@@ -143,9 +163,9 @@ class DatabaseHelper(val context: Context):
         }
 
         // File didn't exist, write it to the data directory
-        context.openFileOutput(filename, Context.MODE_PRIVATE).use {
-            it.write(fileBytes)
-            it.close()
+        context.openFileOutput(filename, Context.MODE_PRIVATE).use { outStream ->
+            outStream.write(fileBytes)
+            outStream.close()
         }
 
         savedMapUri.put("savedmap", mapRowId)
@@ -197,8 +217,8 @@ class DatabaseHelper(val context: Context):
         val associatedMapId = mapTableCursor.getLong(mapTableCursor.getColumnIndexOrThrow("_id"))
         mapTableCursor.close()
 
-        val SELECT_ALL_URIS_SQL = "SELECT * FROM $TABLE_PHOTOMAPURIS WHERE $COLUMN_ASSOCIATED_MAP='$associatedMapId';"
-        val uriTableCursor = db.rawQuery(SELECT_ALL_URIS_SQL, null)
+        val selectAllUrisSQL = "SELECT * FROM $TABLE_PHOTOMAPURIS WHERE $COLUMN_ASSOCIATED_MAP='$associatedMapId';"
+        val uriTableCursor = db.rawQuery(selectAllUrisSQL, null)
 
         while (uriTableCursor.moveToNext()){
 
@@ -260,7 +280,7 @@ class DatabaseHelper(val context: Context):
 
             }
         }else{
-            Log.e("No file uris", "No file URIs were found for $savedMapName")
+            Log.w("No file uris", "No file URIs were found for $savedMapName")
         }
 
         savedFilesCursor.close()
@@ -286,7 +306,7 @@ class DatabaseHelper(val context: Context):
      * Supporting function to find if a map already exists, so they can be overwritten.
      */
     fun checkMapExists(db: SQLiteDatabase, mapName: String): Boolean {
-        val findMapUri = "SELECT mapname FROM $TABLE_SAVEDPHOTOMAPS WHERE mapname='$mapName';"
+        val findMapUri = "SELECT mapname FROM $TABLE_SAVEDPHOTOMAPS WHERE $COLUMN_MAPNAME='$mapName';"
 
         val cursor = db.rawQuery(findMapUri, null)
 
