@@ -127,7 +127,11 @@ class PlacePhotomap : PhotomapActivity() {
         var descriptionPara: String? = null
         doAsyncResult {
             descriptionPara = wikiRetriever.getFirstParagraphFromWikipedia(wikiUrl)
-            imageInfoView!!.placeDescValue.text = descriptionPara.toString()
+
+            // Reduce the length of the paragraph to up 250 characters so the view doesn't clutter
+            val reducedDesc = descriptionPara!!.substring(0, Math.min(descriptionPara!!.length, 250)) +
+                    "..."
+            imageInfoView!!.placeDescValue.text = reducedDesc
 
         }
 
