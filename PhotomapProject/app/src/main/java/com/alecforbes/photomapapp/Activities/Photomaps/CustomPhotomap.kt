@@ -3,6 +3,7 @@ package com.alecforbes.photomapapp.Activities.Photomaps
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.os.Parcelable
 import android.support.constraint.ConstraintLayout
 import android.support.v7.app.AlertDialog
 import android.view.View
@@ -110,17 +111,12 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
      */
     private fun getDataFromSelectedApp(){
 
-        val getIntent = Intent(Intent.ACTION_GET_CONTENT)
-        getIntent.type = "image/*"
+        val galleryIntent = Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        galleryIntent.type = "image/*"
+        galleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
 
-        val customSelectIntent = Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        customSelectIntent.type = "image/*"
-
-        val chooseIntent = Intent.createChooser(getIntent, "Select images for Photomap")
-        chooseIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, customSelectIntent)
-
-        if (customSelectIntent.resolveActivity(packageManager) != null){
-            startActivityForResult(chooseIntent, pickData)
+        if (galleryIntent.resolveActivity(packageManager) != null){
+            startActivityForResult(Intent.createChooser(galleryIntent, "Select images with:"), pickData)
         }
 
     }
