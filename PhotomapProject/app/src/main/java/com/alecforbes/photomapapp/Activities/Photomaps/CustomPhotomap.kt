@@ -3,7 +3,6 @@ package com.alecforbes.photomapapp.Activities.Photomaps
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.os.Parcelable
 import android.support.constraint.ConstraintLayout
 import android.support.v7.app.AlertDialog
 import android.view.View
@@ -111,6 +110,7 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
      */
     private fun getDataFromSelectedApp(){
 
+        // For whatever reason only some apps let you select multiple images (Like Google Photos)
         val galleryIntent = Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         galleryIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         galleryIntent.type = "image/*"
