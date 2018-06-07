@@ -19,6 +19,8 @@ import com.google.android.gms.maps.model.Marker
 import kotlinx.android.synthetic.main.activity_photomap.*
 import kotlinx.android.synthetic.main.individual_image_view.*
 import kotlinx.android.synthetic.main.timeline_scroll.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * This class defines the behaviour of a custom photomap created by the user. A relevant custom
@@ -30,8 +32,8 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
     // Store the images as objects with all relevant info
     private val pickData = 1
 
-    lateinit var fileDataController: FileDataController
-    lateinit var mapFragment: PhotomapFragment
+    private lateinit var fileDataController: FileDataController
+    private lateinit var mapFragment: PhotomapFragment
 
     // Images stored in the timeline/preview pane
     private var previewImageUriHashMap = HashMap<String, String>()
@@ -313,11 +315,16 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
     /**
      * Creates a card view with the relevant information collected for that image. Will be displayed
      * when an image is clicked on the map or in the horizontal scroll view of the timeline.
+     *
+     * Reference to:
+     * https://stackoverflow.com/questions/42854152/how-to-convert-hhmmss-to-hhmm-am-pm-in-android
      */
     private fun createIndvView(imageData: ImageData){
 
         // Fill the included Image View with the data of the image clicked in timeline
         indvImageView.setImageBitmap(imageData.getImageBitmap())
+        val datePos = 0
+        val timePos = 1
 
         if (imageData.timeTaken != "0" || imageData.datetaken != "0") { // 0 0 is returned when no timestamp was found
 
@@ -326,13 +333,35 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
 
             // There may be some cases where only one value was so found handle that
             if (imageData.datetaken != "0") {
-                dateTakenValue.text = splitDateTime[0]
+                // Reformat to be more user friendly
+                try {
+                    val reformattedDate = splitDateTime[datePos].replace(":", "/")
+                    dateTakenValue.text = reformattedDate
+                } catch (exIllegalArg: IllegalArgumentException){
+                    // Just set the time to be the raw string if it fails to format
+                    dateTakenValue.text = splitDateTime[datePos]
+                }
             } else {
                 dateTakenValue.text = "Unknown"
             }
 
             if (imageData.timeTaken != "0"){
-                imageTimeTakenValue.text = splitDateTime[1]
+                try {
+                    var time = splitDateTime[timePos]
+                    val splitTime = time.split(":")
+                    val hour = splitTime[1].toInt()
+
+                    // Add PM or AM to time as necessary
+                    time = if(hour in 0..11){
+                        "$time a.m."
+                    }else {
+                        "$time p.m."
+                    }
+
+                    imageTimeTakenValue.text = time
+                }catch (exIllegalArg: IllegalArgumentException){
+                    imageTimeTakenValue.text = splitDateTime[timePos]
+                }
             } else {
                 imageTimeTakenValue.text = "Unknown"
             }
@@ -365,7 +394,6 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
 
         val markerLatLong = clickedMarker!!.position
 
-        // fixme, a little repetition?
         var clickedImageData: ImageData? = null
         fileDataController.selectedData.forEach { imageData ->
             if (imageData.latLong == markerLatLong){
@@ -401,6 +429,9 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
         }
     }
 
+    /**
+     * Destroy the fragment when the user exists
+     */
     override fun onDestroy() {
         supportFragmentManager.beginTransaction().remove(mapFragment).commitAllowingStateLoss()
         super.onDestroy()

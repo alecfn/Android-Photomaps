@@ -106,8 +106,6 @@ class DatabaseHelper(val context: Context):
 
         }
 
-
-
     /**
      * When the user saves a map, save the URI into a new local file accessible to to application.
      *

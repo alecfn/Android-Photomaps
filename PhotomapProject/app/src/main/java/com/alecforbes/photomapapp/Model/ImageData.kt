@@ -40,7 +40,7 @@ data class ImageData(val file: File,
                      var latLong: LatLng= LatLng(0.0, 0.0),
                      var unixTime: Long = 0L,
                      var realAddress: String? = null,
-                     var imageOrientation: Int? = 0,
+                     private var imageOrientation: Int? = 0,
                      private var thumbnailData: ByteArray= byteArrayOf(),
                      private var screenSize: Int? = null): Parcelable, Comparable<ImageData> {
 
@@ -186,7 +186,7 @@ data class ImageData(val file: File,
             thumbnailData = outputStream.toByteArray()
         } catch (e: Exception){
             // If failed to create a scaled bitmap, handle so it does not crash
-            Log.e("Failed to create Thumbnail", "Failed to create a thumbnail from the" +
+            Log.w("Failed to create Thumbnail", "Failed to create a thumbnail from the" +
                     " supplied image. Perhaps the image is too large?")
 
         }

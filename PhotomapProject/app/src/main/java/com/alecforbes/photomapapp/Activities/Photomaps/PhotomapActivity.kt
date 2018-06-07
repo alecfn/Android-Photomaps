@@ -74,15 +74,20 @@ open class PhotomapActivity: AppCompatActivity(){
      *
      * With reference to:
      * https://stackoverflow.com/questions/9987551/how-to-open-google-maps-using-address
+     * https://stackoverflow.com/questions/213506/java-net-urlencoder-encodestring-is-deprecated-what-should-i-use-instead
      */
     fun startMapsFromAddress(realAddress: String){
-        val mapsIntent = Intent(Intent.ACTION_VIEW, Uri.parse(String.format("geo:0,0?q=%s",URLEncoder.encode(realAddress)))) // fixme
+        val mapsIntent = Intent(Intent.ACTION_VIEW, Uri.parse(String.format("geo:0,0?q=%s",
+                URLEncoder.encode(realAddress, java.nio.charset.StandardCharsets.UTF_8.toString()))))
         mapsIntent.setClassName("com.google.android.apps.maps",
                 "com.google.android.maps.MapsActivity")
 
         startActivity(mapsIntent)
     }
 
+    /**
+     * When the user exits an activity, finish it to free memory and clear data
+     */
     override fun onBackPressed() {
         super.onBackPressed()
         this.finish()

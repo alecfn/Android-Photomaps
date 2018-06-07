@@ -22,11 +22,11 @@ import org.jetbrains.anko.doAsyncResult
  */
 class PlacePhotomap : PhotomapActivity() {
 
-    lateinit var firebaseController: FirebaseController
+    private lateinit var firebaseController: FirebaseController
 
-    var imageInfoView: ViewGroup? = null
-    var placeMapFragment: PhotomapFragment? = null
-    var selectedLoc: String? = null
+    private var imageInfoView: ViewGroup? = null
+    private var placeMapFragment: PhotomapFragment? = null
+    private var selectedLoc: String? = null
 
     private val wikiLinkPos = 1 // Position of Wikipedia link in the associatedLinks list of ImageData
 
