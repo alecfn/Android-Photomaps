@@ -85,19 +85,39 @@
                 android:height="90dp"
                 android:text="@string/loading" />
 
-            <Button
-                android:id="@+id/placeViewInMapsButton"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:textSize="15sp"
-                android:text="@string/view_in_maps"
-                android:theme="@style/PrimaryFlatButton"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dateTakenTitle" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/placeViewInMapsButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:text="@string/view_in_maps"
+                    android:textSize="15sp"
+                    android:theme="@style/PrimaryFlatButton"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/dateTakenTitle" />
+
+                <Button
+                    android:id="@+id/readMoreButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:text="@string/read_more"
+                    android:textSize="15sp"
+                    android:theme="@style/PrimaryFlatButton"/>
+
+            </LinearLayout>
 
             <Button
                 android:id="@+id/placeCloseButton"

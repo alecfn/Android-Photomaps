@@ -1,5 +1,7 @@
 package com.alecforbes.photomapapp.Activities.Photomaps
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -93,10 +95,18 @@ class PlacePhotomap : PhotomapActivity() {
             clickedImageData!!.realAddress = imageAddress
         }
 
+        // Set read more listener to open relevant Wikipedia page
+        imageInfoView!!.readMoreButton.setOnClickListener{
+            val wikiUrl = clickedImageData!!.getAssociatedLinks()!![wikiLinkPos]
+            val wikiIntent = Intent(Intent.ACTION_VIEW)
+            wikiIntent.data = Uri.parse(wikiUrl)
+            startActivity(wikiIntent)
+        }
+
         imageInfoView!!.placeAddressValue.text = clickedImageData!!.realAddress
         imageInfoView!!.placeIndvImageView.setImageBitmap(clickedImageData!!.getImageBitmap())
 
-        // Populate the description with the first paragraph on the landmark from Wikipedia todo
+        // Populate the description with the first paragraph on the landmark from Wikipedia
 
         getWikipediaDesc(clickedImageData!!.getAssociatedLinks()!![wikiLinkPos])
 
@@ -135,7 +145,6 @@ class PlacePhotomap : PhotomapActivity() {
 
         }
 
-        // todo could also add a 'read more' button that opens the wikipage
     }
 
 
