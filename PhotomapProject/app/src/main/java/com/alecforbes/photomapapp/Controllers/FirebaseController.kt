@@ -1,6 +1,7 @@
 package com.alecforbes.photomapapp.Controllers
 
 import android.content.ContentResolver
+import android.util.Log
 import com.alecforbes.photomapapp.Activities.Photomaps.PlacePhotomap
 import com.alecforbes.photomapapp.Model.ImageData
 import com.alecforbes.photomapapp.Model.ImageDataCreator
@@ -49,10 +50,15 @@ class FirebaseController(content: ContentResolver,
 
             }.addOnCompleteListener {
                 // Update the map as every firebase operation completes, and update the map
-                includedImages = imageDataCreator.createIncludedImageData()
-                // Set the last inserted image links to be the firebase and wikipedia references
-                includedImages.last().setAssociatedLinks(linksList)
-                associatedPlaceMap.onFirebaseComplete(includedImages)
+                try {
+                    includedImages = imageDataCreator.createIncludedImageData()
+                    // Set the last inserted image links to be the firebase and wikipedia references
+                    includedImages.last().setAssociatedLinks(linksList)
+                    associatedPlaceMap.onFirebaseComplete(includedImages)
+                }catch(exIllegal: IllegalStateException){
+                    // If going quickly between place views this may fail, so handle the exception
+                    Log.e("Firebase illegal state", "Illegal state while downloading images.")
+                }
             }
 
         }

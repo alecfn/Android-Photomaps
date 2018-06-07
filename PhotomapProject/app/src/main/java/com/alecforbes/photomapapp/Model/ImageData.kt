@@ -185,9 +185,10 @@ data class ImageData(val file: File,
             thumbnail.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
             thumbnailData = outputStream.toByteArray()
         } catch (e: Exception){
-            // If failed to create a scaled bitmap, only log the error as it should not occur
+            // If failed to create a scaled bitmap, handle so it does not crash
             Log.e("Failed to create Thumbnail", "Failed to create a thumbnail from the" +
-                    "supplied image. Perhaps the image is too large?")
+                    " supplied image. Perhaps the image is too large?")
+
         }
     }
 

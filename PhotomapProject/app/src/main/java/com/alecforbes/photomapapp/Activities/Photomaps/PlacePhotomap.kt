@@ -28,7 +28,7 @@ class PlacePhotomap : PhotomapActivity() {
     var placeMapFragment: PhotomapFragment? = null
     var selectedLoc: String? = null
 
-    val wikiLinkPos = 1 // Position of Wikipedia link in the associatedLinks list of ImageData
+    private val wikiLinkPos = 1 // Position of Wikipedia link in the associatedLinks list of ImageData
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
