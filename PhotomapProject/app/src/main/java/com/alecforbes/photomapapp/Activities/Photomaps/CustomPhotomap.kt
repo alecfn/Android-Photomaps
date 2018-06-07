@@ -2,7 +2,9 @@ package com.alecforbes.photomapapp.Activities.Photomaps
 
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
+import android.os.StrictMode
 import android.support.constraint.ConstraintLayout
 import android.support.v7.app.AlertDialog
 import android.view.View
@@ -243,14 +245,24 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
 
     /**
      * Launch a share intent when the user clicks 'share map' in the FAB.
+     * Currently just shares image files on a map.
+     *
+     * https://stackoverflow.com/questions/38200282/android-os-fileuriexposedexception-file-storage-emulated-0-test-txt-exposed
      */
     private fun shareMap(){
-        val shareIntent = Intent(android.content.Intent.ACTION_SEND)
-        shareIntent.type = "text/plain"
-        val shareBody = "Download Photomaps here: <link to play store> and create your own!"
-        shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Check out my cool new photomap!")
-        shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody)
+        val shareIntent = Intent(android.content.Intent.ACTION_SEND_MULTIPLE)
 
+        // Uris in a saved map cannot be shared directly as they are file uris, so disable check
+
+        try {
+            val uriCheckMethod = StrictMode::class.java.getMethod("disableDeathOnFileUriExposure")
+            uriCheckMethod.invoke(null)
+        }catch (exUriDeath: Exception){
+            // Failed to disable check, saved map file:// uris cant be shared
+        }
+        shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, fileDataController.imageUris)
+        shareIntent.type = "image/*"
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         startActivity(Intent.createChooser(shareIntent, "Share via:"))
     }
 
