@@ -38,7 +38,7 @@ Known issues with the application are also listed at the bottom of this page.
 
 ## Additional Tools:
 * ExifPilot https://www.colorpilot.com/exif.html was used to create test image data, by editing exif information for testing.
-* _Note:I have included a folder called 'TestData' with all the image data I created to test the application. 
+* _Note: I have included a folder called 'TestData' with all the image data I created to test the application. 
 Any of these images can be placed on a device for testing, including the folders labelled (firebase)_  
 
 ## Image Attribution:
