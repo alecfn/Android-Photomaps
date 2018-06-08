@@ -361,7 +361,6 @@ open class PhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnC
         val parent: PhotomapActivity?
         // Get the parent activity to give the cluster the thumbnail size
         if(isPlaceMap){
-            imageClusterManager.isPlaceMap = true
             parent = activity as PlacePhotomap
         } else {
             parent = activity as CustomPhotomap

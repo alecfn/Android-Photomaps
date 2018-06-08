@@ -18,9 +18,6 @@ class ImageClusterManager(context: Context,
                           private var cameraIdleListener: GoogleMap.OnCameraIdleListener?):
         ClusterManager<ImageClusterItem>(context, map){
 
-    var isPlaceMap: Boolean = false
-    // The type of map, place, custom etc. to know how to perform logic
-
     /**
      * Handle when the user clicks on a marker in a cluster.
      */
