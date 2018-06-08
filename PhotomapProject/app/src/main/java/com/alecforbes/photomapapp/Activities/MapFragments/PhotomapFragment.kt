@@ -37,12 +37,14 @@ import kotlin.collections.HashMap
  * all the shared functionality of a map fragment being defined within the same class.
  *
  * Note: This is essentially inheritance, but the different class initialisations are made here.
+ * This makes sense in this context as the behaviour all map fragments is similar, but they are
+ * initialised differently (how data is passed in for example).
  */
 
 open class PhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnClickListener,
         GoogleMap.OnMarkerClickListener, OnClusterItemClickListener<ImageClusterItem> {
 
-
+    // Objects for marker clustering
     private lateinit var photomap: GoogleMap
     private lateinit var imageClusterManager: ImageClusterManager
     private var imageClusterRenderer: ImageClusterRenderer? = null
@@ -53,6 +55,7 @@ open class PhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnC
 
     private var selectedImages = ArrayList<ImageData>()
 
+    // Booleans to know how to perform certain logic different in different companion objects
     private var isPlaceMap = false
     private var isSavedMap = false
 
@@ -65,7 +68,6 @@ open class PhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnC
         getMapAsync(this)
 
     }
-
 
     override fun onMapReady(map: GoogleMap?) {
         photomap = map as GoogleMap
@@ -89,8 +91,10 @@ open class PhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnC
      * Define the necessary objects for the map fragment when the instance is created. This does not
      * call the lifecycle functions like onMapReady, the fragment must be linked to a view for that.
      *
-     *
-     * Define placemap objects
+     * Define placemap objects according to the way the data needs to be passed in. Companion
+     * objects in Kotlin are implementation of an object which is common to all instances of a class
+     * They are somewhat similar to static fields in Java, but a great way to define different init
+     * behaviour in a class without the need for direct inheritance.
      */
     companion object {
         fun newCustomInstance(): PhotomapFragment {

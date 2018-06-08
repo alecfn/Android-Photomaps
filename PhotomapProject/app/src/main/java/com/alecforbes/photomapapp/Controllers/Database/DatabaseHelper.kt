@@ -288,7 +288,8 @@ class DatabaseHelper(val context: Context):
     }
 
     /**
-     * Update a map already in the database with new URI entries.
+     * Update a map already in the database with new URI entries. This is done by deleting the
+     * map entry, then re-adding it (otherwise only new images could be added, but not removed.)
      */
     fun updateMap(savedMapName: String, imageUris: ArrayList<Uri>){
 

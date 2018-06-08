@@ -69,6 +69,8 @@ class PlacePhotomap : PhotomapActivity() {
      * Create individual images when images are clicked on a place map. This is not the same
      * as what is created on the custom maps, as the information for the images is different.
      *
+     * These views allow users to open corresponding Wikipedia pages for the marker objects
+     * as well as view the location in maps.
      */
     fun createIndvFirebaseImageView(clickedMarker: Marker?){
 
@@ -150,6 +152,7 @@ class PlacePhotomap : PhotomapActivity() {
     }
 
     override fun onDestroy() {
+        // Kill the fragment this frees up memory and removes from the stack
         supportFragmentManager.beginTransaction().remove(placeMapFragment).commitAllowingStateLoss()
         super.onDestroy()
     }

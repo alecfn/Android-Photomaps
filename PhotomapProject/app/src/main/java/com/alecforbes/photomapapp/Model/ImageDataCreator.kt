@@ -21,7 +21,6 @@ class  ImageDataCreator( private val content: ContentResolver,
      * Place map Image data objects need to be created differently from a CustomPhotomap, as they
      * are not selected via intents
      */
-
     fun createIncludedImageData(): ArrayList<ImageData> {
 
         files.forEach { file ->

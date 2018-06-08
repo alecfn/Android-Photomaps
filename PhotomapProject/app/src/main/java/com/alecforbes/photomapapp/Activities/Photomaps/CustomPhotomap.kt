@@ -4,7 +4,6 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.support.constraint.ConstraintLayout
 import android.support.v4.content.FileProvider
 import android.support.v7.app.AlertDialog
 import android.view.View

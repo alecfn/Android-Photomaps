@@ -29,7 +29,7 @@ class FirebaseController(content: ContentResolver,
     private val imagelinkpos = 0 // Position of firebase image link in list
 
     /**
-     * Get the images from firebase for the selected location and return the array of URIs
+     * Get the images from firebase for the selected location and return the array of URIs.
      */
     fun retrieveSelectedPlaceImages(placeName: String) {
 
