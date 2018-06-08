@@ -259,8 +259,13 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
         // Uris in a saved map cannot be shared directly as they are file uris, so create content uris
 
         val shareUris = ArrayList<Uri>()
-        fileDataController.imageUris.forEach {
-            shareUris.add(FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".provider", File(it.path)))
+        fileDataController.imageUris.forEach { uri ->
+            try{ // If the map was saved, need to make content URIs
+                shareUris.add(FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".provider", File(uri.path)))
+            }catch (exIllegalArg: IllegalArgumentException){ // If unsaved, can just send file URIs
+                shareUris.add(uri)
+            }
+
         }
 
         shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, shareUris)
