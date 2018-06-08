@@ -25,7 +25,7 @@ Known issues with the application are also listed at the bottom of this page.
 * JSoup used to collect information on place images from Wikipedia, MIT License https://jsoup.org/license
    * Wikipedia first paragraph descriptions are retrieved using JSoup.
 
-## Google Libraries (All Apache 2.0):
+## Google Libraries (All Apache 2.0 as in AOSP https://source.android.com/setup/start/licenses):
 
 * Standard Google Android libraries (specific layouts, views etc.)
 * Firebase Authentication
