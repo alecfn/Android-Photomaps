@@ -171,8 +171,8 @@ open class PhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnC
 
                 // If coordinates are undefined, let the user know
                 if (imageData.latitude == 0f || imageData.longitude == 0f){
-                    Toast.makeText(context, "Some selected images had an undefined location." +
-                            " These images will appear at the default location on the map.",
+                    Toast.makeText(context, "Some images had an undefined location." +
+                            " These will appear at the default location on the map.",
                             Toast.LENGTH_LONG).show()
                 }
 
