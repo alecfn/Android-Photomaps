@@ -85,7 +85,6 @@ open class PhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnC
 
     }
 
-
     /**
      * Define the necessary objects for the map fragment when the instance is created. This does not
      * call the lifecycle functions like onMapReady, the fragment must be linked to a view for that.
@@ -117,8 +116,6 @@ open class PhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnC
             return fragment
         }
     }
-
-
 
     fun setSelectedData(selectedData: ArrayList<ImageData>){
         selectedImages = selectedData

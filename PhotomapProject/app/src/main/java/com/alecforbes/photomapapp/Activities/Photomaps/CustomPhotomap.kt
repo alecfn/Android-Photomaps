@@ -4,13 +4,14 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.os.StrictMode
 import android.support.constraint.ConstraintLayout
+import android.support.v4.content.FileProvider
 import android.support.v7.app.AlertDialog
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import com.alecforbes.photomapapp.Activities.MapFragments.PhotomapFragment
+import com.alecforbes.photomapapp.BuildConfig
 import com.alecforbes.photomapapp.Controllers.Database.DatabaseHelper
 import com.alecforbes.photomapapp.Controllers.FileDataController
 import com.alecforbes.photomapapp.Controllers.ImageGeocoder
@@ -21,8 +22,9 @@ import com.google.android.gms.maps.model.Marker
 import kotlinx.android.synthetic.main.activity_photomap.*
 import kotlinx.android.synthetic.main.individual_image_view.*
 import kotlinx.android.synthetic.main.timeline_scroll.*
-import java.text.SimpleDateFormat
+import java.io.File
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * This class defines the behaviour of a custom photomap created by the user. A relevant custom
@@ -246,21 +248,22 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
     /**
      * Launch a share intent when the user clicks 'share map' in the FAB.
      * Currently just shares image files on a map.
+     * Uses a 'FileProvider' to create Content Uris for the images and make them sharable.
      *
      * https://stackoverflow.com/questions/38200282/android-os-fileuriexposedexception-file-storage-emulated-0-test-txt-exposed
+     * https://stackoverflow.com/questions/42516126/fileprovider-illegalargumentexception-failed-to-find-configured-root
      */
     private fun shareMap(){
         val shareIntent = Intent(android.content.Intent.ACTION_SEND_MULTIPLE)
 
-        // Uris in a saved map cannot be shared directly as they are file uris, so disable check
+        // Uris in a saved map cannot be shared directly as they are file uris, so create content uris
 
-        try {
-            val uriCheckMethod = StrictMode::class.java.getMethod("disableDeathOnFileUriExposure")
-            uriCheckMethod.invoke(null)
-        }catch (exUriDeath: Exception){
-            // Failed to disable check, saved map file:// uris cant be shared
+        val shareUris = ArrayList<Uri>()
+        fileDataController.imageUris.forEach {
+            shareUris.add(FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".provider", File(it.path)))
         }
-        shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, fileDataController.imageUris)
+
+        shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, shareUris)
         shareIntent.type = "image/*"
 
         // Add some text to the share intent

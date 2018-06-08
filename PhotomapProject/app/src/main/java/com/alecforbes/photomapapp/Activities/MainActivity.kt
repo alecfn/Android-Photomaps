@@ -7,7 +7,6 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import android.widget.Toast
 import com.alecforbes.photomapapp.Activities.Photomaps.CustomPhotomap
 import com.alecforbes.photomapapp.R
 import kotlinx.android.synthetic.main.activity_main.*
@@ -32,6 +31,9 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * Set up the listeners for each button on the main screen to navigate the app.
+     */
     private fun setupButtonListeners(){
 
         // Get the buttons with Kotlin extensions, so we don't have to use findById
