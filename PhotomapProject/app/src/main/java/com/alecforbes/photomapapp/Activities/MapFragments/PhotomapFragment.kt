@@ -188,6 +188,8 @@ open class PhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnC
     /**
      * Set the boundaries of the map to include all of the markers added so they all appear on
      * the screen.
+     *
+     * https://stackoverflow.com/questions/11849636/maximum-lat-and-long-bounds-for-the-world-google-maps-api-latlngbounds
      */
     private fun setMapBounds(){
 
@@ -198,15 +200,17 @@ open class PhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnC
         }
 
         val mapBounds = latLongBuilder.build()
+        val width = 1000 // Pixel heights and width of map
+        val height = 1000
         val pad = 250 // Map pixel padding on edges
-        val cameraUpdate = CameraUpdateFactory.newLatLngBounds(mapBounds, pad)
+        val cameraUpdate = CameraUpdateFactory.newLatLngBounds(mapBounds, width, height, pad)
 
         try {
             photomap.moveCamera(cameraUpdate)
         }catch (ex: Exception){
-            // This get called before markers are on the map so nothing will be set
-            Log.e("Failed Set Bounds", "Failed to set the bounds, probably no markers in" +
-                    "the list?")
+            // This got called before map was drawn
+           Log.e("Failed Set Bounds", "Failed to set the bounds, map may not have been" +
+                    "initialised at call.")
         }
 
     }
