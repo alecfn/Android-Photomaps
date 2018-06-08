@@ -63,5 +63,7 @@ the map will not show the new images. If you go back to the main menu, then reop
 I think I have fixed this but it may still happen occasionally.
 * Occasionally when clicking an image in a place map, a view for an individual image will appear
 but will be blank and contain no information. This only seems to happen if multiple markers are clicked in rapid succession at map load.
+* Initially when loading a 'Place' map and clicking an image, the card description may display 'Loading' until the user moves the map
+to redraw it. I have specified this to redraw when the text updates, but it may still occur.
 * Some image applications do not allow for the selection of multiple images at once (despite the ALLOW_MULTIPLE flag being set 
 in the intent). You can still select a single image at a time however. I recommend using something like Google Photos which allows multiple.
