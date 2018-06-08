@@ -37,7 +37,7 @@ Known issues with the application are also listed at the bottom of this page.
    * Necessary to run map services in the application. Note: Emulators need to have Google Play installed to run services.
 
 ## Image Attribution:
-* The majority of used in this application images were obtained from Pexels, a free stock image website. https://www.pexels.com/
+* The majority images of used in this application images were obtained from Pexels, a free stock image website. https://www.pexels.com/
 * This includes images used on the main app menu screens and for the application icon.
 * Other images (For example images used for place markers) were obtained through Google.
 
