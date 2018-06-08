@@ -292,11 +292,9 @@ class DatabaseHelper(val context: Context):
      */
     fun updateMap(savedMapName: String, imageUris: ArrayList<Uri>){
 
-        val oldMapId = getMapRowId(savedMapName, this.readableDatabase)
+        deleteMap(savedMapName)
+        addMap(savedMapName, imageUris)
 
-        imageUris.forEach {uri ->
-            addURI(this.writableDatabase, oldMapId!!, savedMapName, uri)
-        }
     }
 
     /**

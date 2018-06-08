@@ -373,7 +373,8 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
                 dateTakenValue.text = "Unknown"
             }
 
-            if (imageData.timeTaken != "0"){
+            // Loaded images may contain "" as the timeTaken if no time data found
+            if (imageData.timeTaken != "0" && imageData.timeTaken != ""){
                 try {
                     var time = splitDateTime[timePos]
                     val splitTime = time.split(":")
