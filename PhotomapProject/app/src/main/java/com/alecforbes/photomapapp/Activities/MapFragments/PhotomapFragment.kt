@@ -240,6 +240,8 @@ open class PhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnC
 
     /**
      * Remove the polylines used on the map to represent a timeline between images.
+     *
+     * https://stackoverflow.com/questions/14853084/how-to-remove-all-the-polylines-from-a-map
      */
     fun clearTimelinePolylines(){
 
@@ -315,6 +317,9 @@ open class PhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnC
 
     }
 
+    /**
+     * Create individual image views when the user clicks on an image displayed on the map.
+     */
     override fun onMarkerClick(marker: Marker?): Boolean {
 
         if (isPlaceMap){
@@ -331,6 +336,7 @@ open class PhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnC
 
     }
 
+
     override fun onClick(view: View?) {
 
         val displayedImageView = parentFragment.activity.findViewById<ConstraintLayout>(R.id.indvImageViewConstraint)
@@ -339,6 +345,14 @@ open class PhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnC
         displayedImageView.visibility = View.GONE
     }
 
+    /**
+     * Defines the clustering used on the map to group closely placed images on the map. This
+     * involves custom cluster items and a cluster manager and renderer that define how image items
+     * are rendered/clustered.
+     *
+     * Based on:
+     * https://github.com/googlemaps/android-maps-utils/tree/master/library/src/com/google/maps/android/clustering
+     */
     fun setUpClusterer(){
         val cameraIdleListenter = GoogleMap.OnCameraIdleListener {  }
         imageClusterManager = ImageClusterManager(this.context, photomap, cameraIdleListenter)
