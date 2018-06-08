@@ -181,8 +181,7 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
                         val overwriteAlert= AlertDialog.Builder(this@CustomPhotomap)
 
                         with(overwriteAlert){
-                            overwriteAlert.setTitle("A map with the name $savedMapName" +
-                                    " already exists. Would you like to overwrite it?")
+                            overwriteAlert.setTitle("$savedMapName already exists. Would you like to overwrite it?")
 
                             setPositiveButton("Overwrite"){
                                 _, _ ->
