@@ -133,11 +133,8 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
      * information to building a photomap. This essentially resets the state of the map.
      */
     private fun clearViewsAndData(){
-        val mapLayout = findViewById<ConstraintLayout>(R.id.photomapConstraintLayout)
         imagePreviewPane.removeAllViews()
         timelineCardView.visibility = View.GONE
-        mapLayout.removeView(imagePreviewPane)
-        mapLayout.removeView(findViewById(R.id.customTimeline))
         mapFragment.clearMap() // Also clear drawables on the map fragment
         fileDataController.selectedData.clear()
         fileDataController.imageUris.clear()
@@ -286,6 +283,12 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
      * be.
      */
     private fun addImagesToPreview(){
+
+        // If there's no images, don't make a timeline view
+        if(fileDataController.selectedData.size == 0){
+            Toast.makeText(applicationContext, "There are no images on the map!", Toast.LENGTH_SHORT).show()
+            return
+        }
 
         timelineCardView.visibility = View.VISIBLE
 
