@@ -377,7 +377,7 @@ class CustomPhotomap : PhotomapActivity(), OneMoreFabMenu.OptionsClick {
                 try {
                     var time = splitDateTime[timePos]
                     val splitTime = time.split(":")
-                    val hour = splitTime[1].toInt()
+                    val hour = splitTime[0].toInt() // First position is hour
 
                     // Add PM or AM to time as necessary
                     time = if(hour in 0..11){
