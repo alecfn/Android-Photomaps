@@ -30,7 +30,7 @@ Known issues with the application are also listed at the bottom of this page.
 * Standard Google Android libraries (specific layouts, views etc.)
 * Firebase Authentication
 * Firebase Storage
-   * Google Map Utils 0.5
+* Google Map Utils 0.5
    * Followed the Map Utils MultiDrawable Clustering Example and used MultiDrawable Java class, under Apache 2.0
      https://github.com/googlemaps/android-maps-utils/tree/master/library/src/com/google/maps/android/clustering
 * Google Play Services 3.1.0
