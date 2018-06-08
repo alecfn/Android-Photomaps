@@ -38,7 +38,15 @@ class SavedMaps : AppCompatActivity() {
             return
         }
 
+    }
+
+    /**
+     * Ensure the list is always updated when the saved list is opened so all saved maps display.
+     */
+    override fun onResume() {
+        getSavedMapsFromDB()
         populateSavedView()
+        super.onResume()
     }
 
     /**
@@ -49,9 +57,9 @@ class SavedMaps : AppCompatActivity() {
         val savedMapNames = databaseHelper.getSavedMaps()
 
 
-        savedMapNames.forEach {
-            val savedMapUris = databaseHelper.getSavedMapUris(it)
-            savedMaps[it] = savedMapUris
+        savedMapNames.forEach { key ->
+            val savedMapUris = databaseHelper.getSavedMapUris(key)
+            savedMaps[key] = savedMapUris
         }
 
     }
