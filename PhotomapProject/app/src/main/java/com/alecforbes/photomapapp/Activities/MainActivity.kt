@@ -7,6 +7,7 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.widget.Toast
 import com.alecforbes.photomapapp.Activities.Photomaps.CustomPhotomap
 import com.alecforbes.photomapapp.R
 import kotlinx.android.synthetic.main.activity_main.*
@@ -60,10 +61,10 @@ class MainActivity : AppCompatActivity() {
     /**
      * Request the relevant needed permissions for creating a photomap at run time.
      *
-     * There are read/write external storage
+     * There are read/write external storage, though in most modern Android versions this is just
+     * 'storage' permission. As long as one is given, the app should work fine.
      */
     private fun setupPermissions(){
-        // TODO: just doing this in main for now, may move to more appropriate locations
 
         val readPermission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE)
         val writePermission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -100,7 +101,8 @@ class MainActivity : AppCompatActivity() {
         when(requestCode) {
             readExternalRequestCode -> {
             if ((grantResults.isNotEmpty() && grantResults[0] == permissionDenied)){
-                    // We need read permission to perform basic functions
+                    // We need read permission to perform basic functions, ask again
+                    setupPermissions()
                 }
             }
             writeExternalRequestCode -> {

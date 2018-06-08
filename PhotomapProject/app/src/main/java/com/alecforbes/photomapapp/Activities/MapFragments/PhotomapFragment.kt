@@ -221,7 +221,7 @@ open class PhotomapFragment : SupportMapFragment(), OnMapReadyCallback, View.OnC
     fun addTimelinePolylines(){
         val imagePolyLine = PolylineOptions()
         // Set some style options for the lines joining images
-                .color(Color.BLUE)
+                .color(Color.RED)
                 .startCap(RoundCap())
                 .endCap(RoundCap())
                 .width(10F)
