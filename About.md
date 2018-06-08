@@ -36,6 +36,11 @@ Known issues with the application are also listed at the bottom of this page.
 * Google Play Services 3.1.0
    * Necessary to run map services in the application. Note: Emulators need to have Google Play installed to run services.
 
+## Additional Tools:
+* ExifPilot https://www.colorpilot.com/exif.html was used to create test image data, by editing exif information for testing.
+* _Note:I have included a folder called 'TestData' with all the image data I created to test the application. 
+Any of these images can be placed on a device for testing, including the folders labelled (firebase)_  
+
 ## Image Attribution:
 * The majority of images used in this application were obtained from Pexels, a free stock image website. https://www.pexels.com/
 * This includes images used on the main app menu screens and for the application icon.
